@@ -1,0 +1,126 @@
+---
+import BuildingGraphic from "./BuildingGraphic.astro";
+
+const stats = [
+  {
+    target: 10,
+    prefix: "+",
+    format: "int",
+    label: "ANOS DE EXPERIÊNCIA",
+    icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    target: 500,
+    prefix: "+",
+    format: "int",
+    label: "CLIENTES ATENDIDOS",
+    icon: "M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m5-3.13a4 4 0 100-8 4 4 0 000 8zm6 1a4 4 0 10-3-6.65M5.5 9.65A4 4 0 118.5 3",
+  },
+  {
+    target: 2000,
+    prefix: "+",
+    format: "mil",
+    label: "EQUIPAMENTOS REVESTIDOS",
+    icon: "M12 8a4 4 0 100 8 4 4 0 000-8zm8.4 4a8.4 8.4 0 01-.15 1.55l1.65 1.3-1.5 2.6-1.95-.65a8.5 8.5 0 01-2.7 1.55l-.3 2.05h-3l-.3-2.05a8.5 8.5 0 01-2.7-1.55l-1.95.65-1.5-2.6 1.65-1.3A8.4 8.4 0 013.6 12c0-.53.05-1.05.15-1.55L2.1 9.15l1.5-2.6 1.95.65a8.5 8.5 0 012.7-1.55L8.55 3.6h3l.3 2.05a8.5 8.5 0 012.7 1.55l1.95-.65 1.5 2.6-1.65 1.3c.1.5.15 1.02.15 1.55z",
+  },
+];
+---
+
+<section id="sobre" class="bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-navy-900">
+        SOBRE A <span class="text-orange-500">TEXFLOW</span>
+      </h2>
+      <p class="mt-5 text-muted leading-relaxed">
+        Somos especialistas em revestimentos antiaderentes e texturizações
+        industriais, atendendo empresas que buscam mais qualidade,
+        produtividade e durabilidade em seus processos.
+      </p>
+      <p class="mt-4 text-muted leading-relaxed">
+        Com tecnologia avançada e uma equipe altamente qualificada, entregamos
+        soluções sob medida para cada desafio.
+      </p>
+
+      <div class="stats-grid mt-9 grid grid-cols-2 sm:grid-cols-4 gap-5">
+        {
+          stats.map((s) => (
+            <div class="group flex flex-col gap-2 cursor-default">
+              <div class="w-10 h-10 rounded-md bg-orange-500 flex items-center justify-center text-white transition-colors duration-300 group-hover:bg-navy-900">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d={s.icon} />
+                </svg>
+              </div>
+              <div
+                class="counter-value text-xl font-extrabold text-navy-900 transition-colors duration-300 group-hover:text-orange-500"
+                data-target={s.target}
+                data-prefix={s.prefix}
+                data-format={s.format}
+              >
+                {s.prefix}1
+              </div>
+              <div class="text-[11px] font-semibold text-muted tracking-wide leading-tight transition-colors duration-300 group-hover:text-orange-500">{s.label}</div>
+            </div>
+          ))
+        }
+        <div class="group flex flex-col gap-2 border border-slate-200 rounded-lg p-3 -m-3 sm:m-0 sm:border-0 sm:p-0 cursor-default">
+          <div class="w-10 h-10 rounded-md overflow-hidden relative shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-110">
+            <div class="absolute inset-0 bg-[#009c3b]"></div>
+            <div class="absolute inset-[18%] bg-[#ffdf00]" style="clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"></div>
+            <div class="absolute inset-[34%] rounded-full bg-[#002776]"></div>
+          </div>
+          <div class="text-sm font-extrabold text-navy-900 leading-tight transition-colors duration-300 group-hover:text-orange-500">ATUAÇÃO<br />NACIONAL</div>
+          <div class="text-[11px] font-semibold text-muted leading-tight transition-colors duration-300 group-hover:text-orange-500">Presente em todo o Brasil</div>
+        </div>
+      </div>
+    </div>
+
+    <BuildingGraphic />
+  </div>
+</section>
+
+<script>
+  const counters = document.querySelectorAll<HTMLElement>(".counter-value");
+  const duration = 1600;
+
+  function formatValue(current: number, target: number, format: string | undefined, prefix: string) {
+    if (format === "mil" && current >= target) {
+      return `${prefix}${target / 1000} MIL`;
+    }
+    return `${prefix}${current}`;
+  }
+
+  function animate(el: HTMLElement) {
+    const target = parseInt(el.dataset.target || "0", 10);
+    const prefix = el.dataset.prefix || "";
+    const format = el.dataset.format;
+    const startTime = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.max(1, Math.floor(eased * target));
+      el.textContent = formatValue(current, target, format, prefix);
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = formatValue(target, target, format, prefix);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  counters.forEach((el) => observer.observe(el));
+</script>

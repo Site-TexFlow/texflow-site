@@ -1,0 +1,160 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter((p) => p.id !== post.id)
+  .filter((p) => p.data.tags.some((tag) => post.data.tags.includes(tag)))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const fallbackRelated = allPosts
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const related = relatedPosts.length > 0 ? relatedPosts : fallbackRelated;
+
+const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
+
+const canonicalURL = new URL(`/blog/${post.id}`, Astro.site).toString();
+const imageURL = new URL(post.data.image, Astro.site).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.data.title,
+  description: post.data.description,
+  image: [imageURL],
+  datePublished: post.data.publishDate.toISOString(),
+  dateModified: post.data.publishDate.toISOString(),
+  author: {
+    "@type": "Organization",
+    name: post.data.author,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "TexFlow",
+    logo: {
+      "@type": "ImageObject",
+      url: new URL("/favicon.svg", Astro.site).toString(),
+    },
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalURL,
+  },
+};
+---
+
+<Layout
+  title={`${post.data.title} | Blog TexFlow`}
+  description={post.data.description}
+  image={post.data.image}
+  type="article"
+  publishDate={post.data.publishDate}
+  author={post.data.author}
+  jsonLd={jsonLd}
+>
+  <Header />
+  <main>
+    <section class="relative overflow-hidden bg-navy-900">
+      <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 10px 10px, #ffffff 1.6px, transparent 1.8px); background-size: 16px 16px;"></div>
+      <div class="relative max-w-4xl mx-auto px-6 lg:px-10 py-14 lg:py-16">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-white/60 mb-6">
+          <a href="/" class="hover:text-orange-400 transition-colors">Home</a>
+          <span>/</span>
+          <a href="/blog" class="hover:text-orange-400 transition-colors">Blog</a>
+          <span>/</span>
+          <span class="text-white/80 truncate max-w-[220px] sm:max-w-none">{post.data.title}</span>
+        </nav>
+
+        <div class="flex items-center gap-2 flex-wrap mb-4">
+          {post.data.tags.map((tag) => (
+            <span class="text-[10px] font-bold uppercase tracking-wide text-orange-400 bg-white/10 px-2 py-1 rounded">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl lg:text-[2.25rem] font-extrabold text-white leading-tight">
+          {post.data.title}
+        </h1>
+
+        <div class="mt-5 flex items-center gap-3 text-sm text-white/60">
+          <span>{post.data.author}</span>
+          <span>&bull;</span>
+          <time datetime={post.data.publishDate.toISOString()}>
+            {dateFormatter.format(post.data.publishDate)}
+          </time>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-10 -mt-8 lg:-mt-10">
+        <div class="aspect-[16/8] rounded-xl overflow-hidden shadow-xl">
+          <img src={post.data.image} alt={post.data.imageAlt} class="w-full h-full object-cover" />
+        </div>
+      </div>
+
+      <div class="max-w-4xl mx-auto px-6 lg:px-10 py-12 lg:py-16">
+        <article class="article-prose">
+          <Content />
+        </article>
+      </div>
+    </section>
+
+    {
+      related.length > 0 && (
+        <section class="bg-slate-50 border-t border-slate-100">
+          <div class="max-w-6xl mx-auto px-6 lg:px-10 py-14 lg:py-16">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-navy-900 mb-8">
+              POSTS <span class="text-orange-500">RELACIONADOS</span>
+            </h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {related.map((r) => (
+                <a
+                  href={`/blog/${r.id}`}
+                  class="group bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                >
+                  <div class="aspect-[16/10] overflow-hidden bg-navy-900">
+                    <img
+                      src={r.data.image}
+                      alt={r.data.imageAlt}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="p-5 flex flex-col flex-1">
+                    <h3 class="font-bold text-sm text-navy-900 leading-snug group-hover:text-orange-500 transition-colors">
+                      {r.data.title}
+                    </h3>
+                    <time class="mt-3 text-xs text-muted" datetime={r.data.publishDate.toISOString()}>
+                      {dateFormatter.format(r.data.publishDate)}
+                    </time>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </main>
+  <Footer />
+</Layout>

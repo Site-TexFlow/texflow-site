@@ -1,0 +1,122 @@
+---
+const segments = [
+  "Alimentícia",
+  "Automobilística",
+  "Têxtil",
+  "Plástica",
+  "Borracha",
+  "Gráfica",
+  "Agrícola",
+  "Outro",
+];
+---
+
+<section id="contato" class="bg-navy-900">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-start">
+    <div class="text-white">
+      <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+        PRONTO PARA ELEVAR A <span class="text-orange-500">PERFORMANCE</span> DOS SEUS EQUIPAMENTOS?
+      </h2>
+      <p class="mt-5 text-white/70 leading-relaxed max-w-md">
+        Fale com nossos especialistas e solicite seu orçamento sem
+        compromisso.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href="#contato"
+          class="flex items-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-orange-600 transition-colors"
+        >
+          Solicitar Orçamento
+        </a>
+        <a
+          href="https://wa.me/554134034034"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center gap-2 border border-white/40 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-white/10 transition-colors"
+        >
+          Falar no WhatsApp
+        </a>
+      </div>
+
+      <div class="mt-10 flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl p-4 max-w-md">
+        <div class="w-12 h-12 rounded-full overflow-hidden shrink-0 relative bg-[#009c3b]">
+          <div class="absolute inset-[18%] bg-[#ffdf00]" style="clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"></div>
+          <div class="absolute inset-[34%] rounded-full bg-[#002776]"></div>
+        </div>
+        <div>
+          <div class="font-extrabold text-sm tracking-wide">BRAZILIAN TECHNOLOGY</div>
+          <div class="text-white/60 text-xs mt-1 leading-snug">
+            Tecnologia brasileira. Qualidade, inovação e confiança em cada
+            aplicação.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-xl">
+      <h3 class="text-xl font-extrabold text-navy-900">
+        SOLICITE UM <span class="text-orange-500">ORÇAMENTO</span>
+      </h3>
+      <p class="mt-2 text-sm text-muted">
+        Preencha o formulário e nossa equipe entrará em contato.
+      </p>
+
+      <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <input
+          type="text"
+          placeholder="Nome completo*"
+          required
+          class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+        />
+        <input
+          type="text"
+          placeholder="Empresa*"
+          required
+          class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+        />
+        <input
+          type="email"
+          placeholder="E-mail*"
+          required
+          class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+        />
+        <input
+          type="tel"
+          placeholder="WhatsApp*"
+          required
+          class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+        />
+        <select
+          required
+          class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm text-muted focus:outline-none focus:ring-2 focus:ring-orange-400"
+        >
+          <option value="" selected disabled>Segmento de atuação*</option>
+          {segments.map((s) => <option value={s}>{s}</option>)}
+        </select>
+        <textarea
+          placeholder="Descreva sua necessidade*"
+          required
+          rows="4"
+          class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
+        ></textarea>
+
+        <label class="col-span-full flex items-start gap-2.5 text-xs text-muted">
+          <input type="checkbox" required class="mt-0.5 accent-orange-500" />
+          Concordo com o uso dos meus dados para contato comercial, conforme a
+          <a href="/politica-de-privacidade" class="text-orange-500 underline">Política de Privacidade</a>.*
+        </label>
+
+        <button
+          type="submit"
+          class="col-span-full flex items-center justify-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-orange-600 transition-colors"
+        >
+          Enviar Orçamento
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M4 12h16m0 0l-6-6m6 6l-6 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

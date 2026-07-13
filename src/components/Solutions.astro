@@ -1,0 +1,97 @@
+---
+const solutions = [
+  {
+    title: "Revestimento Antiaderente Industrial",
+    text: "Redução do atrito e da aderência de materiais, aumentando a produtividade.",
+    icon: "gear",
+    pattern: "dark-weave",
+  },
+  {
+    title: "Revestimento Antiaderente Alimentício",
+    text: "Acabamentos que atendem às normas para contato com alimentos, com segurança e performance.",
+    icon: "gear",
+    pattern: "dimples",
+  },
+  {
+    title: "Texturização Industrial",
+    text: "Texturizações personalizadas que melhoram a funcionalidade e a aparência das peças.",
+    icon: "gear",
+    pattern: "dots-metal",
+  },
+  {
+    title: "A Confirmar",
+    text: "Outros serviços a confirmar.",
+    icon: "plus",
+    pattern: "muted",
+  },
+];
+---
+
+<section id="solucoes" class="bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+    <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+      NOSSAS <span class="text-orange-500">SOLUÇÕES</span>
+    </h2>
+
+    <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {
+        solutions.map((s) => (
+          <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class:list={["relative aspect-[4/3] pattern", s.pattern]}>
+              <div class="absolute -bottom-5 left-5 w-11 h-11 rounded-full bg-orange-500 flex items-center justify-center shadow-md ring-4 ring-white">
+                {s.icon === "gear" ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.4 4a8.4 8.4 0 01-.15 1.55l1.65 1.3-1.5 2.6-1.95-.65a8.5 8.5 0 01-2.7 1.55l-.3 2.05h-3l-.3-2.05a8.5 8.5 0 01-2.7-1.55l-1.95.65-1.5-2.6 1.65-1.3A8.4 8.4 0 013.6 12c0-.53.05-1.05.15-1.55L2.1 9.15l1.5-2.6 1.95.65a8.5 8.5 0 012.7-1.55L8.55 3.6h3l.3 2.05a8.5 8.5 0 012.7 1.55l1.95-.65 1.5 2.6-1.65 1.3c.1.5.15 1.02.15 1.55z" />
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                )}
+              </div>
+            </div>
+            <div class="p-6 pt-8">
+              <h3 class="font-bold text-navy-900 leading-snug">{s.title}</h3>
+              <p class="mt-2 text-sm text-muted leading-relaxed">{s.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pattern {
+    background-color: #1c2126;
+  }
+  .dark-weave {
+    background-image: radial-gradient(circle at 10px 10px, rgba(255, 255, 255, 0.12) 1.6px, transparent 1.8px);
+    background-size: 12px 12px;
+    background-color: #23282e;
+  }
+  .dimples {
+    background-image: radial-gradient(circle at center, #4a5158 0%, #2b3036 55%, #1c2126 100%);
+    background-size: 20px 20px;
+    background-color: #23282e;
+  }
+  .dots-metal {
+    background-image: radial-gradient(circle at center, #6b7480 0%, #3d434b 60%, transparent 62%);
+    background-size: 22px 22px;
+    background-color: #2b3036;
+  }
+  .muted {
+    background: repeating-linear-gradient(45deg, #e2e6e9, #e2e6e9 10px, #ecefef 10px, #ecefef 20px);
+  }
+  .muted::after {
+    content: "?";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #b9c0c6;
+  }
+</style>

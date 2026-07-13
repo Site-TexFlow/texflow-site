@@ -1,0 +1,49 @@
+---
+const features = [
+  {
+    title: "Alta Performance",
+    text: "Mais eficiência nos processos",
+    icon: "M12 2v2m0 16v2m10-10h-2M4 12H2m15.07-7.07l-1.42 1.42M8.35 15.65l-1.42 1.42m0-11.32l1.42 1.42m7.3 7.3l1.42 1.42M12 8a4 4 0 100 8 4 4 0 000-8z",
+  },
+  {
+    title: "Tecnologia Avançada",
+    text: "Equipamentos e materiais de ponta",
+    icon: "M12 2l7 3.5v6c0 5-3 8.5-7 10.5-4-2-7-5.5-7-10.5v-6L12 2z",
+  },
+  {
+    title: "Qualidade Comprovada",
+    text: "Padrões rigorosos e certificações",
+    icon: "M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.4 7.2 16.9l.9-5.4-3.9-3.8 5.4-.8L12 2z",
+  },
+  {
+    title: "Atendimento Especializado",
+    text: "Suporte técnico em todas as etapas",
+    icon: "M4 13a8 8 0 0116 0m-16 0v3a2 2 0 002 2h1v-6H6a2 2 0 00-2 2zm16 0v3a2 2 0 01-2 2h-1v-6h1a2 2 0 012 2z",
+  },
+  {
+    title: "Entrega em Todo Brasil",
+    text: "Agilidade, segurança e compromisso",
+    icon: "M3 16V7a1 1 0 011-1h9v10M3 16h10M3 16v1a1 1 0 001 1h1m8-2h6l-2.2-4H14v4zm-7 2a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z",
+  },
+];
+---
+
+<section class="bg-slate-50 border-y border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
+    {
+      features.map((f) => (
+        <div class="flex items-start gap-3">
+          <div class="shrink-0 w-11 h-11 rounded-full border-2 border-navy-900 flex items-center justify-center text-navy-900">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d={f.icon} />
+            </svg>
+          </div>
+          <div>
+            <div class="font-bold text-navy-900 text-sm leading-snug">{f.title}</div>
+            <div class="text-muted text-sm leading-snug mt-0.5">{f.text}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

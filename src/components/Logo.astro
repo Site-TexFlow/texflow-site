@@ -1,0 +1,45 @@
+---
+interface Props {
+  variant?: "light" | "dark";
+  showTagline?: boolean;
+  large?: boolean;
+}
+const { variant = "dark", showTagline = true, large = false } = Astro.props;
+const textColor = variant === "dark" ? "text-navy-900" : "text-white";
+const taglineColor = variant === "dark" ? "text-muted" : "text-white/60";
+const iconSize = large ? 44 : 34;
+const textSize = large ? "text-2xl sm:text-3xl" : "text-xl";
+---
+
+<a href="/" class="flex items-center gap-3 shrink-0">
+  <svg width={iconSize} height={iconSize} viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="34" height="34" rx="8" fill="#E8672E" />
+    <path
+      d="M9 22c3-1 4-4 4-7s-1-6-4-7"
+      stroke="white"
+      stroke-width="2.4"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <path
+      d="M17 24c4-1.3 5.3-5.3 5.3-9s-1.3-7.7-5.3-9"
+      stroke="white"
+      stroke-width="2.4"
+      stroke-linecap="round"
+      fill="none"
+      opacity="0.85"
+    />
+  </svg>
+  <div class="leading-none">
+    <div class={`font-extrabold tracking-tight ${textSize} ${textColor}`}>
+      TEX<span class="text-orange-500">FLOW</span>
+    </div>
+    {
+      showTagline && (
+        <div class={`text-[9px] font-semibold tracking-wide uppercase ${taglineColor} leading-tight mt-0.5`}>
+          Revestimentos antiaderentes<br />e texturizações industriais
+        </div>
+      )
+    }
+  </div>
+</a>
