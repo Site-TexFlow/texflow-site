@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import Applications from "../components/Applications.astro";
+import FinalCta from "../components/FinalCta.astro";
+---
+
+<Layout
+  title="Aplicações e Segmentos Atendidos | TexFlow"
+  description="A TexFlow atende os segmentos alimentício, automobilístico, têxtil, plástico, borracha, gráfico e agrícola com revestimentos e texturização sob medida."
+>
+  <Header />
+  <main>
+    <PageHero breadcrumbLabel="Aplicações" subtitle="Soluções para cada segmento da indústria — cada aplicação exige um revestimento ou texturização específico, e é isso que entregamos.">
+      SOLUÇÕES PARA <span class="text-orange-500">CADA SEGMENTO</span>
+    </PageHero>
+
+    <Applications expanded />
+    <FinalCta />
+  </main>
+  <Footer />
+</Layout>

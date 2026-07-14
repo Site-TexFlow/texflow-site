@@ -1,13 +1,55 @@
 ---
+interface Props {
+  expanded?: boolean;
+}
+const { expanded = false } = Astro.props;
+
 const apps = [
-  { label: "Alimentícia", icon: "M12 3c-1.5 2-2 3.5-2 5a4 4 0 108 0c0-1.5-.5-3-2-5m-4 1c.5-1 1-1.5 1-2M6 13a6 6 0 1112 0c0 4-2.5 8-6 8s-6-4-6-8z" },
-  { label: "Automobilística", icon: "M5 17h14M6 17a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 17l1.5-5.5A2 2 0 017.4 10h9.2a2 2 0 011.9 1.5L20 17M4 17v-3h16v3" },
-  { label: "Têxtil", icon: "M12 3v18M8 5c2 1 2 3 0 4s-2 3 0 4 2 3 0 4M16 5c-2 1-2 3 0 4s2 3 0 4-2 3 0 4" },
-  { label: "Plástica", icon: "M9 3h6v3l1.5 2v11a2 2 0 01-2 2h-5a2 2 0 01-2-2V8L9 6V3zM8 12h8" },
-  { label: "Borracha", icon: "M12 3a9 9 0 100 18 9 9 0 000-18zm0 5a4 4 0 100 8 4 4 0 000-8z" },
-  { label: "Gráfica", icon: "M6 9V3h12v6M6 18h12v3H6v-3zM4 9h16a2 2 0 012 2v5h-4v3H6v-3H2v-5a2 2 0 012-2z" },
-  { label: "Agrícola", icon: "M12 21c4-1 7-5 7-10a10 10 0 00-7-3 10 10 0 00-7 3c0 5 3 9 7 10zm0-13v9" },
+  {
+    label: "Alimentícia",
+    icon: "M12 3c-1.5 2-2 3.5-2 5a4 4 0 108 0c0-1.5-.5-3-2-5m-4 1c.5-1 1-1.5 1-2M6 13a6 6 0 1112 0c0 4-2.5 8-6 8s-6-4-6-8z",
+    description: "Peças e equipamentos que entram em contato com alimentos, com revestimentos que atendem normas de segurança e higiene.",
+  },
+  {
+    label: "Automobilística",
+    icon: "M5 17h14M6 17a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 17l1.5-5.5A2 2 0 017.4 10h9.2a2 2 0 011.9 1.5L20 17M4 17v-3h16v3",
+    description: "Componentes para linhas de montagem e produção automotiva, com revestimentos que resistem à alta demanda de uso.",
+  },
+  {
+    label: "Têxtil",
+    icon: "M12 3v18M8 5c2 1 2 3 0 4s-2 3 0 4 2 3 0 4M16 5c-2 1-2 3 0 4s2 3 0 4-2 3 0 4",
+    description: "Cilindros e componentes de máquinas têxteis, com texturização e revestimento que melhoram o deslizamento do material.",
+  },
+  {
+    label: "Plástica",
+    icon: "M9 3h6v3l1.5 2v11a2 2 0 01-2 2h-5a2 2 0 01-2-2V8L9 6V3zM8 12h8",
+    description: "Moldes e peças para injeção e extrusão de plásticos, com acabamento antiaderente que facilita a desmoldagem.",
+  },
+  {
+    label: "Borracha",
+    icon: "M12 3a9 9 0 100 18 9 9 0 000-18zm0 5a4 4 0 100 8 4 4 0 000-8z",
+    description: "Componentes para processos de vulcanização e moldagem de borracha, com revestimentos resistentes a altas temperaturas.",
+  },
+  {
+    label: "Gráfica",
+    icon: "M6 9V3h12v6M6 18h12v3H6v-3zM4 9h16a2 2 0 012 2v5h-4v3H6v-3H2v-5a2 2 0 012-2z",
+    description: "Cilindros e rolos para equipamentos gráficos, com texturização que melhora a transferência de tinta.",
+  },
+  {
+    label: "Agrícola",
+    icon: "M12 21c4-1 7-5 7-10a10 10 0 00-7-3 10 10 0 00-7 3c0 5 3 9 7 10zm0-13v9",
+    description: "Peças e implementos agrícolas expostos a desgaste constante, com revestimentos que aumentam a durabilidade.",
+  },
 ];
+
+// "Outro" só aparece na versão expandida (página /aplicacoes) — a home
+// mantém os mesmos 7 ícones compactos de sempre.
+const outro = {
+  label: "Outro",
+  icon: "M12 5v14M5 12h14",
+  description: "Não encontrou o seu segmento? Fale com a gente — atendemos demandas específicas fora dessa lista.",
+};
+const displayedApps = expanded ? [...apps, outro] : apps;
 ---
 
 <section id="aplicacoes" class="bg-white">
@@ -16,19 +58,35 @@ const apps = [
       APLICAÇÕES / SEGMENTOS
     </h2>
 
-    <div class="mt-10 flex flex-wrap justify-center gap-x-10 gap-y-8">
-      {
-        apps.map((a) => (
-          <div class="group flex flex-col items-center gap-3 w-24 cursor-pointer">
-            <div class="w-16 h-16 rounded-full border-2 border-navy-900 flex items-center justify-center text-navy-900 transition-all duration-300 group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/30">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d={a.icon} />
-              </svg>
+    {
+      expanded ? (
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {displayedApps.map((a) => (
+            <div class="group flex flex-col items-center text-center gap-3 p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <div class="w-16 h-16 rounded-full border-2 border-navy-900 flex items-center justify-center text-navy-900 transition-all duration-300 group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d={a.icon} />
+                </svg>
+              </div>
+              <div class="text-sm font-bold tracking-wide text-navy-900 uppercase">{a.label}</div>
+              <p class="text-sm text-muted leading-relaxed">{a.description}</p>
             </div>
-            <div class="text-xs font-bold tracking-wide text-navy-900 text-center uppercase transition-colors duration-300 group-hover:text-orange-500">{a.label}</div>
-          </div>
-        ))
-      }
-    </div>
+          ))}
+        </div>
+      ) : (
+        <div class="mt-10 flex flex-wrap justify-center gap-x-10 gap-y-8">
+          {displayedApps.map((a) => (
+            <div class="group flex flex-col items-center gap-3 w-24 cursor-pointer">
+              <div class="w-16 h-16 rounded-full border-2 border-navy-900 flex items-center justify-center text-navy-900 transition-all duration-300 group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/30">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d={a.icon} />
+                </svg>
+              </div>
+              <div class="text-xs font-bold tracking-wide text-navy-900 text-center uppercase transition-colors duration-300 group-hover:text-orange-500">{a.label}</div>
+            </div>
+          ))}
+        </div>
+      )
+    }
   </div>
 </section>

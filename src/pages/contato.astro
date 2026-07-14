@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaForm from "../components/CtaForm.astro";
+import Location from "../components/Location.astro";
+import Reviews from "../components/Reviews.astro";
+---
+
+<Layout
+  title="Contato | Solicite um Orçamento - TexFlow"
+  description="Entre em contato com a TexFlow para solicitar um orçamento de revestimento antiaderente ou texturização industrial. Fale por WhatsApp, telefone ou preencha o formulário."
+>
+  <Header />
+  <main>
+    <PageHero breadcrumbLabel="Contato" subtitle="Fale com nossos especialistas e solicite um orçamento sem compromisso — por WhatsApp, telefone ou pelo formulário abaixo." ctaHref="#contato">
+      FALE COM <span class="text-orange-500">NOSSOS ESPECIALISTAS</span>
+    </PageHero>
+
+    <CtaForm />
+    <Location />
+    <Reviews />
+  </main>
+  <Footer />
+</Layout>

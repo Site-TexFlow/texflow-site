@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+import heroImage from "../assets/hero/Slide_1.png";
+
+interface Props {
+  breadcrumbLabel: string;
+  subtitle: string;
+  ctaHref?: string;
+}
+
+const { breadcrumbLabel, subtitle, ctaHref = "/contato#contato" } = Astro.props;
+---
+
+<section class="relative overflow-hidden min-h-[380px] lg:min-h-[440px] flex items-center">
+  <div class="absolute inset-0 bg-gradient-to-br from-[#232a31] via-[#14181d] to-[#0a0d10]"></div>
+
+  <div class="absolute inset-0">
+    <Image
+      src={heroImage}
+      alt=""
+      widths={[640, 1024, 1600, 1920]}
+      sizes="100vw"
+      quality={78}
+      format="webp"
+      loading="eager"
+      fetchpriority="high"
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950 to-navy-950/40 sm:via-navy-950/85 sm:to-navy-950/10"></div>
+
+  <div class="relative w-full max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+    <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-white/60 mb-6">
+      <a href="/" class="hover:text-orange-400 transition-colors">Home</a>
+      <span>/</span>
+      <span class="text-white/80">{breadcrumbLabel}</span>
+    </nav>
+
+    <div class="max-w-xl">
+      <h1 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold leading-tight text-white">
+        <slot />
+      </h1>
+      <p class="mt-5 text-white/75 text-base leading-relaxed max-w-lg">
+        {subtitle}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href={ctaHref}
+          class="flex items-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-orange-600 transition-colors"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+            <path d="M8 3h8a2 2 0 012 2v14l-6-3-6 3V5a2 2 0 012-2z" stroke="white" stroke-width="1.8" stroke-linejoin="round" />
+          </svg>
+          Solicitar Orçamento
+        </a>
+        <a
+          href="https://wa.me/554134034034"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center gap-2 border border-white/60 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-white hover:text-navy-900 transition-colors"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.4-.3z" />
+          </svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

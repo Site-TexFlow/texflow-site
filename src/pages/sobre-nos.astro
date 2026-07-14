@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import About from "../components/About.astro";
+import FinalCta from "../components/FinalCta.astro";
+
+const values = [
+  {
+    title: "Diagnóstico técnico",
+    text: "Avaliamos a peça, o material e o processo antes de indicar qualquer solução — nada de acabamento genérico.",
+  },
+  {
+    title: "Soluções sob medida",
+    text: "Cada revestimento ou texturização é definido de acordo com a aplicação real do cliente, não com um catálogo fechado.",
+  },
+  {
+    title: "Acompanhamento contínuo",
+    text: "Suporte técnico do diagnóstico à entrega, com atenção ao desempenho da peça também depois da aplicação.",
+  },
+];
+---
+
+<Layout
+  title="Sobre Nós | TexFlow Revestimentos e Texturizações Industriais"
+  description="Conheça a TexFlow: mais de 10 anos de experiência em revestimentos antiaderentes e texturização industrial, com tecnologia avançada e atendimento especializado em todo o Brasil."
+>
+  <Header />
+  <main>
+    <PageHero breadcrumbLabel="Sobre Nós" subtitle="Mais de uma década de experiência em revestimentos antiaderentes e texturização industrial, a serviço da produtividade da sua empresa.">
+      SOBRE A <span class="text-orange-500">TEXFLOW</span>
+    </PageHero>
+
+    <About />
+
+    <section class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          COMO <span class="text-orange-500">TRABALHAMOS</span>
+        </h2>
+        <div class="mt-10 grid sm:grid-cols-3 gap-6">
+          {
+            values.map((v) => (
+              <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <h3 class="font-bold text-navy-900 leading-snug">{v.title}</h3>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{v.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <FinalCta />
+  </main>
+  <Footer />
+</Layout>

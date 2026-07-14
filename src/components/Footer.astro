@@ -1,7 +1,16 @@
 ---
 import Logo from "./Logo.astro";
 
-const quickLinks = ["Home", "Sobre Nós", "Soluções", "Aplicações", "Diferenciais", "Processo", "Cases", "Contato"];
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "Sobre Nós", href: "/sobre-nos" },
+  { label: "Soluções", href: "/solucoes" },
+  { label: "Aplicações", href: "/aplicacoes" },
+  { label: "Diferenciais", href: "/diferenciais" },
+  { label: "Processo", href: "/processo" },
+  { label: "Cases", href: "/cases" },
+  { label: "Contato", href: "/contato" },
+];
 const solutionLinks = [
   "Revestimento antiaderente industrial",
   "Revestimento antiaderente alimentício",
@@ -30,14 +39,14 @@ const socials = [
     <div>
       <h4 class="font-bold text-sm tracking-wide mb-4">LINKS RÁPIDOS</h4>
       <ul class="space-y-2.5 text-sm text-white/60">
-        {quickLinks.map((l) => <li><a href="#" class="hover:text-orange-400 transition-colors">{l}</a></li>)}
+        {quickLinks.map((l) => <li><a href={l.href} class="hover:text-orange-400 transition-colors">{l.label}</a></li>)}
       </ul>
     </div>
 
     <div>
       <h4 class="font-bold text-sm tracking-wide mb-4">SOLUÇÕES</h4>
       <ul class="space-y-2.5 text-sm text-white/60">
-        {solutionLinks.map((l) => <li><a href="#solucoes" class="hover:text-orange-400 transition-colors">{l}</a></li>)}
+        {solutionLinks.map((l) => <li><a href="/solucoes" class="hover:text-orange-400 transition-colors">{l}</a></li>)}
       </ul>
     </div>
 
