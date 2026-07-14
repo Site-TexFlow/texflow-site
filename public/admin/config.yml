@@ -25,3 +25,29 @@ collections:
       - { label: "Autor", name: "author", widget: "string", required: false, default: "Equipe TexFlow" }
       - { label: "Rascunho", name: "draft", widget: "boolean", required: false, default: false }
       - { label: "Corpo do Post", name: "body", widget: "markdown" }
+
+  - name: "gallery"
+    label: "Galeria"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Imagem", name: "image", widget: "image", media_folder: "/public/images/gallery", public_folder: "/images/gallery" }
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Revestimento Antiaderente Industrial", value: "Revestimento Antiaderente Industrial" }
+          - { label: "Revestimento Antiaderente Alimentício", value: "Revestimento Antiaderente Alimentício" }
+          - { label: "Texturização Industrial", value: "Texturização Industrial" }
+          - { label: "A Confirmar", value: "A Confirmar" }
+          - { label: "Alimentícia", value: "Alimentícia" }
+          - { label: "Automobilística", value: "Automobilística" }
+          - { label: "Têxtil", value: "Têxtil" }
+          - { label: "Plástica", value: "Plástica" }
+          - { label: "Borracha", value: "Borracha" }
+          - { label: "Gráfica", value: "Gráfica" }
+          - { label: "Agrícola", value: "Agrícola" }
+          - { label: "Outro", value: "Outro" }
+      - { label: "Descrição", name: "description", widget: "text", required: false }

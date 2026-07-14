@@ -1,0 +1,11 @@
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="800" fill="#0d2544"/>
+  <g stroke="#e8672e" stroke-width="4" opacity="0.55" fill="none">
+    <path d="M100,220 C200,180 260,260 400,220 S600,180 700,220"/>
+    <path d="M100,340 C200,300 260,380 400,340 S600,300 700,340"/>
+    <path d="M100,460 C200,420 260,500 400,460 S600,420 700,460"/>
+    <path d="M100,580 C200,540 260,620 400,580 S600,540 700,580"/>
+  </g>
+  <text x="400" y="670" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="800" fill="#ffffff">BOBINA TÊXTIL</text>
+  <text x="400" y="708" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#e8672e">Têxtil</text>
+</svg>

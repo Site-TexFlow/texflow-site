@@ -15,4 +15,32 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Categorias combinam as 4 Soluções e os 8 segmentos de Aplicações
+// exibidos no site (mesmos rótulos usados em Solutions.astro,
+// Applications.astro e no select do formulário de orçamento).
+const galleryCategories = z.enum([
+  'Revestimento Antiaderente Industrial',
+  'Revestimento Antiaderente Alimentício',
+  'Texturização Industrial',
+  'A Confirmar',
+  'Alimentícia',
+  'Automobilística',
+  'Têxtil',
+  'Plástica',
+  'Borracha',
+  'Gráfica',
+  'Agrícola',
+  'Outro',
+]);
+
+const gallery = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/gallery' }),
+  schema: z.object({
+    title: z.string(),
+    image: z.string(),
+    category: galleryCategories,
+    description: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, gallery };
