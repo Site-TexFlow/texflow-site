@@ -3,81 +3,34 @@ const lat = -25.4206268;
 const lng = -49.49086520546873;
 const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
 const wazeUrl = `https://waze.com/ul?ll=${lat}%2C${lng}&navigate=yes`;
+
+const dLat = 0.006;
+const dLng = 0.012;
+const bbox = [lng - dLng, lat - dLat, lng + dLng, lat + dLat].join(",");
+const osmEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&marker=${lat},${lng}`;
 ---
 
 <div class="relative rounded-xl overflow-hidden shadow-sm border border-slate-100 bg-white aspect-[16/9] sm:aspect-[21/9]">
-  <svg
-    viewBox="0 0 800 360"
-    preserveAspectRatio="xMidYMid slice"
-    class="absolute inset-0 w-full h-full"
-    role="img"
-    aria-label="Mapa estilizado indicando a localização da TexFlow em Pinhais, PR"
-  >
-    <defs>
-      <linearGradient id="map-bg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#f1f5f9" />
-        <stop offset="1" stop-color="#e2e8f0" />
-      </linearGradient>
-      <radialGradient id="pin-shadow" cx="50%" cy="50%" r="50%">
-        <stop offset="0" stop-color="rgba(10,28,52,0.25)" />
-        <stop offset="1" stop-color="rgba(10,28,52,0)" />
-      </radialGradient>
-    </defs>
-
-    <rect width="800" height="360" fill="url(#map-bg)" />
-
-    <g stroke="#cbd5e1" stroke-width="2">
-      <line x1="0" y1="70" x2="800" y2="70" />
-      <line x1="0" y1="160" x2="800" y2="140" />
-      <line x1="0" y1="290" x2="800" y2="260" />
-      <line x1="120" y1="0" x2="90" y2="360" />
-      <line x1="330" y1="0" x2="360" y2="360" />
-      <line x1="560" y1="0" x2="600" y2="360" />
-      <line x1="700" y1="0" x2="740" y2="360" />
-    </g>
-
-    <g fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5">
-      <rect x="150" y="90" width="70" height="50" rx="3" />
-      <rect x="400" y="30" width="90" height="55" rx="3" />
-      <rect x="600" y="170" width="60" height="70" rx="3" />
-      <rect x="60" y="200" width="80" height="60" rx="3" />
-      <rect x="470" y="200" width="70" height="45" rx="3" />
-      <rect x="230" y="180" width="55" height="40" rx="3" />
-    </g>
-
-    <circle cx="400" cy="185" r="70" fill="url(#pin-shadow)" />
-
-    <ellipse cx="400" cy="228" rx="20" ry="6" fill="rgba(10,28,52,0.18)" />
-
-    <g transform="translate(400,175)">
-      <path
-        d="M0,-58 C29,-58 52,-35 52,-6 C52,32 0,52 0,52 C0,52 -52,32 -52,-6 C-52,-35 -29,-58 0,-58 Z"
-        fill="#e8672e"
-        stroke="#0a1c34"
-        stroke-width="3"
-      />
-      <circle cx="0" cy="-6" r="19" fill="#0a1c34" />
-    </g>
-
-    <g transform="translate(400,300)" text-anchor="middle" font-family="Inter, Arial, sans-serif">
-      <text y="0" font-size="20" font-weight="800" fill="#0a1c34">TEXFLOW</text>
-      <text y="22" font-size="14" fill="#5b6b7b">Pinhais - PR</text>
-    </g>
-  </svg>
+  <iframe
+    src={osmEmbedUrl}
+    width="100%"
+    height="100%"
+    style="border:0;"
+    loading="lazy"
+    title="Mapa da localização da TexFlow em Pinhais, PR"
+    class="w-full h-full"
+  ></iframe>
 
   <button
     id="map-directions-trigger"
     type="button"
     aria-haspopup="true"
-    class="absolute inset-0 w-full h-full cursor-pointer group"
+    class="absolute bottom-4 right-4 flex items-center gap-1.5 bg-white shadow-md rounded-md px-3.5 py-2 text-xs font-semibold text-navy-900 cursor-pointer hover:bg-slate-50 transition-colors"
   >
-    <span class="absolute inset-0 bg-navy-900/0 group-hover:bg-navy-900/10 transition-colors"></span>
-    <span class="absolute bottom-4 right-4 flex items-center gap-1.5 bg-white shadow-md rounded-md px-3.5 py-2 text-xs font-semibold text-navy-900">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500">
-        <path d="M3 11l18-8-8 18-2-8-8-2z" />
-      </svg>
-      Como chegar
-    </span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500">
+      <path d="M3 11l18-8-8 18-2-8-8-2z" />
+    </svg>
+    Como chegar
   </button>
 
   <div
