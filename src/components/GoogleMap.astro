@@ -1,8 +1,16 @@
 ---
-const lat = -25.4206268;
-const lng = -49.49086520546873;
-const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-const wazeUrl = `https://waze.com/ul?ll=${lat}%2C${lng}&navigate=yes`;
+// Coordenadas geocodificadas a partir do endereço real (Rua Uniflor, Emiliano
+// Perneta, Pinhais - PR). As coordenadas antigas, herdadas do embed original,
+// apontavam ~30km a oeste do local correto.
+const lat = -25.4213678;
+const lng = -49.1862127;
+const address = "Rua Uniflor, 1012 - Emiliano Perneta, Pinhais - PR";
+const placeId = "ChIJq6pamHXv3JQRyHvoLTfnpAc";
+
+// destination_place_id ancora a rota no perfil verificado do Google Meu
+// Negócio da TexFlow, independente de precisão de coordenadas.
+const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}&destination_place_id=${placeId}`;
+const wazeUrl = `https://waze.com/ul?q=${encodeURIComponent(address)}&navigate=yes`;
 
 const dLat = 0.006;
 const dLng = 0.012;
