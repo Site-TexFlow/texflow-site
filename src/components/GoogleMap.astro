@@ -6,17 +6,64 @@ const wazeUrl = `https://waze.com/ul?ll=${lat}%2C${lng}&navigate=yes`;
 ---
 
 <div class="relative rounded-xl overflow-hidden shadow-sm border border-slate-100 bg-white aspect-[16/9] sm:aspect-[21/9]">
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d230625.75125922554!2d-49.49086520546873!3d-25.4206268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcef75985aaaab%3A0x7a4e7372de87bc8!2sTexflow%20Texturiza%C3%A7%C3%B5es%20e%20Revestimentos%20Antiaderentes!5e0!3m2!1spt-BR!2sbr!4v1783979085083!5m2!1spt-BR!2sbr"
-    width="100%"
-    height="100%"
-    style="border:0;"
-    allowfullscreen
-    loading="lazy"
-    referrerpolicy="strict-origin-when-cross-origin"
-    title="Localização da TexFlow no Google Maps"
-    class="w-full h-full pointer-events-none"
-  ></iframe>
+  <svg
+    viewBox="0 0 800 360"
+    preserveAspectRatio="xMidYMid slice"
+    class="absolute inset-0 w-full h-full"
+    role="img"
+    aria-label="Mapa estilizado indicando a localização da TexFlow em Pinhais, PR"
+  >
+    <defs>
+      <linearGradient id="map-bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f1f5f9" />
+        <stop offset="1" stop-color="#e2e8f0" />
+      </linearGradient>
+      <radialGradient id="pin-shadow" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="rgba(10,28,52,0.25)" />
+        <stop offset="1" stop-color="rgba(10,28,52,0)" />
+      </radialGradient>
+    </defs>
+
+    <rect width="800" height="360" fill="url(#map-bg)" />
+
+    <g stroke="#cbd5e1" stroke-width="2">
+      <line x1="0" y1="70" x2="800" y2="70" />
+      <line x1="0" y1="160" x2="800" y2="140" />
+      <line x1="0" y1="290" x2="800" y2="260" />
+      <line x1="120" y1="0" x2="90" y2="360" />
+      <line x1="330" y1="0" x2="360" y2="360" />
+      <line x1="560" y1="0" x2="600" y2="360" />
+      <line x1="700" y1="0" x2="740" y2="360" />
+    </g>
+
+    <g fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5">
+      <rect x="150" y="90" width="70" height="50" rx="3" />
+      <rect x="400" y="30" width="90" height="55" rx="3" />
+      <rect x="600" y="170" width="60" height="70" rx="3" />
+      <rect x="60" y="200" width="80" height="60" rx="3" />
+      <rect x="470" y="200" width="70" height="45" rx="3" />
+      <rect x="230" y="180" width="55" height="40" rx="3" />
+    </g>
+
+    <circle cx="400" cy="185" r="70" fill="url(#pin-shadow)" />
+
+    <ellipse cx="400" cy="228" rx="20" ry="6" fill="rgba(10,28,52,0.18)" />
+
+    <g transform="translate(400,175)">
+      <path
+        d="M0,-58 C29,-58 52,-35 52,-6 C52,32 0,52 0,52 C0,52 -52,32 -52,-6 C-52,-35 -29,-58 0,-58 Z"
+        fill="#e8672e"
+        stroke="#0a1c34"
+        stroke-width="3"
+      />
+      <circle cx="0" cy="-6" r="19" fill="#0a1c34" />
+    </g>
+
+    <g transform="translate(400,300)" text-anchor="middle" font-family="Inter, Arial, sans-serif">
+      <text y="0" font-size="20" font-weight="800" fill="#0a1c34">TEXFLOW</text>
+      <text y="22" font-size="14" fill="#5b6b7b">Pinhais - PR</text>
+    </g>
+  </svg>
 
   <button
     id="map-directions-trigger"
