@@ -1,14 +1,40 @@
 ---
+import { Image } from "astro:assets";
+
+// Qualquer imagem colocada em src/assets/hero/ vira automaticamente um slide
+// do carrossel (ordenado por nome de arquivo) — não precisa editar este
+// componente para adicionar/remover fotos.
+const slideModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/hero/*.{jpeg,jpg,png,webp,avif}",
+  { eager: true }
+);
+const slides = Object.keys(slideModules)
+  .sort()
+  .map((path) => slideModules[path].default);
 ---
 
 <section class="relative overflow-hidden min-h-[560px] lg:min-h-[680px] flex items-center">
   <div class="absolute inset-0 bg-gradient-to-br from-[#232a31] via-[#14181d] to-[#0a0d10]"></div>
 
-  <div class="roller-wrap absolute inset-y-0 right-0 w-[42%] sm:w-[70%] lg:w-[68%]">
-    <div class="roller-body"></div>
-    <div class="roller-hub"></div>
-    <div class="roller-shaft"></div>
-  </div>
+  {
+    slides.length > 0 && (
+      <div class="hero-slides absolute inset-0">
+        {slides.map((slide, i) => (
+          <Image
+            src={slide}
+            alt=""
+            widths={[640, 1024, 1600, 1920]}
+            sizes="100vw"
+            quality={78}
+            format="webp"
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchpriority={i === 0 ? "high" : "auto"}
+            class:list={["hero-slide absolute inset-0 w-full h-full object-cover", { "is-active": i === 0 }]}
+          />
+        ))}
+      </div>
+    )
+  }
 
   <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950 to-navy-950/40 sm:via-navy-950/85 sm:to-navy-950/10"></div>
 
@@ -51,46 +77,25 @@
 </section>
 
 <style>
-  .roller-body {
-    position: absolute;
-    left: -8%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 62%;
-    height: 78%;
-    border-radius: 0 60px 60px 0;
-    background:
-      radial-gradient(circle at 8px 8px, rgba(255, 255, 255, 0.14) 1.6px, transparent 1.8px) 0 0/14px 14px,
-      radial-gradient(circle at 60% 35%, #3a4149 0%, #1c2126 55%, #0a0c0e 100%);
-    box-shadow: inset -10px 0 30px rgba(0, 0, 0, 0.6);
+  .hero-slide {
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
   }
-  .roller-hub {
-    position: absolute;
-    left: 52%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 20%;
-    aspect-ratio: 1 / 1;
-    border-radius: 9999px;
-    background: radial-gradient(circle at 35% 30%, #cfd6dc 0%, #8a939b 40%, #4b5259 75%, #2a2e33 100%);
-    box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.25), inset 0 0 12px rgba(0, 0, 0, 0.4);
-  }
-  .roller-hub::after {
-    content: "";
-    position: absolute;
-    inset: 32%;
-    border-radius: 9999px;
-    background: radial-gradient(circle at 40% 35%, #4b5259 0%, #23272b 70%);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
-  }
-  .roller-shaft {
-    position: absolute;
-    right: -6%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 38%;
-    height: 30%;
-    border-radius: 0 16px 16px 0;
-    background: linear-gradient(180deg, #cfd6dc 0%, #9aa2a9 30%, #545a60 70%, #33373b 100%);
+  .hero-slide.is-active {
+    opacity: 1;
   }
 </style>
+
+{
+  slides.length > 1 && (
+    <script>
+      const slideEls = document.querySelectorAll<HTMLElement>(".hero-slide");
+      let current = 0;
+      setInterval(() => {
+        slideEls[current]?.classList.remove("is-active");
+        current = (current + 1) % slideEls.length;
+        slideEls[current]?.classList.add("is-active");
+      }, 6000);
+    </script>
+  )
+}
