@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import FinalCta from "../components/FinalCta.astro";
+---
+
+<Layout
+  title="Revestimento Antiaderente Alimentício | TexFlow"
+  description="Revestimento antiaderente alimentício da TexFlow, com acabamentos que atendem às normas de contato com alimentos, garantindo segurança e performance na produção."
+>
+  <Header />
+  <main>
+    <PageHero breadcrumbLabel="Revestimento Antiaderente Alimentício" subtitle="Acabamentos que atendem às normas para contato com alimentos, com segurança e performance.">
+      REVESTIMENTO ANTIADERENTE <span class="text-orange-500">ALIMENTÍCIO</span>
+    </PageHero>
+
+    <section class="bg-white">
+      <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <p class="text-muted leading-relaxed text-lg">
+          Desenvolvido para peças e equipamentos que entram em contato direto
+          com alimentos, seguindo normas de segurança específicas para esse
+          tipo de aplicação. Ideal para formas, esteiras e componentes de
+          linhas de produção alimentícia.
+        </p>
+
+        <div class="mt-10 bg-slate-50 rounded-xl border border-slate-100 p-6">
+          <h2 class="font-bold text-navy-900">Leia mais no blog</h2>
+          <a
+            href="/blog/revestimento-antiaderente-vida-util-equipamentos"
+            class="group mt-2 flex items-center gap-1 text-sm font-semibold text-orange-500"
+          >
+            Como revestimentos antiaderentes aumentam a vida útil de equipamentos industriais
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+              <path d="M5 12h14m0 0l-6-6m6 6l-6 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FinalCta />
+  </main>
+  <Footer />
+</Layout>

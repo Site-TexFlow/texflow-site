@@ -3,19 +3,16 @@ import Logo from "./Logo.astro";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "Sobre Nós", href: "/sobre-nos" },
-  { label: "Soluções", href: "/solucoes" },
+  { label: "Empresa", href: "/empresa" },
+  { label: "Texturização", href: "/texturizacao" },
   { label: "Aplicações", href: "/aplicacoes" },
-  { label: "Diferenciais", href: "/diferenciais" },
-  { label: "Processo", href: "/processo" },
-  { label: "Cases", href: "/cases" },
+  { label: "Blog", href: "/blog" },
   { label: "Contato", href: "/contato" },
 ];
 const solutionLinks = [
-  "Revestimento antiaderente industrial",
-  "Revestimento antiaderente alimentício",
-  "Texturização industrial",
-  "A CONFIRMAR",
+  { label: "Revestimento antiaderente industrial", href: "/revestimento-antiaderente-industrial" },
+  { label: "Revestimento antiaderente alimentício", href: "/revestimento-antiaderente-alimenticio" },
+  { label: "Texturização industrial", href: "/texturizacao" },
 ];
 const socials = [
   { label: "Instagram", href: "https://www.instagram.com/texflow.pr", icon: "M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9zm5.2-1.8a1 1 0 100 2 1 1 0 000-2z" },
@@ -46,7 +43,7 @@ const socials = [
     <div>
       <h4 class="font-bold text-sm tracking-wide mb-4">SOLUÇÕES</h4>
       <ul class="space-y-2.5 text-sm text-white/60">
-        {solutionLinks.map((l) => <li><a href="/solucoes" class="hover:text-orange-400 transition-colors">{l}</a></li>)}
+        {solutionLinks.map((l) => <li><a href={l.href} class="hover:text-orange-400 transition-colors">{l.label}</a></li>)}
       </ul>
     </div>
 

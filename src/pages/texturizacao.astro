@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import FinalCta from "../components/FinalCta.astro";
+---
+
+<Layout
+  title="Texturização Industrial | TexFlow"
+  description="Texturização industrial personalizada da TexFlow, com padrões definidos para cada peça e aplicação, melhorando funcionalidade, aderência e acabamento."
+>
+  <Header />
+  <main>
+    <PageHero breadcrumbLabel="Texturização" subtitle="Texturizações personalizadas que melhoram a funcionalidade e a aparência das peças.">
+      TEXTURIZAÇÃO <span class="text-orange-500">INDUSTRIAL</span>
+    </PageHero>
+
+    <section class="bg-white">
+      <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <p class="text-muted leading-relaxed text-lg">
+          Aplicada quando a superfície da peça precisa de um padrão
+          específico — para reter lubrificante, aumentar aderência
+          controlada ou transferir acabamento para o material processado.
+          Definimos o padrão certo com base no material e na aplicação.
+        </p>
+
+        <div class="mt-10 bg-slate-50 rounded-xl border border-slate-100 p-6">
+          <h2 class="font-bold text-navy-900">Leia mais no blog</h2>
+          <a
+            href="/blog/texturizacao-industrial-quando-aplicar"
+            class="group mt-2 flex items-center gap-1 text-sm font-semibold text-orange-500"
+          >
+            Texturização industrial: quando aplicar em cada tipo de peça
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+              <path d="M5 12h14m0 0l-6-6m6 6l-6 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FinalCta />
+  </main>
+  <Footer />
+</Layout>

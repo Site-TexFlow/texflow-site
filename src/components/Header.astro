@@ -2,23 +2,38 @@
 import Logo from "./Logo.astro";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Sobre Nós", href: "/sobre-nos" },
-  { label: "Soluções", href: "/solucoes", dropdown: true },
+  { label: "Empresa", href: "/empresa" },
+  {
+    label: "Revestimento",
+    children: [
+      { label: "Revestimento Antiaderente Industrial", href: "/revestimento-antiaderente-industrial" },
+      { label: "Revestimento Antiaderente Alimentício", href: "/revestimento-antiaderente-alimenticio" },
+    ],
+  },
+  { label: "Texturização", href: "/texturizacao" },
+  {
+    label: "Outros Serviços",
+    external: true,
+    children: [
+      { label: "Placas de Identificação", href: "https://gravametal.com.br/placas-de-identificacao/" },
+      { label: "Gravação a Laser", href: "https://gravametal.com.br/gravacao-a-laser/" },
+      { label: "Placas de Homenagem", href: "https://gravametal.com.br/placa-de-homenagem/" },
+      { label: "Réguas e Escalas", href: "https://gravametal.com.br/reguas-e-escalas/" },
+    ],
+  },
   { label: "Aplicações", href: "/aplicacoes" },
-  { label: "Diferenciais", href: "/diferenciais" },
-  { label: "Processo", href: "/processo" },
-  { label: "Cases", href: "/cases" },
   { label: "Blog", href: "/blog" },
   { label: "Contato", href: "/contato" },
 ];
 
 const currentPath = Astro.url.pathname;
-const isActive = (href: string) => {
+const isActive = (href?: string) => {
+  if (!href || href.startsWith("http")) return false;
   if (href === "/") return currentPath === "/";
-  if (href.startsWith("/")) return currentPath === href || currentPath.startsWith(`${href}/`);
-  return false;
+  return currentPath === href || currentPath.startsWith(`${href}/`);
 };
+const isGroupActive = (link: (typeof navLinks)[number]) =>
+  isActive(link.href) || (link.children?.some((c) => isActive(c.href)) ?? false);
 ---
 
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-100">
@@ -27,24 +42,55 @@ const isActive = (href: string) => {
 
     <nav class="hidden lg:flex items-center gap-5 xl:gap-7 text-[13px] xl:text-sm font-semibold text-navy-900 whitespace-nowrap">
       {
-        navLinks.map((link) => (
-          <a
-            href={link.href}
-            class={`relative flex items-center gap-1 py-2 hover:text-orange-500 transition-colors ${
-              isActive(link.href) ? "text-orange-500" : ""
-            }`}
-          >
-            {link.label.toUpperCase()}
-            {link.dropdown && (
-              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="mt-0.5">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-              </svg>
-            )}
-            {isActive(link.href) && (
-              <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-orange-500 rounded-full" />
-            )}
-          </a>
-        ))
+        navLinks.map((link) =>
+          link.children ? (
+            <div class="relative nav-dropdown">
+              <button
+                type="button"
+                class={`nav-dropdown-trigger relative flex items-center gap-1 py-2 hover:text-orange-500 transition-colors ${
+                  isGroupActive(link) ? "text-orange-500" : ""
+                }`}
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {link.label.toUpperCase()}
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="mt-0.5 nav-dropdown-chevron transition-transform">
+                  <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                {isGroupActive(link) && <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-orange-500 rounded-full" />}
+              </button>
+              <div class="nav-dropdown-panel hidden absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
+                <div class="bg-white rounded-lg shadow-xl border border-slate-100 py-2 min-w-[280px]">
+                  {link.children.map((child) => (
+                    <a
+                      href={child.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      class="flex items-center justify-between gap-3 px-4 py-2.5 text-navy-900 text-[13px] font-semibold hover:bg-slate-50 hover:text-orange-500 transition-colors whitespace-normal"
+                    >
+                      {child.label}
+                      {link.external && (
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-muted">
+                          <path d="M7 17L17 7M8 7h9v9" />
+                        </svg>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={link.href}
+              class={`relative flex items-center gap-1 py-2 hover:text-orange-500 transition-colors ${
+                isActive(link.href) ? "text-orange-500" : ""
+              }`}
+            >
+              {link.label.toUpperCase()}
+              {isActive(link.href) && <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-orange-500 rounded-full" />}
+            </a>
+          )
+        )
       }
     </nav>
 
@@ -59,14 +105,46 @@ const isActive = (href: string) => {
     </button>
   </div>
 
-  <nav id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white px-6 py-4">
-    <div class="flex flex-col gap-3 text-sm font-semibold text-navy-900">
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white px-6 py-4 max-h-[75vh] overflow-y-auto">
+    <div class="flex flex-col gap-1 text-sm font-semibold text-navy-900">
       {
-        navLinks.map((link) => (
-          <a href={link.href} class={isActive(link.href) ? "text-orange-500" : ""}>
-            {link.label.toUpperCase()}
-          </a>
-        ))
+        navLinks.map((link) =>
+          link.children ? (
+            <div class="mobile-dropdown border-b border-slate-100 py-1">
+              <button
+                type="button"
+                class={`mobile-dropdown-trigger w-full flex items-center justify-between py-2.5 ${isGroupActive(link) ? "text-orange-500" : ""}`}
+                aria-expanded="false"
+              >
+                {link.label.toUpperCase()}
+                <svg width="11" height="7" viewBox="0 0 10 6" fill="none" class="mobile-dropdown-chevron transition-transform">
+                  <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+              </button>
+              <div class="mobile-dropdown-panel hidden flex-col gap-1 pb-2 pl-3">
+                {link.children.map((child) => (
+                  <a
+                    href={child.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    class="flex items-center justify-between gap-2 py-2 text-[13px] font-semibold text-muted hover:text-orange-500 transition-colors"
+                  >
+                    {child.label}
+                    {link.external && (
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+                        <path d="M7 17L17 7M8 7h9v9" />
+                      </svg>
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a href={link.href} class={`py-2.5 border-b border-slate-100 ${isActive(link.href) ? "text-orange-500" : ""}`}>
+              {link.label.toUpperCase()}
+            </a>
+          )
+        )
       }
     </div>
   </nav>
@@ -77,5 +155,49 @@ const isActive = (href: string) => {
   const menu = document.getElementById("mobile-menu");
   btn?.addEventListener("click", () => {
     menu?.classList.toggle("hidden");
+  });
+
+  // Desktop dropdowns (click to open, click outside / Escape to close)
+  const dropdowns = document.querySelectorAll<HTMLElement>(".nav-dropdown");
+  function closeAllDesktopDropdowns() {
+    dropdowns.forEach((d) => {
+      d.querySelector(".nav-dropdown-panel")?.classList.add("hidden");
+      d.querySelector(".nav-dropdown-chevron")?.classList.remove("rotate-180");
+      d.querySelector(".nav-dropdown-trigger")?.setAttribute("aria-expanded", "false");
+    });
+  }
+  dropdowns.forEach((dropdown) => {
+    const trigger = dropdown.querySelector(".nav-dropdown-trigger");
+    const panel = dropdown.querySelector(".nav-dropdown-panel");
+    const chevron = dropdown.querySelector(".nav-dropdown-chevron");
+    trigger?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = !panel?.classList.contains("hidden");
+      closeAllDesktopDropdowns();
+      if (!isOpen) {
+        panel?.classList.remove("hidden");
+        chevron?.classList.add("rotate-180");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+  document.addEventListener("click", () => closeAllDesktopDropdowns());
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAllDesktopDropdowns();
+  });
+
+  // Mobile accordions
+  const mobileDropdowns = document.querySelectorAll<HTMLElement>(".mobile-dropdown");
+  mobileDropdowns.forEach((dropdown) => {
+    const trigger = dropdown.querySelector(".mobile-dropdown-trigger");
+    const panel = dropdown.querySelector<HTMLElement>(".mobile-dropdown-panel");
+    const chevron = dropdown.querySelector(".mobile-dropdown-chevron");
+    trigger?.addEventListener("click", () => {
+      const isOpen = panel?.classList.contains("flex");
+      panel?.classList.toggle("hidden", isOpen);
+      panel?.classList.toggle("flex", !isOpen);
+      chevron?.classList.toggle("rotate-180", !isOpen);
+      trigger.setAttribute("aria-expanded", String(!isOpen));
+    });
   });
 </script>
