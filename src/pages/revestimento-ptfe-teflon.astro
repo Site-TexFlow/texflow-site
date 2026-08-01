@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import FinalCta from "../components/FinalCta.astro";
+---
+
+<Layout
+  title="Revestimentos em PTFE (Teflon®) | TexFlow"
+  description="Revestimentos em PTFE (Teflon®) da TexFlow para reduzir atrito, facilitar a limpeza e aumentar a resistência química e térmica de componentes industriais."
+>
+  <Header />
+  <main>
+    <PageHero breadcrumbLabel="Revestimentos em PTFE (Teflon®)" subtitle="Aplicação de revestimentos em PTFE (Teflon®) para reduzir atrito, facilitar a limpeza e aumentar a resistência química e térmica dos componentes industriais.">
+      REVESTIMENTOS EM PTFE <span class="text-orange-500">(TEFLON®)</span>
+    </PageHero>
+
+    <section class="bg-white">
+      <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <p class="text-muted leading-relaxed text-lg">
+          Indicado para peças que exigem baixíssimo atrito, fácil limpeza e
+          alta resistência química e térmica. O PTFE (Teflon®) é aplicado em
+          camadas que protegem o componente mesmo em ambientes agressivos ou
+          de temperatura elevada.
+        </p>
+      </div>
+    </section>
+
+    <FinalCta />
+  </main>
+  <Footer />
+</Layout>
