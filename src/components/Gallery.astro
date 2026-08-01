@@ -2,8 +2,16 @@
 import { getCollection } from "astro:content";
 import "glightbox/dist/css/glightbox.min.css";
 
-const items = await getCollection("gallery");
-const categories = [...new Set(items.map((i) => i.data.category))];
+// Só itens marcados como destaque aparecem aqui — fotos novas cadastradas
+// pelo painel sem essa marcação ficam de fora da galeria da home.
+const items = await getCollection("gallery", ({ data }) => data.featured);
+
+const categories = [
+  "Alimentícia",
+  "Selagem",
+  "Rotomoldagem e EPS",
+  "Injeção e Extrusão",
+];
 ---
 
 {
@@ -61,6 +69,10 @@ const categories = [...new Set(items.map((i) => i.data.category))];
             </a>
           ))}
         </div>
+
+        <p id="gallery-empty" class="hidden mt-10 text-center text-muted">
+          Em breve novas fotos desta categoria.
+        </p>
       </div>
     </section>
   )
@@ -93,6 +105,7 @@ const categories = [...new Set(items.map((i) => i.data.category))];
   const filterButtons = document.querySelectorAll<HTMLButtonElement>("[data-gallery-filter]");
   const cards = document.querySelectorAll<HTMLElement>("#galeria [data-category]");
   const grid = document.getElementById("gallery-grid");
+  const emptyState = document.getElementById("gallery-empty");
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -103,10 +116,14 @@ const categories = [...new Set(items.map((i) => i.data.category))];
       filterButtons.forEach((b) => b.classList.remove("is-active"));
       btn.classList.add("is-active");
 
+      let visibleCount = 0;
       cards.forEach((card) => {
         const show = filter === "all" || card.dataset.category === filter;
         card.classList.toggle("is-hidden", !show);
+        if (show) visibleCount++;
       });
+
+      emptyState?.classList.toggle("hidden", visibleCount > 0);
     });
   });
 </script>

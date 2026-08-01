@@ -15,22 +15,11 @@ const blog = defineCollection({
   }),
 });
 
-// Categorias combinam as 4 Soluções e os 8 segmentos de Aplicações
-// exibidos no site (mesmos rótulos usados em Solutions.astro,
-// Applications.astro e no select do formulário de orçamento).
 const galleryCategories = z.enum([
-  'Revestimento Antiaderente Industrial',
-  'Revestimento Antiaderente Alimentício',
-  'Texturização Industrial',
-  'A Confirmar',
   'Alimentícia',
-  'Automobilística',
-  'Têxtil',
-  'Plástica',
-  'Borracha',
-  'Gráfica',
-  'Agrícola',
-  'Outro',
+  'Selagem',
+  'Rotomoldagem e EPS',
+  'Injeção e Extrusão',
 ]);
 
 const gallery = defineCollection({
@@ -40,6 +29,10 @@ const gallery = defineCollection({
     image: z.string(),
     category: galleryCategories,
     description: z.string().optional(),
+    // Só itens marcados como destaque aparecem na galeria da home. Fotos
+    // novas cadastradas pelo painel entram como "não destacadas" por
+    // padrão, para não diluir a curadoria da home com fotos mais simples.
+    featured: z.boolean().default(false),
   }),
 });
 

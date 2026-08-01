@@ -38,16 +38,9 @@ collections:
         name: "category"
         widget: "select"
         options:
-          - { label: "Revestimento Antiaderente Industrial", value: "Revestimento Antiaderente Industrial" }
-          - { label: "Revestimento Antiaderente Alimentício", value: "Revestimento Antiaderente Alimentício" }
-          - { label: "Texturização Industrial", value: "Texturização Industrial" }
-          - { label: "A Confirmar", value: "A Confirmar" }
           - { label: "Alimentícia", value: "Alimentícia" }
-          - { label: "Automobilística", value: "Automobilística" }
-          - { label: "Têxtil", value: "Têxtil" }
-          - { label: "Plástica", value: "Plástica" }
-          - { label: "Borracha", value: "Borracha" }
-          - { label: "Gráfica", value: "Gráfica" }
-          - { label: "Agrícola", value: "Agrícola" }
-          - { label: "Outro", value: "Outro" }
+          - { label: "Selagem", value: "Selagem" }
+          - { label: "Rotomoldagem e EPS", value: "Rotomoldagem e EPS" }
+          - { label: "Injeção e Extrusão", value: "Injeção e Extrusão" }
       - { label: "Descrição", name: "description", widget: "text", required: false }
+      - { label: "Destacar na Home?", name: "featured", widget: "boolean", default: false, hint: "Só fotos marcadas aqui aparecem na galeria da página inicial." }
