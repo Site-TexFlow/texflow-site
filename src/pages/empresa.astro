@@ -1,10 +1,16 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
-import About from "../components/About.astro";
+import Location from "../components/Location.astro";
 import FinalCta from "../components/FinalCta.astro";
+
+import inicioImg from "../assets/empresa/inicio.png";
+import emConstrucaoImg from "../assets/empresa/em-construcao.png";
+import construidaImg from "../assets/empresa/construida.png";
+import atualImg from "../assets/empresa/atual.png";
 
 const values = [
   {
@@ -20,19 +26,84 @@ const values = [
     text: "Suporte técnico do diagnóstico à entrega, com atenção ao desempenho da peça também depois da aplicação.",
   },
 ];
+
+const timeline = [
+  {
+    title: "1996 — O Início",
+    text: "Em 1996, nasceu a TexFlow Texturização e Antiaderentes Industriais Ltda, ramificação de um grupo com mais de 30 anos de mercado. Desde o início, desenvolvemos tecnologia própria internamente, o que nos permitiu competir com capacidade técnica e qualidade no mercado de revestimentos antiaderentes e texturização de moldes.",
+    image: inicioImg,
+  },
+  {
+    title: "A Construção",
+    text: "Hoje o grupo conta com 1.200 m² de área construída, em constante desenvolvimento e crescimento a cada ano. Mantemos o compromisso com qualidade e pontualidade em cada entrega, sempre buscando a satisfação e a fidelização dos nossos clientes.",
+    image: emConstrucaoImg,
+  },
+  {
+    title: "Especialização",
+    text: "A TexFlow é especialista em texturização de moldes e revestimentos antiaderentes. Nossas soluções eliminam o desgaste dos equipamentos, protegem contra a corrosão e dispensam o uso de óleos e lubrificantes, a aplicação do revestimento antiaderente reduz o atrito entre superfícies e aumenta a resistência ao calor.",
+    image: construidaImg,
+  },
+  {
+    title: "Atualidade",
+    text: "Somos uma empresa 100% brasileira e hoje atendemos clientes em todo o país, com agilidade e qualidade em cada projeto. Conheça a TexFlow e peça um orçamento!",
+    image: atualImg,
+  },
+];
 ---
 
 <Layout
   title="Empresa | TexFlow Revestimentos e Texturizações Industriais"
-  description="Conheça a TexFlow: mais de 10 anos de experiência em revestimentos antiaderentes e texturização industrial, com tecnologia avançada e atendimento especializado em todo o Brasil."
+  description="Conheça a TexFlow: mais de 30 anos de experiência em revestimentos antiaderentes e texturização industrial, com tecnologia própria e atendimento especializado em todo o Brasil."
 >
   <Header />
   <main>
-    <PageHero breadcrumbLabel="Empresa" subtitle="Mais de uma década de experiência em revestimentos antiaderentes e texturização industrial, a serviço da produtividade da sua empresa.">
+    <PageHero breadcrumbLabel="Empresa" subtitle="Tecnologia própria e atendimento técnico direto em cada etapa do projeto — conheça a trajetória da TexFlow.">
       SOBRE A <span class="text-orange-500">TEXFLOW</span>
     </PageHero>
 
-    <About />
+    <section class="bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <p class="max-w-3xl mx-auto text-center text-muted leading-relaxed text-lg">
+          A TexFlow é uma empresa 100% brasileira com mais de 30 anos de
+          experiência em revestimentos antiaderentes e texturização
+          industrial. Desenvolvemos tecnologia própria internamente desde o
+          início, o que nos dá controle total sobre qualidade, prazo e
+          repetibilidade em cada projeto entregue.
+        </p>
+
+        <h2 class="mt-14 text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          NOSSA <span class="text-orange-500">HISTÓRIA</span>
+        </h2>
+
+        <div class="mt-14 flex flex-col gap-16 lg:gap-20">
+          {
+            timeline.map((step, i) => (
+              <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class:list={["relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl", i % 2 === 1 && "lg:order-2"]}>
+                  <Image
+                    src={step.image}
+                    alt={step.title}
+                    widths={[480, 768, 1024]}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    quality={78}
+                    format="webp"
+                    loading="lazy"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class:list={[i % 2 === 1 && "lg:order-1"]}>
+                  <div class="w-10 h-10 rounded-full bg-orange-500 text-white font-extrabold flex items-center justify-center">
+                    {i + 1}
+                  </div>
+                  <h3 class="mt-4 text-xl font-extrabold text-navy-900 leading-snug">{step.title}</h3>
+                  <p class="mt-3 text-muted leading-relaxed">{step.text}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
 
     <section class="bg-slate-50">
       <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
@@ -52,7 +123,11 @@ const values = [
       </div>
     </section>
 
-    <FinalCta />
+    <Location />
+
+    <FinalCta subtitle="Fale com a TexFlow e receba um orçamento rápido para a demanda do seu negócio.">
+      Sua empresa precisa de <span class="text-orange-500">revestimento antiaderente</span> de qualidade?
+    </FinalCta>
   </main>
   <Footer />
 </Layout>
