@@ -1,14 +1,15 @@
 ---
 import { Image } from "astro:assets";
-import heroImage from "../assets/hero/Slide_1.png";
+import defaultHeroImage from "../assets/hero/Slide_1.png";
 
 interface Props {
   breadcrumbLabel: string;
   subtitle: string;
   ctaHref?: string;
+  image?: ImageMetadata;
 }
 
-const { breadcrumbLabel, subtitle, ctaHref = "/contato#contato" } = Astro.props;
+const { breadcrumbLabel, subtitle, ctaHref = "/contato#contato", image = defaultHeroImage } = Astro.props;
 ---
 
 <section class="relative overflow-hidden min-h-[380px] lg:min-h-[440px] flex items-center">
@@ -16,7 +17,7 @@ const { breadcrumbLabel, subtitle, ctaHref = "/contato#contato" } = Astro.props;
 
   <div class="absolute inset-0">
     <Image
-      src={heroImage}
+      src={image}
       alt=""
       widths={[640, 1024, 1600, 1920]}
       sizes="100vw"

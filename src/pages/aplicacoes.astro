@@ -5,6 +5,8 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import Applications from "../components/Applications.astro";
 import FinalCta from "../components/FinalCta.astro";
+
+import aplicacoesHero from "../assets/heroes/aplicacoes.png";
 ---
 
 <Layout
@@ -13,7 +15,7 @@ import FinalCta from "../components/FinalCta.astro";
 >
   <Header />
   <main>
-    <PageHero breadcrumbLabel="Aplicações" subtitle="Soluções para cada segmento da indústria — cada aplicação exige um revestimento ou texturização específico, e é isso que entregamos.">
+    <PageHero breadcrumbLabel="Aplicações" subtitle="Soluções para cada segmento da indústria — cada aplicação exige um revestimento ou texturização específico, e é isso que entregamos." image={aplicacoesHero}>
       SOLUÇÕES PARA <span class="text-orange-500">CADA SEGMENTO</span>
     </PageHero>
 

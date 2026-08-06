@@ -6,6 +6,8 @@ import PageHero from "../components/PageHero.astro";
 import CtaForm from "../components/CtaForm.astro";
 import Location from "../components/Location.astro";
 import Reviews from "../components/Reviews.astro";
+
+import contatoHero from "../assets/heroes/contato.png";
 ---
 
 <Layout
@@ -14,7 +16,7 @@ import Reviews from "../components/Reviews.astro";
 >
   <Header />
   <main>
-    <PageHero breadcrumbLabel="Contato" subtitle="Fale com nossos especialistas e solicite um orçamento sem compromisso — por WhatsApp, telefone ou pelo formulário abaixo." ctaHref="#contato">
+    <PageHero breadcrumbLabel="Contato" subtitle="Fale com nossos especialistas e solicite um orçamento sem compromisso — por WhatsApp, telefone ou pelo formulário abaixo." ctaHref="#contato" image={contatoHero}>
       FALE COM <span class="text-orange-500">NOSSOS ESPECIALISTAS</span>
     </PageHero>
 
