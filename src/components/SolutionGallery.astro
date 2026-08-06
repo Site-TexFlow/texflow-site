@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+import "glightbox/dist/css/glightbox.min.css";
+
+interface Props {
+  category: string;
+  lightboxGroup: string;
+}
+const { category, lightboxGroup } = Astro.props;
+
+const items = await getCollection("gallery", ({ data }) => data.category === category);
+---
+
+{
+  items.length > 0 && (
+    <section class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          GALERIA DE <span class="text-orange-500">FOTOS</span>
+        </h2>
+        <p class="mt-3 text-center text-muted max-w-xl mx-auto leading-relaxed">
+          Peças e equipamentos reais entregues pela TexFlow nessa solução.
+        </p>
+
+        <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {items.map((item) => (
+            <a
+              href={item.data.image}
+              class={`${lightboxGroup} group relative block aspect-square rounded-xl overflow-hidden shadow-sm border border-slate-100`}
+              data-gallery={lightboxGroup}
+              data-title={item.data.title}
+              data-description={item.data.description}
+            >
+              <img
+                src={item.data.image}
+                alt={item.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy-900/85 via-navy-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <div class="text-white font-bold text-sm leading-snug">{item.data.title}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  import GLightbox from "glightbox";
+
+  const groups = new Set(
+    Array.from(document.querySelectorAll<HTMLElement>("[data-gallery]")).map((el) => el.dataset.gallery)
+  );
+  groups.forEach((group) => {
+    if (group) GLightbox({ selector: `.${group}`, touchNavigation: true, loop: true, zoomable: true });
+  });
+</script>

@@ -20,6 +20,12 @@ const galleryCategories = z.enum([
   'Selagem',
   'Rotomoldagem e EPS',
   'Injeção e Extrusão',
+  // Categorias das páginas de solução — usadas para puxar a galeria
+  // filtrada em cada página dedicada (ex: /revestimento-antiaderente-industrial).
+  'Revestimento Antiaderente Industrial',
+  'Revestimento Antiaderente Alimentício',
+  'Texturização Industrial',
+  'Revestimentos em PTFE (Teflon®)',
 ]);
 
 const gallery = defineCollection({

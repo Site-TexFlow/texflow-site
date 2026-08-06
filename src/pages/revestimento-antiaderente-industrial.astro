@@ -1,9 +1,36 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
+import SolutionGallery from "../components/SolutionGallery.astro";
 import FinalCta from "../components/FinalCta.astro";
+
+import antiaderenteIndustrial from "../assets/solucoes/antiaderente-industrial.png";
+
+const benefits = [
+  {
+    title: "Redução do atrito",
+    text: "Menor coeficiente de atrito na superfície, reduzindo o desgaste mecânico da peça e do material processado.",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  {
+    title: "Resistência química",
+    text: "Proteção contra corrosão e contato com produtos químicos, mesmo em ambientes agressivos.",
+    icon: "M9 3h6v3l1.5 2v11a2 2 0 01-2 2h-5a2 2 0 01-2-2V8L9 6V3zM8 12h8",
+  },
+  {
+    title: "Durabilidade",
+    text: "Camada resistente que mantém a performance do revestimento ao longo de milhares de ciclos de operação.",
+    icon: "M12 2l7 3.5v6c0 5-3 8.5-7 10.5-4-2-7-5.5-7-10.5v-6L12 2z",
+  },
+  {
+    title: "Facilidade de limpeza",
+    text: "Superfície antiaderente que reduz o acúmulo de resíduos, diminuindo o tempo gasto em limpeza e manutenção.",
+    icon: "M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z",
+  },
+];
 ---
 
 <Layout
@@ -17,28 +44,60 @@ import FinalCta from "../components/FinalCta.astro";
     </PageHero>
 
     <section class="bg-white">
-      <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-        <p class="text-muted leading-relaxed text-lg">
-          Indicado para rolos, moldes e peças que sofrem atrito constante ou
-          contato com materiais que tendem a aderir à superfície metálica,
-          como resinas, borrachas e massas. Reduz desgaste, evita paradas
-          para limpeza e aumenta a vida útil do equipamento.
-        </p>
-
-        <div class="mt-10 bg-slate-50 rounded-xl border border-slate-100 p-6">
-          <h2 class="font-bold text-navy-900">Leia mais no blog</h2>
-          <a
-            href="/blog/revestimento-antiaderente-vida-util-equipamentos"
-            class="group mt-2 flex items-center gap-1 text-sm font-semibold text-orange-500"
-          >
-            Como revestimentos antiaderentes aumentam a vida útil de equipamentos industriais
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
-              <path d="M5 12h14m0 0l-6-6m6 6l-6 6" />
-            </svg>
-          </a>
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-muted leading-relaxed text-lg">
+            O revestimento antiaderente industrial da TexFlow aumenta a
+            eficiência e a durabilidade de equipamentos metálicos submetidos
+            a atrito constante ou contato com materiais que tendem a aderir
+            à superfície, como resinas, borrachas e massas.
+          </p>
+          <p class="mt-4 text-muted leading-relaxed text-lg">
+            Indicado para rolos, moldes e peças de uso contínuo, o
+            revestimento reduz o desgaste, evita paradas para limpeza e
+            prolonga a vida útil do equipamento — com menor consumo de
+            insumos e mais previsibilidade na produção.
+          </p>
+        </div>
+        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+          <Image
+            src={antiaderenteIndustrial}
+            alt="Peças com revestimento antiaderente industrial"
+            widths={[480, 768, 1024]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            quality={78}
+            format="webp"
+            loading="eager"
+            class="w-full h-full object-cover"
+          />
         </div>
       </div>
     </section>
+
+    <section class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          BENEFÍCIOS DO <span class="text-orange-500">REVESTIMENTO INDUSTRIAL</span>
+        </h2>
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {
+            benefits.map((b) => (
+              <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <div class="w-11 h-11 rounded-full bg-orange-500 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={b.icon} />
+                  </svg>
+                </div>
+                <h3 class="mt-4 font-bold text-navy-900 leading-snug">{b.title}</h3>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{b.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <SolutionGallery category="Revestimento Antiaderente Industrial" lightboxGroup="lightbox-industrial" />
 
     <FinalCta />
   </main>

@@ -42,5 +42,9 @@ collections:
           - { label: "Selagem", value: "Selagem" }
           - { label: "Rotomoldagem e EPS", value: "Rotomoldagem e EPS" }
           - { label: "Injeção e Extrusão", value: "Injeção e Extrusão" }
+          - { label: "Revestimento Antiaderente Industrial", value: "Revestimento Antiaderente Industrial" }
+          - { label: "Revestimento Antiaderente Alimentício", value: "Revestimento Antiaderente Alimentício" }
+          - { label: "Texturização Industrial", value: "Texturização Industrial" }
+          - { label: "Revestimentos em PTFE (Teflon®)", value: "Revestimentos em PTFE (Teflon®)" }
       - { label: "Descrição", name: "description", widget: "text", required: false }
       - { label: "Destacar na Home?", name: "featured", widget: "boolean", default: false, hint: "Só fotos marcadas aqui aparecem na galeria da página inicial." }

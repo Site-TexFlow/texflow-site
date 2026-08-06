@@ -1,9 +1,46 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
+import SolutionGallery from "../components/SolutionGallery.astro";
 import FinalCta from "../components/FinalCta.astro";
+
+import ptfeTeflon from "../assets/solucoes/ptfe-teflon.png";
+
+const benefits = [
+  {
+    title: "Baixíssimo atrito",
+    text: "Um dos coeficientes de atrito mais baixos entre os materiais sólidos, reduzindo o desgaste da peça e do material em contato.",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  {
+    title: "Resistência térmica",
+    text: "Mantém suas propriedades em uma ampla faixa de temperatura, suportando processos com calor intenso.",
+    icon: "M12 2l7 3.5v6c0 5-3 8.5-7 10.5-4-2-7-5.5-7-10.5v-6L12 2z",
+  },
+  {
+    title: "Resistência química",
+    text: "Inerte à maioria dos ácidos, solventes e produtos químicos industriais, protegendo a peça contra corrosão.",
+    icon: "M9 3h6v3l1.5 2v11a2 2 0 01-2 2h-5a2 2 0 01-2-2V8L9 6V3zM8 12h8",
+  },
+  {
+    title: "Não-aderência",
+    text: "Superfície lisa que evita o acúmulo de resíduos, reduzindo a frequência de limpeza e manutenção.",
+    icon: "M12 2c-4 5.5-7 9.5-7 13a7 7 0 0014 0c0-3.5-3-7.5-7-13z",
+  },
+  {
+    title: "Menor uso de lubrificantes",
+    text: "Reduz ou elimina a necessidade de óleos e graxas em peças submetidas a atrito constante.",
+    icon: "M12 8a4 4 0 100 8 4 4 0 000-8zm8.4 4a8.4 8.4 0 01-.15 1.55l1.65 1.3-1.5 2.6-1.95-.65a8.5 8.5 0 01-2.7 1.55l-.3 2.05h-3l-.3-2.05a8.5 8.5 0 01-2.7-1.55l-1.95.65-1.5-2.6 1.65-1.3A8.4 8.4 0 013.6 12c0-.53.05-1.05.15-1.55L2.1 9.15l1.5-2.6 1.95.65a8.5 8.5 0 012.7-1.55L8.55 3.6h3l.3 2.05a8.5 8.5 0 012.7 1.55l1.95-.65 1.5 2.6-1.65 1.3c.1.5.15 1.02.15 1.55z",
+  },
+  {
+    title: "Durabilidade",
+    text: "Aplicação em camadas duráveis que mantêm a performance do revestimento ao longo de milhares de ciclos de uso.",
+    icon: "M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.4 7.2 16.9l.9-5.4-3.9-3.8 5.4-.8L12 2z",
+  },
+];
 ---
 
 <Layout
@@ -17,15 +54,63 @@ import FinalCta from "../components/FinalCta.astro";
     </PageHero>
 
     <section class="bg-white">
-      <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-        <p class="text-muted leading-relaxed text-lg">
-          Indicado para peças que exigem baixíssimo atrito, fácil limpeza e
-          alta resistência química e térmica. O PTFE (Teflon®) é aplicado em
-          camadas que protegem o componente mesmo em ambientes agressivos ou
-          de temperatura elevada.
-        </p>
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-muted leading-relaxed text-lg">
+            O PTFE (politetrafluoretileno), mais conhecido pelo nome
+            comercial Teflon®, é um dos materiais com menor coeficiente de
+            atrito que existem. Na TexFlow, aplicamos revestimentos em PTFE
+            sobre superfícies metálicas para reduzir o atrito, facilitar a
+            limpeza e proteger o componente contra corrosão e desgaste —
+            mesmo em ambientes com exposição química ou térmica intensa.
+          </p>
+          <p class="mt-4 text-muted leading-relaxed text-lg">
+            É uma solução versátil, usada em peças que vão de moldes
+            industriais a componentes que operam sob temperatura elevada,
+            sempre que a prioridade é reduzir a aderência de materiais à
+            superfície e prolongar a vida útil do equipamento sem depender
+            de lubrificação constante.
+          </p>
+        </div>
+        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+          <Image
+            src={ptfeTeflon}
+            alt="Peças com revestimento em PTFE (Teflon®)"
+            widths={[480, 768, 1024]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            quality={78}
+            format="webp"
+            loading="eager"
+            class="w-full h-full object-cover"
+          />
+        </div>
       </div>
     </section>
+
+    <section class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          BENEFÍCIOS DO <span class="text-orange-500">PTFE (TEFLON®)</span>
+        </h2>
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {
+            benefits.map((b) => (
+              <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <div class="w-11 h-11 rounded-full bg-orange-500 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={b.icon} />
+                  </svg>
+                </div>
+                <h3 class="mt-4 font-bold text-navy-900 leading-snug">{b.title}</h3>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{b.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <SolutionGallery category="Revestimentos em PTFE (Teflon®)" lightboxGroup="lightbox-ptfe" />
 
     <FinalCta />
   </main>

@@ -1,9 +1,59 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
+import SolutionGallery from "../components/SolutionGallery.astro";
 import FinalCta from "../components/FinalCta.astro";
+
+import texturizacaoImg from "../assets/solucoes/texturizacao-industrial.png";
+
+const benefits = [
+  {
+    title: "Melhor aderência de revestimentos",
+    text: "Uma superfície texturizada corretamente aumenta a ancoragem de revestimentos aplicados posteriormente, prolongando sua durabilidade.",
+    icon: "M12 8a4 4 0 100 8 4 4 0 000-8zm8.4 4a8.4 8.4 0 01-.15 1.55l1.65 1.3-1.5 2.6-1.95-.65a8.5 8.5 0 01-2.7 1.55l-.3 2.05h-3l-.3-2.05a8.5 8.5 0 01-2.7-1.55l-1.95.65-1.5-2.6 1.65-1.3A8.4 8.4 0 013.6 12c0-.53.05-1.05.15-1.55L2.1 9.15l1.5-2.6 1.95.65a8.5 8.5 0 012.7-1.55L8.55 3.6h3l.3 2.05a8.5 8.5 0 012.7 1.55l1.95-.65 1.5 2.6-1.65 1.3c.1.5.15 1.02.15 1.55z",
+  },
+  {
+    title: "Redução de atrito",
+    text: "Padrões específicos reduzem a área de contato direto entre peças, diminuindo o desgaste mecânico.",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  {
+    title: "Melhoria estética",
+    text: "Acabamento com identidade visual própria, transferido diretamente para o material processado pelo molde ou peça texturizada.",
+    icon: "M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.4 7.2 16.9l.9-5.4-3.9-3.8 5.4-.8L12 2z",
+  },
+  {
+    title: "Otimização de processos",
+    text: "Padrões que facilitam o escoamento de fluidos, ar ou resíduos durante a operação, tornando o processo mais eficiente.",
+    icon: "M12 2l7 3.5v6c0 5-3 8.5-7 10.5-4-2-7-5.5-7-10.5v-6L12 2z",
+  },
+];
+
+const applications = [
+  {
+    title: "Indústria automotiva",
+    text: "Componentes e moldes para peças automotivas com padrões de superfície específicos.",
+    icon: "M5 17h14M6 17a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 17l1.5-5.5A2 2 0 017.4 10h9.2a2 2 0 011.9 1.5L20 17M4 17v-3h16v3",
+  },
+  {
+    title: "Fabricação de embalagens",
+    text: "Moldes para embalagens que exigem acabamento e textura consistentes.",
+    icon: "M21 8L12 3 3 8v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8",
+  },
+  {
+    title: "Moldes para injeção plástica",
+    text: "Transferência de textura para peças plásticas injetadas em grande escala.",
+    icon: "M9 3h6v3l1.5 2v11a2 2 0 01-2 2h-5a2 2 0 01-2-2V8L9 6V3zM8 12h8",
+  },
+  {
+    title: "Equipamentos de produção industrial",
+    text: "Peças e componentes de linhas de produção que exigem controle de aderência e atrito.",
+    icon: "M12 8a4 4 0 100 8 4 4 0 000-8zm8.4 4a8.4 8.4 0 01-.15 1.55l1.65 1.3-1.5 2.6-1.95-.65a8.5 8.5 0 01-2.7 1.55l-.3 2.05h-3l-.3-2.05a8.5 8.5 0 01-2.7-1.55l-1.95.65-1.5-2.6 1.65-1.3A8.4 8.4 0 013.6 12c0-.53.05-1.05.15-1.55L2.1 9.15l1.5-2.6 1.95.65a8.5 8.5 0 012.7-1.55L8.55 3.6h3l.3 2.05a8.5 8.5 0 012.7 1.55l1.95-.65 1.5 2.6-1.65 1.3c.1.5.15 1.02.15 1.55z",
+  },
+];
 ---
 
 <Layout
@@ -17,28 +67,87 @@ import FinalCta from "../components/FinalCta.astro";
     </PageHero>
 
     <section class="bg-white">
-      <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-        <p class="text-muted leading-relaxed text-lg">
-          Aplicada quando a superfície da peça precisa de um padrão
-          específico — para reter lubrificante, aumentar aderência
-          controlada ou transferir acabamento para o material processado.
-          Definimos o padrão certo com base no material e na aplicação.
-        </p>
-
-        <div class="mt-10 bg-slate-50 rounded-xl border border-slate-100 p-6">
-          <h2 class="font-bold text-navy-900">Leia mais no blog</h2>
-          <a
-            href="/blog/texturizacao-industrial-quando-aplicar"
-            class="group mt-2 flex items-center gap-1 text-sm font-semibold text-orange-500"
-          >
-            Texturização industrial: quando aplicar em cada tipo de peça
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
-              <path d="M5 12h14m0 0l-6-6m6 6l-6 6" />
-            </svg>
-          </a>
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-muted leading-relaxed text-lg">
+            A texturização é um processo de modificação da superfície de
+            moldes e componentes metálicos, criando padrões específicos que
+            melhoram o desempenho do produto final. É aplicada quando a
+            peça precisa reter lubrificante, aumentar a aderência de forma
+            controlada ou transferir acabamento para o material processado.
+          </p>
+          <p class="mt-4 text-muted leading-relaxed text-lg">
+            Definimos o padrão de texturização com base no material da peça
+            e na aplicação real do processo — sempre buscando o equilíbrio
+            entre funcionalidade e acabamento, sem comprometer a precisão
+            dimensional do componente.
+          </p>
+        </div>
+        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+          <Image
+            src={texturizacaoImg}
+            alt="Peça com texturização industrial"
+            widths={[480, 768, 1024]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            quality={78}
+            format="webp"
+            loading="eager"
+            class="w-full h-full object-cover"
+          />
         </div>
       </div>
     </section>
+
+    <section class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          BENEFÍCIOS DA <span class="text-orange-500">TEXTURIZAÇÃO</span>
+        </h2>
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {
+            benefits.map((b) => (
+              <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <div class="w-11 h-11 rounded-full bg-orange-500 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={b.icon} />
+                  </svg>
+                </div>
+                <h3 class="mt-4 font-bold text-navy-900 leading-snug">{b.title}</h3>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{b.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          APLICAÇÕES <span class="text-orange-500">INDUSTRIAIS</span>
+        </h2>
+        <p class="mt-3 text-center text-muted max-w-xl mx-auto leading-relaxed">
+          A texturização oferecida pela TexFlow é utilizada em diversos setores industriais.
+        </p>
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {
+            applications.map((a) => (
+              <div class="flex flex-col items-center text-center gap-3 p-6 rounded-xl border border-slate-100 shadow-sm">
+                <div class="w-16 h-16 rounded-full border-2 border-navy-900 flex items-center justify-center text-navy-900">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={a.icon} />
+                  </svg>
+                </div>
+                <h3 class="text-sm font-bold tracking-wide text-navy-900 uppercase">{a.title}</h3>
+                <p class="text-sm text-muted leading-relaxed">{a.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <SolutionGallery category="Texturização Industrial" lightboxGroup="lightbox-texturizacao" />
 
     <FinalCta />
   </main>
