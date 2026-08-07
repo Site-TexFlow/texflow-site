@@ -76,20 +76,23 @@ const segments = [
           class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
         <input
+          id="cta-email"
           type="email"
           placeholder="E-mail*"
           required
           class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
         <input
+          id="cta-whatsapp"
           type="tel"
+          inputmode="tel"
           placeholder="WhatsApp*"
           required
           class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
         <select
           required
-          class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm text-muted focus:outline-none focus:ring-2 focus:ring-orange-400"
+          class="w-full self-start rounded-md border border-slate-200 px-4 py-3 text-sm text-muted focus:outline-none focus:ring-2 focus:ring-orange-400"
         >
           <option value="" selected disabled>Segmento de atuação*</option>
           {segments.map((s) => <option value={s}>{s}</option>)}
@@ -97,6 +100,7 @@ const segments = [
         <textarea
           placeholder="Descreva sua necessidade*"
           required
+          maxlength="500"
           rows="4"
           class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
         ></textarea>
@@ -120,3 +124,54 @@ const segments = [
     </div>
   </div>
 </section>
+
+<script>
+  // Telefone: aceita fixo/celular brasileiro ou número estrangeiro com
+  // código de país (+55...). O padrão fica oculto — só aparece como erro
+  // se o número digitado não bater com nenhum dos formatos.
+  function isValidPhone(raw: string) {
+    const trimmed = raw.trim();
+    const digits = trimmed.replace(/\D/g, "");
+
+    if (trimmed.startsWith("+") && !trimmed.startsWith("+55")) {
+      // Estrangeiro: entre 8 e 15 dígitos (padrão E.164), com "+" e código do país.
+      return digits.length >= 8 && digits.length <= 15;
+    }
+
+    // Brasileiro: remove o código de país 55 se foi digitado.
+    let local = digits;
+    if (local.length > 11 && local.startsWith("55")) {
+      local = local.slice(2);
+    }
+
+    if (local.length === 10) {
+      // Fixo: DDD (2 díg.) + número (8 díg., não pode começar com 9 — isso é celular).
+      return /^[1-9]{2}[2-8]\d{7}$/.test(local);
+    }
+    if (local.length === 11) {
+      // Celular: DDD (2 díg.) + 9 + número (8 díg.).
+      return /^[1-9]{2}9\d{8}$/.test(local);
+    }
+    return false;
+  }
+
+  function isValidEmail(raw: string) {
+    return /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(raw.trim());
+  }
+
+  const whatsappInput = document.getElementById("cta-whatsapp") as HTMLInputElement | null;
+  whatsappInput?.addEventListener("input", () => {
+    whatsappInput.setCustomValidity(
+      whatsappInput.value === "" || isValidPhone(whatsappInput.value)
+        ? ""
+        : "Digite um número de WhatsApp válido: fixo ou celular brasileiro (com DDD) ou número estrangeiro com código do país (+)."
+    );
+  });
+
+  const emailInput = document.getElementById("cta-email") as HTMLInputElement | null;
+  emailInput?.addEventListener("input", () => {
+    emailInput.setCustomValidity(
+      emailInput.value === "" || isValidEmail(emailInput.value) ? "" : "Digite um e-mail válido."
+    );
+  });
+</script>
