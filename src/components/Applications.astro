@@ -1,8 +1,9 @@
 ---
 interface Props {
   expanded?: boolean;
+  title?: string;
 }
-const { expanded = false } = Astro.props;
+const { expanded = false, title = "APLICAÇÕES / SEGMENTOS" } = Astro.props;
 
 const apps = [
   {
@@ -55,7 +56,7 @@ const displayedApps = expanded ? [...apps, outro] : apps;
 <section id="aplicacoes" class="bg-white">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
     <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
-      APLICAÇÕES / SEGMENTOS
+      {title}
     </h2>
 
     {
@@ -76,14 +77,14 @@ const displayedApps = expanded ? [...apps, outro] : apps;
       ) : (
         <div class="mt-10 flex flex-wrap justify-center gap-x-10 gap-y-8">
           {displayedApps.map((a) => (
-            <div class="group flex flex-col items-center gap-3 w-24 cursor-pointer">
+            <a href="/aplicacoes" class="group flex flex-col items-center gap-3 w-24">
               <div class="w-16 h-16 rounded-full border-2 border-navy-900 flex items-center justify-center text-navy-900 transition-all duration-300 group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/30">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                   <path d={a.icon} />
                 </svg>
               </div>
               <div class="text-xs font-bold tracking-wide text-navy-900 text-center uppercase transition-colors duration-300 group-hover:text-orange-500">{a.label}</div>
-            </div>
+            </a>
           ))}
         </div>
       )
