@@ -42,6 +42,7 @@ collections:
           - { label: "Selagem", value: "Selagem" }
           - { label: "Rotomoldagem e EPS", value: "Rotomoldagem e EPS" }
           - { label: "Injeção e Extrusão", value: "Injeção e Extrusão" }
+          - { label: "Gráfica", value: "Gráfica" }
           - { label: "Revestimento Antiaderente Industrial", value: "Revestimento Antiaderente Industrial" }
           - { label: "Revestimento Antiaderente Alimentício", value: "Revestimento Antiaderente Alimentício" }
           - { label: "Texturização Industrial", value: "Texturização Industrial" }
