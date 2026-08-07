@@ -18,7 +18,7 @@ collections:
     fields:
       - { label: "Título", name: "title", widget: "string" }
       - { label: "Descrição", name: "description", widget: "text" }
-      - { label: "Data de Publicação", name: "publishDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - { label: "Data de Publicação", name: "publishDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, default: "2026-01-01" }
       - { label: "Imagem de Destaque", name: "image", widget: "image" }
       - { label: "Texto Alternativo da Imagem", name: "imageAlt", widget: "string" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
