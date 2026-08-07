@@ -32,7 +32,7 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Título", name: "title", widget: "string", required: false }
       - { label: "Imagem", name: "image", widget: "image", media_folder: "/public/images/gallery", public_folder: "/images/gallery" }
       - label: "Categoria"
         name: "category"

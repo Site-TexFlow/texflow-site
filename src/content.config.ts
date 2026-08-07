@@ -32,7 +32,7 @@ const galleryCategories = z.enum([
 const gallery = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/gallery' }),
   schema: z.object({
-    title: z.string(),
+    title: z.string().optional(),
     image: z.string(),
     category: galleryCategories,
     description: z.string().optional(),
