@@ -26,7 +26,6 @@ const galleryCategories = z.enum([
   'Revestimento Antiaderente Industrial',
   'Revestimento Antiaderente Alimentício',
   'Texturização Industrial',
-  'Revestimentos em PTFE (Teflon®)',
 ]);
 
 const gallery = defineCollection({
