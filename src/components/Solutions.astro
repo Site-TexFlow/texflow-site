@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import antiaderenteIndustrial from "../assets/solucoes/antiaderente-industrial.png";
 import antiaderenteAlimenticio from "../assets/solucoes/antiaderente-alimenticio.png";
 import texturizacaoIndustrial from "../assets/solucoes/texturizacao-industrial.png";
+import outrosServicos from "../assets/solucoes/outros-servicos.png";
 
 interface Props {
   expanded?: boolean;
@@ -27,6 +28,12 @@ const solutions = [
     text: "Texturizações personalizadas que melhoram a funcionalidade e a aparência das peças.",
     detail: "Aplicada quando a superfície da peça precisa de um padrão específico — para reter lubrificante, aumentar aderência controlada ou transferir acabamento para o material processado. Definimos o padrão certo com base no material e na aplicação.",
     image: texturizacaoIndustrial,
+  },
+  {
+    title: "Outros Serviços",
+    text: "Placas de identificação, gravação a laser, placas de homenagem e réguas e escalas, em parceria com a Gravametal.",
+    detail: "Além de revestimentos e texturização, também oferecemos placas de identificação, gravação a laser, placas de homenagem e réguas e escalas — serviços complementares realizados em parceria com a Gravametal, para atender ainda mais necessidades da sua indústria em um só lugar.",
+    image: outrosServicos,
   },
 ];
 ---
