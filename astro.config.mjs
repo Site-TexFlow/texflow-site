@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
@@ -14,5 +14,10 @@ export default defineConfig({
   integrations: [sitemap(), decapCmsOauth()],
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+  env: {
+    schema: {
+      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
+    },
+  },
 });

@@ -62,14 +62,16 @@ const segments = [
         Preencha o formulário e nossa equipe entrará em contato.
       </p>
 
-      <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <form id="cta-form" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <input
+          id="cta-name"
           type="text"
           placeholder="Nome completo*"
           required
           class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
         <input
+          id="cta-company"
           type="text"
           placeholder="Empresa*"
           required
@@ -91,6 +93,7 @@ const segments = [
           class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
         <select
+          id="cta-segment"
           required
           class="w-full self-start rounded-md border border-slate-200 px-4 py-3 text-sm text-muted focus:outline-none focus:ring-2 focus:ring-orange-400"
         >
@@ -98,6 +101,7 @@ const segments = [
           {segments.map((s) => <option value={s}>{s}</option>)}
         </select>
         <textarea
+          id="cta-message"
           placeholder="Descreva sua necessidade*"
           required
           maxlength="500"
@@ -112,14 +116,17 @@ const segments = [
         </label>
 
         <button
+          id="cta-submit"
           type="submit"
-          class="col-span-full flex items-center justify-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-orange-600 transition-colors"
+          class="col-span-full flex items-center justify-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-orange-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Solicitar Orçamento
+          <span id="cta-submit-label">Solicitar Orçamento</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M4 12h16m0 0l-6-6m6 6l-6 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
+
+        <p id="cta-status" class="col-span-full text-sm hidden" role="status"></p>
       </form>
     </div>
   </div>
@@ -173,5 +180,58 @@ const segments = [
     emailInput.setCustomValidity(
       emailInput.value === "" || isValidEmail(emailInput.value) ? "" : "Digite um e-mail válido."
     );
+  });
+
+  const form = document.getElementById("cta-form") as HTMLFormElement | null;
+  const submitButton = document.getElementById("cta-submit") as HTMLButtonElement | null;
+  const submitLabel = document.getElementById("cta-submit-label");
+  const status = document.getElementById("cta-status");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const name = (document.getElementById("cta-name") as HTMLInputElement).value.trim();
+    const company = (document.getElementById("cta-company") as HTMLInputElement).value.trim();
+    const email = (document.getElementById("cta-email") as HTMLInputElement).value.trim();
+    const whatsapp = (document.getElementById("cta-whatsapp") as HTMLInputElement).value.trim();
+    const segment = (document.getElementById("cta-segment") as HTMLSelectElement).value;
+    const message = (document.getElementById("cta-message") as HTMLTextAreaElement).value.trim();
+
+    if (submitButton) submitButton.disabled = true;
+    if (submitLabel) submitLabel.textContent = "Enviando...";
+    if (status) {
+      status.classList.add("hidden");
+      status.classList.remove("text-red-600", "text-green-600");
+    }
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, company, email, whatsapp, segment, message }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Falha ao enviar. Tente novamente.");
+      }
+
+      form.reset();
+      if (status) {
+        status.textContent = "Mensagem enviada! Nossa equipe vai entrar em contato em breve.";
+        status.classList.remove("hidden");
+        status.classList.add("text-green-600");
+      }
+    } catch (err) {
+      if (status) {
+        status.textContent = err instanceof Error ? err.message : "Falha ao enviar. Tente novamente.";
+        status.classList.remove("hidden");
+        status.classList.add("text-red-600");
+      }
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+      if (submitLabel) submitLabel.textContent = "Solicitar Orçamento";
+    }
   });
 </script>
