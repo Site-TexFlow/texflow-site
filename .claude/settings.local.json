@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm -v)"
+      "Bash(npm -v)",
+      "Bash(vercel login *)",
+      "Bash(vercel --prod --scope tex-flow1)"
     ]
   }
 }
