@@ -21,7 +21,8 @@ function escapeHtml(value: string) {
 export const POST: APIRoute = async ({ request }) => {
   let body: Record<string, unknown>;
   try {
-    body = await request.json();
+    const raw = new TextDecoder("utf-8").decode(await request.arrayBuffer());
+    body = JSON.parse(raw);
   } catch {
     return new Response(JSON.stringify({ error: "Corpo da requisição inválido." }), { status: 400 });
   }
