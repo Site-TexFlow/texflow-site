@@ -45,17 +45,23 @@ export const POST: APIRoute = async ({ request }) => {
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: [TO_EMAIL],
-      reply_to: email,
+      replyTo: email,
       subject: `Novo pedido de orçamento — ${company}`,
       html: `
-        <h2>Novo pedido de orçamento pelo site</h2>
-        <p><strong>Nome:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Empresa:</strong> ${escapeHtml(company)}</p>
-        <p><strong>E-mail:</strong> ${escapeHtml(email)}</p>
-        <p><strong>WhatsApp:</strong> ${escapeHtml(whatsapp)}</p>
-        <p><strong>Segmento de atuação:</strong> ${escapeHtml(segment)}</p>
-        <p><strong>Mensagem:</strong></p>
-        <p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>
+        <!doctype html>
+        <html lang="pt-BR">
+          <head><meta charset="utf-8" /></head>
+          <body>
+            <h2>Novo pedido de orçamento pelo site</h2>
+            <p><strong>Nome:</strong> ${escapeHtml(name)}</p>
+            <p><strong>Empresa:</strong> ${escapeHtml(company)}</p>
+            <p><strong>E-mail:</strong> ${escapeHtml(email)}</p>
+            <p><strong>WhatsApp:</strong> ${escapeHtml(whatsapp)}</p>
+            <p><strong>Segmento de atuação:</strong> ${escapeHtml(segment)}</p>
+            <p><strong>Mensagem:</strong></p>
+            <p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>
+          </body>
+        </html>
       `,
     });
 
