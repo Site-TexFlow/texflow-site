@@ -12,6 +12,7 @@ const categories = [
   "Rotomoldagem e EPS",
   "Injeção e Extrusão",
   "Gráfica",
+  "Texturização",
 ];
 ---
 
@@ -62,14 +63,9 @@ const categories = [
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              {item.data.title && (
-                <div class="absolute inset-0 bg-gradient-to-t from-navy-900/85 via-navy-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <div>
-                    <div class="text-white font-bold text-sm leading-snug">{item.data.title}</div>
-                    <div class="text-orange-400 text-[10px] font-bold uppercase tracking-wide mt-1">{item.data.category}</div>
-                  </div>
-                </div>
-              )}
+              <div class="gallery-card-label absolute inset-0 bg-navy-900/50 flex items-center justify-center p-4 text-center">
+                <div class="text-white font-bold text-sm uppercase tracking-wide leading-snug">{item.data.category}</div>
+              </div>
             </a>
           ))}
         </div>
@@ -93,6 +89,20 @@ const categories = [
   }
   #gallery-grid.is-preview a:not([data-home-card="true"]) {
     display: none;
+  }
+  .gallery-card-label {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  @media (hover: hover) {
+    .glightbox:hover .gallery-card-label {
+      opacity: 1;
+    }
+  }
+  @media (hover: none) {
+    .gallery-card-label {
+      opacity: 1;
+    }
   }
 </style>
 

@@ -21,6 +21,7 @@ const galleryCategories = z.enum([
   'Rotomoldagem e EPS',
   'Injeção e Extrusão',
   'Gráfica',
+  'Texturização',
   // Categorias das páginas de solução — usadas para puxar a galeria
   // filtrada em cada página dedicada (ex: /revestimento-antiaderente-industrial).
   'Revestimento Antiaderente Industrial',
