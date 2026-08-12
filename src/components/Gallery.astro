@@ -54,6 +54,7 @@ const categories = [
               data-title={item.data.title}
               data-description={item.data.description}
               data-category={item.data.category}
+              data-home-card={item.data.homeCard ? "true" : "false"}
             >
               <img
                 src={item.data.image}
@@ -90,7 +91,7 @@ const categories = [
   [data-category].is-hidden {
     display: none;
   }
-  #gallery-grid.is-preview a:nth-child(n + 5) {
+  #gallery-grid.is-preview a:not([data-home-card="true"]) {
     display: none;
   }
 </style>

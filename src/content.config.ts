@@ -39,6 +39,10 @@ const gallery = defineCollection({
     // novas cadastradas pelo painel entram como "não destacadas" por
     // padrão, para não diluir a curadoria da home com fotos mais simples.
     featured: z.boolean().default(false),
+    // A foto com homeCard=true é a única usada no preview "Todos" da
+    // galeria da home (uma por categoria) — independe de featured/ordem
+    // de arquivo, pra não ser deslocada quando novas fotos são adicionadas.
+    homeCard: z.boolean().default(false),
   }),
 });
 
