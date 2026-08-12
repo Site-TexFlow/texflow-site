@@ -100,7 +100,7 @@ const categories = [
     }
   }
   @media (hover: none) {
-    .gallery-card-label {
+    .glightbox[data-home-card="true"]:active .gallery-card-label {
       opacity: 1;
     }
   }
@@ -115,6 +115,10 @@ const categories = [
     loop: true,
     zoomable: true,
   });
+
+  // Sem isso, o Safari/iOS não aciona o pseudo-seletor :active em toque —
+  // é o que faz o nome da categoria aparecer só enquanto o dedo pressiona.
+  document.body.addEventListener("touchstart", () => {}, { passive: true });
 
   const filterButtons = document.querySelectorAll<HTMLButtonElement>("[data-gallery-filter]");
   const cards = document.querySelectorAll<HTMLElement>("#galeria [data-category]");
