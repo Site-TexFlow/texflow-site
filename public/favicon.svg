@@ -1,5 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34">
-  <rect width="34" height="34" rx="8" fill="#0A1C34" />
-  <rect x="7" y="7" width="20" height="5" rx="1.5" fill="white" />
-  <rect x="14.5" y="7" width="5" height="20" rx="1.5" fill="white" />
+  <defs>
+    <clipPath id="favicon-clip">
+      <circle cx="17" cy="17" r="17" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#favicon-clip)">
+    <circle cx="17" cy="17" r="17" fill="#0A1C34" />
+    <rect x="-3" y="9" width="40" height="3.3" fill="white" />
+    <rect x="15.35" y="9" width="3.3" height="30" fill="white" />
+  </g>
 </svg>
