@@ -6,7 +6,7 @@
   </defs>
   <g clip-path="url(#favicon-clip)">
     <circle cx="17" cy="17" r="17" fill="#0A1C34" />
-    <rect x="-3" y="9" width="40" height="3.3" fill="white" />
-    <rect x="15.35" y="9" width="3.3" height="30" fill="white" />
+    <rect x="-3" y="7.8" width="40" height="4.3" fill="white" />
+    <rect x="14.58" y="7.8" width="4.85" height="32" fill="white" />
   </g>
 </svg>
