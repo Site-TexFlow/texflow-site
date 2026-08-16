@@ -2,8 +2,8 @@ backend:
   name: github
   repo: bgartner/texflow-site
   branch: main
-  site_domain: texflow-site.vercel.app
-  base_url: https://texflow-site.vercel.app
+  site_domain: texflow.com.br
+  base_url: https://texflow.com.br
   auth_endpoint: oauth
 
 media_folder: "public/images/blog"
