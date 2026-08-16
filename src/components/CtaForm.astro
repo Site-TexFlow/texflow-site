@@ -218,6 +218,8 @@ const segments = [
       }
 
       form.reset();
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({event: 'form_submit'});
       if (status) {
         status.textContent = "Mensagem enviada! Nossa equipe vai entrar em contato em breve.";
         status.classList.remove("hidden");
