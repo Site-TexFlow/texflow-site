@@ -1,10 +1,4 @@
 ---
-// Nota e contagem de avaliações do perfil público do Google Meu Negócio.
-// Valor definido manualmente — atualize periodicamente para refletir o número real.
-const rating = 4.8;
-const reviewCount = 16;
-const ratingPercent = (rating / 5) * 100;
-
 const starPath =
   "M12 2.5l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7-5.4-4.7 7.1-.6L12 2.5z";
 ---
@@ -14,36 +8,19 @@ const starPath =
     <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
       AVALIE-NOS NO <span class="text-orange-500">GOOGLE</span>
     </h2>
-    <p class="mt-3 text-white/70 leading-relaxed max-w-xl mx-auto">
+    <p class="mt-3 text-white leading-relaxed max-w-xl mx-auto">
       Sua avaliação ajuda outras empresas a conhecer nosso trabalho e
       fortalece nossa reputação no Google.
     </p>
 
-    <div class="mt-8 flex flex-col items-center gap-3">
-      <div class="relative inline-flex">
-        <div class="flex gap-1.5">
-          {
-            Array.from({ length: 5 }).map(() => (
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="rgba(255,255,255,0.15)">
-                <path d={starPath} />
-              </svg>
-            ))
-          }
-        </div>
-        <div class="absolute inset-0 overflow-hidden flex gap-1.5" style={`width: ${ratingPercent}%`}>
-          {
-            Array.from({ length: 5 }).map(() => (
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#e8672e" class="shrink-0">
-                <path d={starPath} />
-              </svg>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="text-white/70 text-sm">
-        <span class="text-white font-bold">{rating.toFixed(1).replace(".", ",")}</span> de {reviewCount} avaliações no Google
-      </div>
+    <div class="mt-8 flex justify-center gap-1.5">
+      {
+        Array.from({ length: 5 }).map(() => (
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="#e8672e">
+            <path d={starPath} />
+          </svg>
+        ))
+      }
     </div>
 
     <a

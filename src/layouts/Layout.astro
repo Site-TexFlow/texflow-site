@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import WhatsAppFloat from "../components/WhatsAppFloat.astro";
 
 interface Props {
   title?: string;
@@ -80,5 +81,6 @@ const ogImageURL = new URL(image, Astro.site);
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <slot />
+    <WhatsAppFloat />
   </body>
 </html>
