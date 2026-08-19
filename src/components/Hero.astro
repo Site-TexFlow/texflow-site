@@ -50,39 +50,35 @@ const slides = Object.keys(slideModules)
         aumentam a eficiência, reduzem custos e prolongam a vida útil dos seus
         equipamentos e processos.
       </p>
-      <div class="mt-8 flex flex-wrap gap-8">
-        <div class="flex flex-col items-stretch gap-5">
-          <a
-            href="#contato"
-            class="flex items-center justify-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-orange-600 transition-colors"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-              <path d="M8 3h8a2 2 0 012 2v14l-6-3-6 3V5a2 2 0 012-2z" stroke="white" stroke-width="1.8" stroke-linejoin="round" />
-            </svg>
-            Solicitar Orçamento
-          </a>
-          <a href="tel:+554134030144" class="flex items-center justify-center gap-2 text-white hover:text-orange-400 transition-colors font-semibold text-2xl">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="shrink-0"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
-            (41) 3403-0144
-          </a>
-        </div>
-        <div class="flex flex-col items-stretch gap-5">
-          <a
-            href="https://wa.me/5541989046545"
-            target="_blank"
-            rel="noopener"
-            class="flex items-center justify-center gap-2 border border-white/60 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-white hover:text-navy-900 transition-colors"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.4-.3z" />
-            </svg>
-            Falar no WhatsApp
-          </a>
-          <a href="tel:+5541989046545" class="flex items-center justify-center gap-2 text-white hover:text-orange-400 transition-colors font-semibold text-2xl">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="shrink-0"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
-            (41) 98904-6545
-          </a>
-        </div>
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
+        <a
+          href="#contato"
+          class="flex items-center justify-start gap-2 bg-orange-500 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-orange-600 transition-colors"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+            <path d="M8 3h8a2 2 0 012 2v14l-6-3-6 3V5a2 2 0 012-2z" stroke="white" stroke-width="1.8" stroke-linejoin="round" />
+          </svg>
+          Solicitar Orçamento
+        </a>
+        <a
+          href="https://wa.me/5541989046545"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center justify-start gap-2 border border-white/60 text-white font-semibold px-6 py-3.5 rounded-md hover:bg-white hover:text-navy-900 transition-colors"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.4-.3z" />
+          </svg>
+          Falar no WhatsApp
+        </a>
+        <a href="tel:+554134030144" class="flex items-center justify-start gap-2 text-white hover:text-orange-400 transition-colors font-semibold text-2xl">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="shrink-0"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
+          (41) 3403-0144
+        </a>
+        <a href="tel:+5541989046545" class="flex items-center justify-start gap-2 text-white hover:text-orange-400 transition-colors font-semibold text-2xl">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="shrink-0"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
+          (41) 98904-6545
+        </a>
       </div>
       <a href="mailto:contato@texflow.com.br" class="mt-5 flex items-center gap-2 text-white hover:text-orange-400 transition-colors text-base w-fit">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="shrink-0"><path d="M3 6h18v12H3V6zm0 0l9 7 9-7"/></svg>
