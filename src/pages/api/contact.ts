@@ -6,6 +6,7 @@ export const prerender = false;
 
 const TO_EMAIL = "contato@texflow.com.br";
 const BCC_EMAIL = "brunnww.digital@gmail.com";
+const GRAVAMETAL_BCC_EMAIL = "gravametal@gmail.com";
 const FROM_EMAIL = "TexFlow Site <formulario@texflow.com.br>";
 
 const resend = new Resend(RESEND_API_KEY);
@@ -34,6 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
   const whatsapp = String(body.whatsapp ?? "").trim();
   const segment = String(body.segment ?? "").trim();
   const message = String(body.message ?? "").trim();
+  const source = String(body.source ?? "").trim();
 
   if (!name || !company || !email || !whatsapp || !segment || !message) {
     return new Response(JSON.stringify({ error: "Preencha todos os campos obrigatórios." }), { status: 400 });
@@ -43,11 +45,13 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify({ error: "E-mail inválido." }), { status: 400 });
   }
 
+  const bcc = source === "outros-servicos" ? [BCC_EMAIL, GRAVAMETAL_BCC_EMAIL] : [BCC_EMAIL];
+
   try {
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: [TO_EMAIL],
-      bcc: [BCC_EMAIL],
+      bcc,
       replyTo: email,
       subject: `Novo pedido de orçamento — ${company}`,
       html: `
