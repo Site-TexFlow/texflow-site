@@ -82,5 +82,34 @@ const ogImageURL = new URL(image, Astro.site);
     <!-- End Google Tag Manager (noscript) -->
     <slot />
     <WhatsAppFloat />
+
+    <script>
+      // Rastreamento delegado de cliques em contato direto (tel:/mailto:) e
+      // nos links de rota do mapa — cobre qualquer instância desses links em
+      // qualquer página/componente, sem precisar anotar cada um manualmente.
+      document.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement | null;
+        if (!target) return;
+
+        const contactLink = target.closest<HTMLAnchorElement>('a[href^="tel:"], a[href^="mailto:"]');
+        if (contactLink) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: contactLink.href.startsWith("tel:") ? "phone_click" : "email_click",
+            link_url: contactLink.href,
+          });
+          return;
+        }
+
+        const directionsLink = target.closest<HTMLAnchorElement>('#map-directions-popover a[href]');
+        if (directionsLink) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "directions_click",
+            method: directionsLink.href.includes("waze.com") ? "waze" : "google_maps",
+          });
+        }
+      });
+    </script>
   </body>
 </html>

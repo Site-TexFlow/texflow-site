@@ -6,6 +6,8 @@ backend:
   base_url: https://www.texflow.com.br
   auth_endpoint: oauth
 
+publish_mode: editorial_workflow
+
 media_folder: "public/images/blog"
 public_folder: "/images/blog"
 

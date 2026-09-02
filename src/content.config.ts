@@ -47,4 +47,78 @@ const gallery = defineCollection({
   }),
 });
 
-export const collections = { blog, gallery };
+// Um arquivo por semana — histórico do relatório de performance oculto.
+// Números ficam crus (não formatados) de propósito: o seletor de período
+// (Semana/Quinzena/Mês/Trimestre) soma múltiplas semanas, e isso só é
+// possível guardando number, não string já formatada em R$/%.
+const reports = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/reports' }),
+  schema: z.object({
+    periodoLabel: z.string(),
+    periodoInicio: z.coerce.date(),
+    periodoFim: z.coerce.date(),
+    geradoEm: z.coerce.date(),
+    revisao: z.string(),
+
+    kpis: z.object({
+      investimento: z.number(),
+      cliques: z.number(),
+      impressoes: z.number(),
+      ctr: z.number(),
+      conversoes: z.number(),
+      custoConversao: z.number(),
+    }),
+
+    semanas: z.array(z.object({
+      label: z.string(),
+      periodoLabel: z.string(),
+      custo: z.number(),
+      parcial: z.boolean().default(false),
+    })),
+
+    campanhas: z.array(z.object({
+      nome: z.string(),
+      orcamentoDiario: z.number(),
+      linhas: z.array(z.object({
+        semanaLabel: z.string(),
+        custo: z.number(),
+        cliques: z.number(),
+        impressoes: z.number(),
+        ctr: z.number(),
+        conversoes: z.number(),
+        parcial: z.boolean().default(false),
+      })),
+    })),
+
+    grupos: z.array(z.object({
+      campanha: z.string(),
+      grupo: z.string(),
+      custo: z.number(),
+      cliques: z.number(),
+      impressoes: z.number(),
+      conversoes: z.number(),
+      nota: z.string().optional(),
+    })),
+
+    destaqueGrupo: z.string().optional(),
+
+    matchGroups: z.array(z.object({
+      campanha: z.string(),
+      cor: z.string().optional(),
+      itens: z.array(z.object({
+        tipo: z.string(),
+        conversoes: z.number(),
+      })),
+    })).default([]),
+
+    acoesExecutadas: z.object({
+      automaticas: z.array(z.string()).default([]),
+      manuais: z.array(z.string()).default([]),
+      pendenteInputManual: z.boolean().default(true),
+    }).default({ automaticas: [], manuais: [], pendenteInputManual: true }),
+
+    planoProximaSemana: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { blog, gallery, reports };

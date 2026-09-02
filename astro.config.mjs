@@ -11,13 +11,20 @@ export default defineConfig({
   site: 'https://texflow-site.vercel.app',
   output: 'static',
   adapter: vercel(),
-  integrations: [sitemap(), decapCmsOauth()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/relatorio-performance'),
+    }),
+    decapCmsOauth(),
+  ],
   vite: {
     plugins: [tailwindcss()]
   },
   env: {
     schema: {
       RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
+      DASHBOARD_USER: envField.string({ context: 'server', access: 'secret' }),
+      DASHBOARD_PASSWORD: envField.string({ context: 'server', access: 'secret' }),
     },
   },
 });
