@@ -25,6 +25,7 @@ export default defineConfig({
       RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
       DASHBOARD_USER: envField.string({ context: 'server', access: 'secret' }),
       DASHBOARD_PASSWORD: envField.string({ context: 'server', access: 'secret' }),
+      GOOGLE_SERVICE_ACCOUNT_KEY: envField.string({ context: 'server', access: 'secret' }),
     },
   },
 });
