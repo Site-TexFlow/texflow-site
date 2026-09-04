@@ -1,12 +1,10 @@
 import { getGoogleClient } from "./google-auth";
 
-// BLOQUEADO: a Google Analytics Admin API ainda não está habilitada no
-// projeto GCP (texflow-dashboard) — sem ela não dá pra confirmar o Property
-// ID real da propriedade "Texflow" por API. O ID do stream (5411827270) que
-// aparece no GA4 NÃO é o Property ID; são identificadores diferentes.
-// Preencher assim que soubermos o Property ID (Admin > Configurações da
-// propriedade, no próprio GA4) ou a Admin API for habilitada.
-const GA4_PROPERTY_ID = "";
+// Property ID confirmado pelo Bruno (GA4 > Admin > Configurações da
+// propriedade) — diferente do ID do stream (5411827270). A Analytics Admin
+// API segue desabilitada no projeto GCP, mas não é necessária pra isso: a
+// Data API (runReport, usada abaixo) é um produto separado e já funciona.
+const GA4_PROPERTY_ID = "383885126";
 
 export interface Ga4Report {
   dimensionHeaders: Array<{ name: string }>;
@@ -22,6 +20,9 @@ export async function getGa4Report(opts: {
   endDate: string;
   metrics: string[];
   dimensions?: string[];
+  dimensionFilter?: Record<string, unknown>;
+  orderByMetric?: string;
+  limit?: number;
 }): Promise<Ga4Report> {
   if (!GA4_PROPERTY_ID) {
     throw new Error("GA4_PROPERTY_ID ainda não configurado — ver comentário no topo deste arquivo.");
@@ -34,6 +35,9 @@ export async function getGa4Report(opts: {
       dateRanges: [{ startDate: opts.startDate, endDate: opts.endDate }],
       metrics: opts.metrics.map((name) => ({ name })),
       dimensions: (opts.dimensions ?? []).map((name) => ({ name })),
+      ...(opts.dimensionFilter ? { dimensionFilter: opts.dimensionFilter } : {}),
+      ...(opts.orderByMetric ? { orderBys: [{ metric: { metricName: opts.orderByMetric }, desc: true }] } : {}),
+      ...(opts.limit ? { limit: opts.limit } : {}),
     },
   });
   return res.data;

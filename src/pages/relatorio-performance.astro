@@ -3,6 +3,8 @@ export const prerender = false;
 
 import { DASHBOARD_USER, DASHBOARD_PASSWORD } from "astro:env/server";
 import { getSearchAnalytics, type SearchAnalyticsRow } from "../lib/search-console";
+import { getGa4Report } from "../lib/ga4";
+import { getValidRoutes, isValidSiteUrl, isValidPath } from "../lib/site-routes";
 
 // Basic Auth — além de ser uma URL não-listada (fora do menu, sem link em
 // nenhuma página), exige usuário/senha. As duas camadas são a decisão
@@ -26,6 +28,8 @@ endDate.setDate(endDate.getDate() - 3);
 const startDate = new Date(endDate);
 startDate.setDate(startDate.getDate() - 27);
 
+const validRoutes = await getValidRoutes();
+
 let totals: SearchAnalyticsRow | null = null;
 let topQueries: SearchAnalyticsRow[] = [];
 let topPages: SearchAnalyticsRow[] = [];
@@ -36,14 +40,74 @@ try {
   const [totalsRows, queriesRows, pagesRows] = await Promise.all([
     getSearchAnalytics({ ...range, dimensions: [], rowLimit: 1 }),
     getSearchAnalytics({ ...range, dimensions: ["query"], rowLimit: 10 }),
-    getSearchAnalytics({ ...range, dimensions: ["page"], rowLimit: 10 }),
+    // Busca mais que o necessário porque URLs legadas do WordPress antigo
+    // (filtradas abaixo) ainda aparecem no índice do Google e ocupariam
+    // posições no topo se pedíssemos só 10.
+    getSearchAnalytics({ ...range, dimensions: ["page"], rowLimit: 50 }),
   ]);
   totals = totalsRows[0] ?? null;
   topQueries = queriesRows;
-  topPages = pagesRows;
+  topPages = pagesRows.filter((row) => isValidSiteUrl(row.keys[0], validRoutes)).slice(0, 10);
 } catch (err) {
   searchConsoleError = err instanceof Error ? err.message : "Erro desconhecido ao consultar o Search Console.";
   console.error("Search Console error:", err);
+}
+
+// GA4 — eventos de conversão confirmados via consulta real ao eventName
+// (não são os mesmos nomes literais da spec original, que tinha um pequeno
+// desvio: é "ads_conversion_Fale_conosco_1", com sufixo "_1").
+const CONVERSION_EVENTS = ["contato_form", "form_start", "Whatsapp_lead", "ads_conversion_Fale_conosco_1"];
+
+let ga4Kpis: { activeUsers: number; sessions: number; newUsers: number; engagementRate: number } | null = null;
+let ga4Channels: Array<{ channel: string; sessions: number }> = [];
+let ga4Pages: Array<{ path: string; views: number }> = [];
+let ga4Conversions: Array<{ event: string; count: number }> = [];
+let ga4Error: string | null = null;
+
+const ga4Row = (r: { dimensionValues: { value: string }[]; metricValues: { value: string }[] }, i = 0) =>
+  ({ dim: r.dimensionValues[0]?.value, metric: Number(r.metricValues[i]?.value ?? 0) });
+
+try {
+  const ga4Range = { startDate: "28daysAgo", endDate: "yesterday" };
+  const [kpiReport, channelReport, pageReport, conversionReport] = await Promise.all([
+    getGa4Report({ ...ga4Range, metrics: ["activeUsers", "sessions", "newUsers", "engagementRate"] }),
+    getGa4Report({ ...ga4Range, dimensions: ["sessionDefaultChannelGroup"], metrics: ["sessions"], orderByMetric: "sessions" }),
+    getGa4Report({ ...ga4Range, dimensions: ["pagePath"], metrics: ["screenPageViews"], orderByMetric: "screenPageViews", limit: 30 }),
+    getGa4Report({
+      ...ga4Range,
+      dimensions: ["eventName"],
+      metrics: ["eventCount"],
+      dimensionFilter: {
+        filter: { fieldName: "eventName", inListFilter: { values: CONVERSION_EVENTS } },
+      },
+    }),
+  ]);
+
+  const kpiValues = kpiReport.rows?.[0]?.metricValues ?? [];
+  ga4Kpis = {
+    activeUsers: Number(kpiValues[0]?.value ?? 0),
+    sessions: Number(kpiValues[1]?.value ?? 0),
+    newUsers: Number(kpiValues[2]?.value ?? 0),
+    engagementRate: Number(kpiValues[3]?.value ?? 0),
+  };
+  ga4Channels = (channelReport.rows ?? []).map((r) => {
+    const { dim, metric } = ga4Row(r);
+    return { channel: dim, sessions: metric };
+  });
+  ga4Pages = (pageReport.rows ?? [])
+    .map((r) => {
+      const { dim, metric } = ga4Row(r);
+      return { path: dim, views: metric };
+    })
+    .filter((row) => isValidPath(row.path, validRoutes))
+    .slice(0, 10);
+  ga4Conversions = (conversionReport.rows ?? []).map((r) => {
+    const { dim, metric } = ga4Row(r);
+    return { event: dim, count: metric };
+  });
+} catch (err) {
+  ga4Error = err instanceof Error ? err.message : "Erro desconhecido ao consultar o GA4.";
+  console.error("GA4 error:", err);
 }
 ---
 
@@ -144,6 +208,105 @@ try {
                     <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.impressions}</td>
                     <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{(row.ctr * 100).toFixed(1)}%</td>
                     <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.position.toFixed(1)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+      </section>
+
+      <section style="border-top:1.5px solid #14182E; padding-top:20px; margin-top:40px;">
+        <div style="font-weight:600; color:#1E2761; font-size:13px; margin-bottom:4px;">SITE — GA4</div>
+        <h2 style="font-size:20px; margin:0 0 4px;">Comportamento no site</h2>
+        <p style="color:#676F82; font-size:13.5px; margin-bottom:20px;">Últimos 28 dias</p>
+
+        {ga4Error && (
+          <p style="background:#EAE6D9; border-left:3px solid #FF6A2C; padding:14px 16px; font-size:14px;">
+            Falha ao consultar o GA4: {ga4Error}
+          </p>
+        )}
+
+        {ga4Kpis && (
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid #B9B29B; border-left:1px solid #B9B29B; margin-bottom:32px;">
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Usuários ativos</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{ga4Kpis.activeUsers}</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Sessões</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{ga4Kpis.sessions}</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Novos usuários</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{ga4Kpis.newUsers}</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Taxa de engajamento</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{(ga4Kpis.engagementRate * 100).toFixed(1)}%</div>
+            </div>
+          </div>
+        )}
+
+        {ga4Conversions.length > 0 && (
+          <>
+            <h3 style="font-size:15px; margin-bottom:10px;">Conversões por tipo</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;">
+              <thead>
+                <tr>
+                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Evento</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Ocorrências</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ga4Conversions.map((row) => (
+                  <tr>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.event}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        {ga4Channels.length > 0 && (
+          <>
+            <h3 style="font-size:15px; margin-bottom:10px;">Origem do tráfego</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;">
+              <thead>
+                <tr>
+                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Canal</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Sessões</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ga4Channels.map((row) => (
+                  <tr>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.channel}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.sessions}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        {ga4Pages.length > 0 && (
+          <>
+            <h3 style="font-size:15px; margin-bottom:10px;">Páginas mais acessadas</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:13.5px;">
+              <thead>
+                <tr>
+                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Página</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Visualizações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ga4Pages.map((row) => (
+                  <tr>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; word-break:break-all;">{row.path}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.views}</td>
                   </tr>
                 ))}
               </tbody>
