@@ -100,12 +100,20 @@ try {
     const { dim, metric } = ga4Row(r);
     return { channel: dim, sessions: metric };
   });
-  ga4Pages = (pageReport.rows ?? [])
-    .map((r) => {
-      const { dim, metric } = ga4Row(r);
-      return { path: dim, views: metric };
-    })
-    .filter((row) => isValidPath(row.path, validRoutes))
+  // GA4 conta /rota e /rota/ como paths distintos (trailingSlash do site é
+  // "ignore") — normaliza removendo a barra final antes de agrupar, exceto
+  // na home, e soma as visualizações das duas variantes na mesma linha.
+  const normalizePath = (path: string) => (path === "/" ? "/" : path.replace(/\/+$/, ""));
+  const pageViewsByPath = new Map<string, number>();
+  for (const r of pageReport.rows ?? []) {
+    const { dim, metric } = ga4Row(r);
+    if (!isValidPath(dim, validRoutes)) continue;
+    const normalized = normalizePath(dim);
+    pageViewsByPath.set(normalized, (pageViewsByPath.get(normalized) ?? 0) + metric);
+  }
+  ga4Pages = [...pageViewsByPath.entries()]
+    .map(([path, views]) => ({ path, views }))
+    .sort((a, b) => b.views - a.views)
     .slice(0, 10);
   ga4Conversions = (conversionReport.rows ?? []).map((r) => {
     const { dim, metric } = ga4Row(r);
