@@ -95,7 +95,7 @@ const ogImageURL = new URL(image, Astro.site);
         if (contactLink) {
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
-            event: contactLink.href.startsWith("tel:") ? "phone_click" : "email_click",
+            event: contactLink.href.startsWith("tel:") ? "click_telefone" : "click_email",
             link_url: contactLink.href,
           });
           return;
@@ -105,7 +105,7 @@ const ogImageURL = new URL(image, Astro.site);
         if (directionsLink) {
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
-            event: "directions_click",
+            event: "click_rota",
             method: directionsLink.href.includes("waze.com") ? "waze" : "google_maps",
           });
         }
