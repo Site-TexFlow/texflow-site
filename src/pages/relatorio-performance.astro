@@ -5,6 +5,8 @@ import { DASHBOARD_USER, DASHBOARD_PASSWORD } from "astro:env/server";
 import { getSearchAnalytics, type SearchAnalyticsRow } from "../lib/search-console";
 import { getGa4Report } from "../lib/ga4";
 import { getValidRoutes, isValidSiteUrl, isValidPath } from "../lib/site-routes";
+import { findLatestAdsSheetId } from "../lib/google-drive";
+import { getAdsSheetRows, type AdsRow } from "../lib/google-sheets";
 
 // Basic Auth — além de ser uma URL não-listada (fora do menu, sem link em
 // nenhuma página), exige usuário/senha. As duas camadas são a decisão
@@ -123,6 +125,69 @@ try {
   ga4Error = err instanceof Error ? err.message : "Erro desconhecido ao consultar o GA4.";
   console.error("GA4 error:", err);
 }
+
+// Google Ads — não há API direta (developer token trava), então o dado vem
+// de um relatório agendado do próprio Google Ads exportado semanalmente pra
+// uma planilha nova (sem ID fixo) dentro da pasta compartilhada com a
+// service account. Localizamos a mais recente pela data de criação.
+let adsTotals: { cost: number; clicks: number; impressions: number; conversions: number } | null = null;
+let adsByCampaign: Array<{ campaign: string; cost: number; clicks: number; impressions: number; conversions: number }> = [];
+let adsByAdGroup: Array<{ campaign: string; adGroup: string; cost: number; clicks: number; impressions: number; conversions: number }> = [];
+let adsError: string | null = null;
+let adsSheetFound = true;
+
+try {
+  const sheetId = await findLatestAdsSheetId();
+  if (!sheetId) {
+    adsSheetFound = false;
+  } else {
+    const allRows = await getAdsSheetRows(sheetId);
+    // Mesma janela de data usada no Search Console, pro "período" do topo
+    // controlar as três seções com o mesmo recorte.
+    const rangeStart = fmt(startDate);
+    const rangeEnd = fmt(endDate);
+    const rows = allRows.filter((r) => r.day >= rangeStart && r.day <= rangeEnd);
+
+    adsTotals = rows.reduce(
+      (acc, r) => ({
+        cost: acc.cost + r.cost,
+        clicks: acc.clicks + r.clicks,
+        impressions: acc.impressions + r.impressions,
+        conversions: acc.conversions + r.conversions,
+      }),
+      { cost: 0, clicks: 0, impressions: 0, conversions: 0 }
+    );
+
+    const byCampaign = new Map<string, { cost: number; clicks: number; impressions: number; conversions: number }>();
+    const byAdGroup = new Map<string, AdsRow & { key: string }>();
+    for (const r of rows) {
+      const c = byCampaign.get(r.campaign) ?? { cost: 0, clicks: 0, impressions: 0, conversions: 0 };
+      c.cost += r.cost;
+      c.clicks += r.clicks;
+      c.impressions += r.impressions;
+      c.conversions += r.conversions;
+      byCampaign.set(r.campaign, c);
+
+      const groupKey = `${r.campaign} ${r.adGroup}`;
+      const g = byAdGroup.get(groupKey) ?? { ...r, cost: 0, clicks: 0, impressions: 0, conversions: 0, key: groupKey };
+      g.cost += r.cost;
+      g.clicks += r.clicks;
+      g.impressions += r.impressions;
+      g.conversions += r.conversions;
+      byAdGroup.set(groupKey, g);
+    }
+
+    adsByCampaign = [...byCampaign.entries()]
+      .map(([campaign, m]) => ({ campaign, ...m }))
+      .sort((a, b) => b.cost - a.cost);
+    adsByAdGroup = [...byAdGroup.values()]
+      .map((g) => ({ campaign: g.campaign, adGroup: g.adGroup, cost: g.cost, clicks: g.clicks, impressions: g.impressions, conversions: g.conversions }))
+      .sort((a, b) => b.cost - a.cost);
+  }
+} catch (err) {
+  adsError = err instanceof Error ? err.message : "Erro desconhecido ao consultar o Google Ads.";
+  console.error("Google Ads error:", err);
+}
 ---
 
 <!doctype html>
@@ -137,8 +202,8 @@ try {
     <div style="max-width:860px; margin:0 auto; padding:60px 24px 100px;">
       <h1 style="font-size:28px; margin-bottom:6px;">Relatório de Performance</h1>
       <p style="color:#676F82; line-height:1.6; margin-bottom:20px;">
-        Google Ads, GA4, blog e ações executadas ainda pendentes de
-        integração. Search Console já está ao vivo abaixo.
+        Blog e ações executadas ainda pendentes de integração. Google Ads,
+        Search Console e GA4 já estão ao vivo abaixo.
       </p>
 
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:40px;">
@@ -155,6 +220,109 @@ try {
       </div>
 
       <section style="border-top:1.5px solid #14182E; padding-top:20px;">
+        <div style="font-weight:600; color:#1E2761; font-size:13px; margin-bottom:4px;">GOOGLE ADS</div>
+        <h2 style="font-size:20px; margin:0 0 4px;">Últimos {days} dias</h2>
+        <p style="color:#676F82; font-size:13.5px; margin-bottom:20px;">{fmt(startDate)} a {fmt(endDate)} · lido da planilha semanal mais recente</p>
+
+        {adsError && (
+          <p style="background:#EAE6D9; border-left:3px solid #FF6A2C; padding:14px 16px; font-size:14px;">
+            Falha ao consultar o Google Ads: {adsError}
+          </p>
+        )}
+
+        {!adsSheetFound && !adsError && (
+          <p style="background:#EAE6D9; border-left:3px solid #FF6A2C; padding:14px 16px; font-size:14px;">
+            Nenhuma planilha "TexFlow - Google Ads Semanal" encontrada na pasta do Drive.
+          </p>
+        )}
+
+        {adsTotals && (
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid #B9B29B; border-left:1px solid #B9B29B; margin-bottom:32px;">
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Investimento</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">R$ {adsTotals.cost.toFixed(2)}</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Cliques</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{adsTotals.clicks}</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Impressões</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{adsTotals.impressions}</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">CTR médio</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{adsTotals.impressions > 0 ? ((adsTotals.clicks / adsTotals.impressions) * 100).toFixed(2) : "0.00"}%</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Conversões</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">{adsTotals.conversions}</div>
+            </div>
+            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
+              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Custo / conversão</div>
+              <div style="font-weight:700; font-size:22px; color:#1E2761;">R$ {adsTotals.conversions > 0 ? (adsTotals.cost / adsTotals.conversions).toFixed(2) : "—"}</div>
+            </div>
+          </div>
+        )}
+
+        {adsByCampaign.length > 0 && (
+          <>
+            <h3 style="font-size:15px; margin-bottom:10px;">Por campanha</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;">
+              <thead>
+                <tr>
+                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Campanha</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Custo</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Cliques</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Impr.</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Conv.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {adsByCampaign.map((row) => (
+                  <tr>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.campaign}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">R$ {row.cost.toFixed(2)}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.clicks}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.impressions}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.conversions}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        {adsByAdGroup.length > 0 && (
+          <>
+            <h3 style="font-size:15px; margin-bottom:10px;">Por grupo de anúncios</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:13.5px;">
+              <thead>
+                <tr>
+                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Campanha</th>
+                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Grupo</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Custo</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Cliques</th>
+                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Conv.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {adsByAdGroup.map((row) => (
+                  <tr>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.campaign}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.adGroup}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">R$ {row.cost.toFixed(2)}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.clicks}</td>
+                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.conversions}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+      </section>
+
+      <section style="border-top:1.5px solid #14182E; padding-top:20px; margin-top:40px;">
         <div style="font-weight:600; color:#1E2761; font-size:13px; margin-bottom:4px;">SEO — SEARCH CONSOLE</div>
         <h2 style="font-size:20px; margin:0 0 4px;">Últimos {days} dias</h2>
         <p style="color:#676F82; font-size:13.5px; margin-bottom:20px;">{fmt(startDate)} a {fmt(endDate)}</p>
