@@ -136,16 +136,24 @@ let adsByAdGroup: Array<{ campaign: string; adGroup: string; cost: number; click
 let adsError: string | null = null;
 let adsSheetFound = true;
 
+// Ads não tem o atraso de processamento do Search Console (~2-3 dias) — o
+// relatório nativo do próprio Google Ads já traz dado de ontem. Usa a mesma
+// janela de "dias" do seletor, mas ancorada em ontem, igual ao GA4 — reusar
+// o endDate com folga de 3 dias do Search Console aqui cortava dias reais
+// e recentes da planilha sem necessidade.
+const adsEndDate = new Date();
+adsEndDate.setDate(adsEndDate.getDate() - 1);
+const adsStartDate = new Date(adsEndDate);
+adsStartDate.setDate(adsStartDate.getDate() - (days - 1));
+
 try {
   const sheetId = await findLatestAdsSheetId();
   if (!sheetId) {
     adsSheetFound = false;
   } else {
     const allRows = await getAdsSheetRows(sheetId);
-    // Mesma janela de data usada no Search Console, pro "período" do topo
-    // controlar as três seções com o mesmo recorte.
-    const rangeStart = fmt(startDate);
-    const rangeEnd = fmt(endDate);
+    const rangeStart = fmt(adsStartDate);
+    const rangeEnd = fmt(adsEndDate);
     const rows = allRows.filter((r) => r.day >= rangeStart && r.day <= rangeEnd);
 
     adsTotals = rows.reduce(
@@ -222,7 +230,7 @@ try {
       <section style="border-top:1.5px solid #14182E; padding-top:20px;">
         <div style="font-weight:600; color:#1E2761; font-size:13px; margin-bottom:4px;">GOOGLE ADS</div>
         <h2 style="font-size:20px; margin:0 0 4px;">Últimos {days} dias</h2>
-        <p style="color:#676F82; font-size:13.5px; margin-bottom:20px;">{fmt(startDate)} a {fmt(endDate)} · lido da planilha semanal mais recente</p>
+        <p style="color:#676F82; font-size:13.5px; margin-bottom:20px;">{fmt(adsStartDate)} a {fmt(adsEndDate)} · lido da planilha semanal mais recente</p>
 
         {adsError && (
           <p style="background:#EAE6D9; border-left:3px solid #FF6A2C; padding:14px 16px; font-size:14px;">
