@@ -1,0 +1,52 @@
+name: Sync Ads snapshot
+
+# Rotina semanal de dado bruto: só sincroniza números do Google Ads, sem
+# nenhum conteúdo editorial. Por isso commita direto na main, sem PR —
+# diferente do fluxo do blog, que continua exigindo aprovação manual.
+on:
+  schedule:
+    # Toda segunda-feira às 08:00 no horário de Brasília (UTC-3 o ano todo,
+    # sem horário de verão no Brasil desde 2019) = 11:00 UTC.
+    - cron: "0 11 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-ads-snapshot
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Ads snapshot sync
+        env:
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+        run: npm run ads:sync
+
+      - name: Commit and push if there is a new snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git status --porcelain src/content/reports | grep -q .; then
+            git add src/content/reports
+            git commit -m "chore: snapshot semanal de dados do Google Ads (TexFlow)"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          else
+            echo "Nenhum arquivo novo para commitar."
+          fi
