@@ -1,14 +1,1299 @@
 {
-  "generatedAt": "2026-09-08T20:25:32.541Z",
-  "spreadsheetId": "19fmkOtGJzL7Jd5ujbnSW4vBBtiaGKSYwT-LxpK1EivY",
+  "generatedAt": "2026-09-08T22:52:55.359Z",
+  "spreadsheetId": "13IZZKKDTWCjeLL-DHjUZ5Hu4vEqdon8SR2rRL_DavsA",
   "days": [
+    "2026-08-09",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14",
+    "2026-08-15",
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-21",
+    "2026-08-22",
+    "2026-08-23",
+    "2026-08-24",
+    "2026-08-25",
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-29",
+    "2026-08-30",
+    "2026-08-31",
     "2026-09-01",
     "2026-09-02",
     "2026-09-03",
-    "2026-09-04"
+    "2026-09-04",
+    "2026-09-05",
+    "2026-09-06",
+    "2026-09-07"
   ],
-  "rowCount": 16,
+  "rowCount": 154,
   "rows": [
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Homenagem",
+      "day": "2026-08-09",
+      "cost": 10.48,
+      "clicks": 4,
+      "ctr": 0.0714,
+      "impressions": 56,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-09",
+      "cost": 11.28,
+      "clicks": 6,
+      "ctr": 0.1429,
+      "impressions": 42,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Inauguração",
+      "day": "2026-08-09",
+      "cost": 12.01,
+      "clicks": 4,
+      "ctr": 0.129,
+      "impressions": 31,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Punções e Carimbos",
+      "day": "2026-08-09",
+      "cost": 15.43,
+      "clicks": 4,
+      "ctr": 0.3077,
+      "impressions": 13,
+      "conversions": 3
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-09",
+      "cost": 5.22,
+      "clicks": 2,
+      "ctr": 0.1538,
+      "impressions": 13,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-09",
+      "cost": 7.69,
+      "clicks": 2,
+      "ctr": 0.1538,
+      "impressions": 13,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-09",
+      "cost": 84.37,
+      "clicks": 42,
+      "ctr": 0.4516,
+      "impressions": 93,
+      "conversions": 3
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-09",
+      "cost": 3.65,
+      "clicks": 1,
+      "ctr": 0.0625,
+      "impressions": 16,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Homenagem",
+      "day": "2026-08-10",
+      "cost": 34.97,
+      "clicks": 11,
+      "ctr": 0.1571,
+      "impressions": 70,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-10",
+      "cost": 9.65,
+      "clicks": 3,
+      "ctr": 0.039,
+      "impressions": 77,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Inauguração",
+      "day": "2026-08-10",
+      "cost": 4.37,
+      "clicks": 2,
+      "ctr": 0.0417,
+      "impressions": 48,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Punções e Carimbos",
+      "day": "2026-08-10",
+      "cost": 8.98,
+      "clicks": 4,
+      "ctr": 0.2222,
+      "impressions": 18,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Régua e Escala",
+      "day": "2026-08-10",
+      "cost": 1.55,
+      "clicks": 1,
+      "ctr": 0.5,
+      "impressions": 2,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-10",
+      "cost": 3.67,
+      "clicks": 1,
+      "ctr": 0.037,
+      "impressions": 27,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-10",
+      "cost": 13.69,
+      "clicks": 4,
+      "ctr": 0.129,
+      "impressions": 31,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-10",
+      "cost": 67.69,
+      "clicks": 28,
+      "ctr": 0.3636,
+      "impressions": 77,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-10",
+      "cost": 36.01,
+      "clicks": 5,
+      "ctr": 0.1667,
+      "impressions": 30,
+      "conversions": 3
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Homenagem",
+      "day": "2026-08-11",
+      "cost": 20.11,
+      "clicks": 7,
+      "ctr": 0.0972,
+      "impressions": 72,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-11",
+      "cost": 3.89,
+      "clicks": 2,
+      "ctr": 0.0278,
+      "impressions": 72,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Inauguração",
+      "day": "2026-08-11",
+      "cost": 8.59,
+      "clicks": 3,
+      "ctr": 0.1,
+      "impressions": 30,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Punções e Carimbos",
+      "day": "2026-08-11",
+      "cost": 9.26,
+      "clicks": 5,
+      "ctr": 0.2632,
+      "impressions": 19,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Régua e Escala",
+      "day": "2026-08-11",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 2,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-11",
+      "cost": 17.05,
+      "clicks": 6,
+      "ctr": 0.3333,
+      "impressions": 18,
+      "conversions": 4
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-11",
+      "cost": 19.65,
+      "clicks": 4,
+      "ctr": 0.0784,
+      "impressions": 51,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-11",
+      "cost": 30.48,
+      "clicks": 9,
+      "ctr": 0.25,
+      "impressions": 36,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-11",
+      "cost": 19.24,
+      "clicks": 4,
+      "ctr": 0.0833,
+      "impressions": 48,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Homenagem",
+      "day": "2026-08-12",
+      "cost": 23.57,
+      "clicks": 8,
+      "ctr": 0.1538,
+      "impressions": 52,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-12",
+      "cost": 18.68,
+      "clicks": 6,
+      "ctr": 0.0822,
+      "impressions": 73,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Inauguração",
+      "day": "2026-08-12",
+      "cost": 12.17,
+      "clicks": 4,
+      "ctr": 0.2,
+      "impressions": 20,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Punções e Carimbos",
+      "day": "2026-08-12",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 10,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-12",
+      "cost": 5.37,
+      "clicks": 2,
+      "ctr": 0.1,
+      "impressions": 20,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-12",
+      "cost": 37.84,
+      "clicks": 12,
+      "ctr": 0.2,
+      "impressions": 60,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-12",
+      "cost": 28.86,
+      "clicks": 11,
+      "ctr": 0.25,
+      "impressions": 44,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-12",
+      "cost": 40.82,
+      "clicks": 8,
+      "ctr": 0.1194,
+      "impressions": 67,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Homenagem",
+      "day": "2026-08-13",
+      "cost": 24.33,
+      "clicks": 7,
+      "ctr": 0.1014,
+      "impressions": 69,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-13",
+      "cost": 12.31,
+      "clicks": 4,
+      "ctr": 0.0465,
+      "impressions": 86,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Inauguração",
+      "day": "2026-08-13",
+      "cost": 1.27,
+      "clicks": 1,
+      "ctr": 0.0526,
+      "impressions": 19,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Punções e Carimbos",
+      "day": "2026-08-13",
+      "cost": 15,
+      "clicks": 7,
+      "ctr": 0.2414,
+      "impressions": 29,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-13",
+      "cost": 6.17,
+      "clicks": 2,
+      "ctr": 0.1,
+      "impressions": 20,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-13",
+      "cost": 30.02,
+      "clicks": 6,
+      "ctr": 0.1277,
+      "impressions": 47,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-13",
+      "cost": 12.19,
+      "clicks": 2,
+      "ctr": 0.08,
+      "impressions": 25,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-13",
+      "cost": 24.35,
+      "clicks": 4,
+      "ctr": 0.2222,
+      "impressions": 18,
+      "conversions": 3
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Homenagem",
+      "day": "2026-08-14",
+      "cost": 16.65,
+      "clicks": 4,
+      "ctr": 0.0976,
+      "impressions": 41,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-14",
+      "cost": 18.63,
+      "clicks": 7,
+      "ctr": 0.1207,
+      "impressions": 58,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Inauguração",
+      "day": "2026-08-14",
+      "cost": 4.92,
+      "clicks": 2,
+      "ctr": 0.1429,
+      "impressions": 14,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Punções e Carimbos",
+      "day": "2026-08-14",
+      "cost": 5.37,
+      "clicks": 3,
+      "ctr": 0.1875,
+      "impressions": 16,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-14",
+      "cost": 13.58,
+      "clicks": 4,
+      "ctr": 0.1333,
+      "impressions": 30,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-14",
+      "cost": 23.3,
+      "clicks": 6,
+      "ctr": 0.1304,
+      "impressions": 46,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-14",
+      "cost": 14.67,
+      "clicks": 7,
+      "ctr": 0.2917,
+      "impressions": 24,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-14",
+      "cost": 1.28,
+      "clicks": 1,
+      "ctr": 0.0256,
+      "impressions": 39,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Homenagem",
+      "day": "2026-08-15",
+      "cost": 13.62,
+      "clicks": 5,
+      "ctr": 0.0893,
+      "impressions": 56,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-15",
+      "cost": 3.79,
+      "clicks": 2,
+      "ctr": 0.087,
+      "impressions": 23,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Inauguração",
+      "day": "2026-08-15",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 10,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Punções e Carimbos",
+      "day": "2026-08-15",
+      "cost": 2.67,
+      "clicks": 1,
+      "ctr": 0.25,
+      "impressions": 4,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-15",
+      "cost": 21.5,
+      "clicks": 9,
+      "ctr": 0.2432,
+      "impressions": 37,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-15",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 7,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-15",
+      "cost": 1.19,
+      "clicks": 1,
+      "ctr": 0.1667,
+      "impressions": 6,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-15",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 7,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-17",
+      "cost": 4.92,
+      "clicks": 2,
+      "ctr": 0.0588,
+      "impressions": 34,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-17",
+      "cost": 0.6,
+      "clicks": 1,
+      "ctr": 0.1429,
+      "impressions": 7,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-17",
+      "cost": 22.06,
+      "clicks": 3,
+      "ctr": 0.12,
+      "impressions": 25,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-17",
+      "cost": 90.42,
+      "clicks": 36,
+      "ctr": 0.259,
+      "impressions": 139,
+      "conversions": 6
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-17",
+      "cost": 10.12,
+      "clicks": 2,
+      "ctr": 0.1111,
+      "impressions": 18,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-18",
+      "cost": 50.01,
+      "clicks": 15,
+      "ctr": 0.0746,
+      "impressions": 201,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-18",
+      "cost": 26.33,
+      "clicks": 10,
+      "ctr": 0.1923,
+      "impressions": 52,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-18",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 8,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-18",
+      "cost": 78.85,
+      "clicks": 43,
+      "ctr": 0.2848,
+      "impressions": 151,
+      "conversions": 8
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-18",
+      "cost": 21.5,
+      "clicks": 4,
+      "ctr": 0.1333,
+      "impressions": 30,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-19",
+      "cost": 38.42,
+      "clicks": 12,
+      "ctr": 0.0649,
+      "impressions": 185,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Régua e Escala",
+      "day": "2026-08-19",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 10,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-19",
+      "cost": 10.37,
+      "clicks": 3,
+      "ctr": 0.0909,
+      "impressions": 33,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-19",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 10,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-19",
+      "cost": 62.71,
+      "clicks": 31,
+      "ctr": 0.31,
+      "impressions": 100,
+      "conversions": 13
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-19",
+      "cost": 3.83,
+      "clicks": 1,
+      "ctr": 0.0417,
+      "impressions": 24,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-20",
+      "cost": 50.97,
+      "clicks": 20,
+      "ctr": 0.1143,
+      "impressions": 175,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Régua e Escala",
+      "day": "2026-08-20",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 1,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-20",
+      "cost": 28.57,
+      "clicks": 8,
+      "ctr": 0.1455,
+      "impressions": 55,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-20",
+      "cost": 8.4,
+      "clicks": 2,
+      "ctr": 0.08,
+      "impressions": 25,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-20",
+      "cost": 9.48,
+      "clicks": 5,
+      "ctr": 0.1724,
+      "impressions": 29,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-20",
+      "cost": 7.49,
+      "clicks": 3,
+      "ctr": 0.0789,
+      "impressions": 38,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Placas de Identificação",
+      "day": "2026-08-21",
+      "cost": 28.24,
+      "clicks": 7,
+      "ctr": 0.0667,
+      "impressions": 105,
+      "conversions": 4
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Régua e Escala",
+      "day": "2026-08-21",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 3,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-21",
+      "cost": 7.41,
+      "clicks": 2,
+      "ctr": 0.0741,
+      "impressions": 27,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-21",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 13,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-21",
+      "cost": 5.13,
+      "clicks": 1,
+      "ctr": 0.0833,
+      "impressions": 12,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-21",
+      "cost": 35.26,
+      "clicks": 6,
+      "ctr": 0.1304,
+      "impressions": 46,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-22",
+      "cost": 9.18,
+      "clicks": 2,
+      "ctr": 0.069,
+      "impressions": 29,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-22",
+      "cost": 8.77,
+      "clicks": 4,
+      "ctr": 0.1053,
+      "impressions": 38,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-22",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 1,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-22",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 14,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-23",
+      "cost": 5.1,
+      "clicks": 3,
+      "ctr": 0.12,
+      "impressions": 25,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-23",
+      "cost": 1.61,
+      "clicks": 1,
+      "ctr": 0.0345,
+      "impressions": 29,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-23",
+      "cost": 27.93,
+      "clicks": 9,
+      "ctr": 0.5294,
+      "impressions": 17,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-23",
+      "cost": 1.74,
+      "clicks": 1,
+      "ctr": 0.1667,
+      "impressions": 6,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-24",
+      "cost": 31.3,
+      "clicks": 10,
+      "ctr": 0.1282,
+      "impressions": 78,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-24",
+      "cost": 5.14,
+      "clicks": 2,
+      "ctr": 0.0667,
+      "impressions": 30,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-24",
+      "cost": 38.62,
+      "clicks": 24,
+      "ctr": 0.3934,
+      "impressions": 61,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-24",
+      "cost": 22.28,
+      "clicks": 6,
+      "ctr": 0.1622,
+      "impressions": 37,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-25",
+      "cost": 75.91,
+      "clicks": 14,
+      "ctr": 0.1094,
+      "impressions": 128,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-25",
+      "cost": 19.98,
+      "clicks": 6,
+      "ctr": 0.1429,
+      "impressions": 42,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-25",
+      "cost": 94.52,
+      "clicks": 37,
+      "ctr": 0.4458,
+      "impressions": 83,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-25",
+      "cost": 15.74,
+      "clicks": 5,
+      "ctr": 0.1667,
+      "impressions": 30,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-26",
+      "cost": 17.29,
+      "clicks": 6,
+      "ctr": 0.0674,
+      "impressions": 89,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-26",
+      "cost": 33.6,
+      "clicks": 9,
+      "ctr": 0.18,
+      "impressions": 50,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-26",
+      "cost": 56.65,
+      "clicks": 53,
+      "ctr": 0.3732,
+      "impressions": 142,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-26",
+      "cost": 4.28,
+      "clicks": 2,
+      "ctr": 0.0513,
+      "impressions": 39,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-27",
+      "cost": 29.15,
+      "clicks": 7,
+      "ctr": 0.0886,
+      "impressions": 79,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-27",
+      "cost": 10.26,
+      "clicks": 5,
+      "ctr": 0.1087,
+      "impressions": 46,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-27",
+      "cost": 63.55,
+      "clicks": 60,
+      "ctr": 0.4,
+      "impressions": 150,
+      "conversions": 3
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-27",
+      "cost": 9.15,
+      "clicks": 2,
+      "ctr": 0.0408,
+      "impressions": 49,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-28",
+      "cost": 17.07,
+      "clicks": 4,
+      "ctr": 0.0769,
+      "impressions": 52,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-28",
+      "cost": 18.87,
+      "clicks": 5,
+      "ctr": 0.2632,
+      "impressions": 19,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-28",
+      "cost": 13.84,
+      "clicks": 20,
+      "ctr": 0.2273,
+      "impressions": 88,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-28",
+      "cost": 8.81,
+      "clicks": 1,
+      "ctr": 0.0476,
+      "impressions": 21,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-29",
+      "cost": 4.25,
+      "clicks": 2,
+      "ctr": 0.125,
+      "impressions": 16,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-29",
+      "cost": 4.54,
+      "clicks": 2,
+      "ctr": 0.0526,
+      "impressions": 38,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-29",
+      "cost": 16.39,
+      "clicks": 25,
+      "ctr": 0.3788,
+      "impressions": 66,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-29",
+      "cost": 3.49,
+      "clicks": 2,
+      "ctr": 0.1333,
+      "impressions": 15,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-30",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 16,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-30",
+      "cost": 23.82,
+      "clicks": 7,
+      "ctr": 0.14,
+      "impressions": 50,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-30",
+      "cost": 50.55,
+      "clicks": 46,
+      "ctr": 0.5349,
+      "impressions": 86,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-30",
+      "cost": 6.63,
+      "clicks": 1,
+      "ctr": 0.1667,
+      "impressions": 6,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-08-31",
+      "cost": 74.72,
+      "clicks": 40,
+      "ctr": 0.199,
+      "impressions": 201,
+      "conversions": 7
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-08-31",
+      "cost": 14.81,
+      "clicks": 2,
+      "ctr": 0.1818,
+      "impressions": 11,
+      "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-08-31",
+      "cost": 14.75,
+      "clicks": 4,
+      "ctr": 0.2105,
+      "impressions": 19,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-08-31",
+      "cost": 2.99,
+      "clicks": 1,
+      "ctr": 0.0833,
+      "impressions": 12,
+      "conversions": 0
+    },
     {
       "campaign": "[2026][BW][PESQUISA] - GERAL 1",
       "adGroup": "Revestimento Antiaderente",
@@ -168,6 +1453,126 @@
       "ctr": 0.1429,
       "impressions": 21,
       "conversions": 1
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-09-05",
+      "cost": 8.96,
+      "clicks": 5,
+      "ctr": 0.1923,
+      "impressions": 26,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-09-05",
+      "cost": 3.84,
+      "clicks": 2,
+      "ctr": 0.0625,
+      "impressions": 32,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-09-05",
+      "cost": 24.38,
+      "clicks": 22,
+      "ctr": 0.4151,
+      "impressions": 53,
+      "conversions": 2
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-09-05",
+      "cost": 2.13,
+      "clicks": 1,
+      "ctr": 0.25,
+      "impressions": 4,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-09-06",
+      "cost": 22.8,
+      "clicks": 22,
+      "ctr": 0.3099,
+      "impressions": 71,
+      "conversions": 4
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-09-06",
+      "cost": 12.64,
+      "clicks": 5,
+      "ctr": 0.0794,
+      "impressions": 63,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-09-06",
+      "cost": 1.78,
+      "clicks": 1,
+      "ctr": 1,
+      "impressions": 1,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-09-06",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 2,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - GERAL 1",
+      "adGroup": "Revestimento Antiaderente",
+      "day": "2026-09-07",
+      "cost": 109.25,
+      "clicks": 128,
+      "ctr": 0.446,
+      "impressions": 287,
+      "conversions": 7
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Alimentício",
+      "day": "2026-09-07",
+      "cost": 6.25,
+      "clicks": 3,
+      "ctr": 0.0508,
+      "impressions": 59,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Revestimento Industrial",
+      "day": "2026-09-07",
+      "cost": 2.37,
+      "clicks": 3,
+      "ctr": 0.1667,
+      "impressions": 18,
+      "conversions": 0
+    },
+    {
+      "campaign": "[2026][BW][PESQUISA] - REVESTIMENTOS 1",
+      "adGroup": "Texturização",
+      "day": "2026-09-07",
+      "cost": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "impressions": 3,
+      "conversions": 0
     }
   ]
 }

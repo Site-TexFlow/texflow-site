@@ -6,13 +6,19 @@
 //      do Drive (findLatestAdsSheetId, já existente em google-drive.ts).
 //   2. Lê todas as linhas dessa planilha — ela cobre uma janela de 30 dias
 //      rolantes (getAdsSheetRows, já existente em google-sheets.ts).
-//   3. Olha os arquivos ads-*.json já salvos em src/content/reports/ (gerados
+//   3. Descarta qualquer linha cuja campanha não comece com
+//      EXPECTED_CAMPAIGN_PREFIX (proteção contra o relatório voltar a somar
+//      dado de outra conta — ver comentário na constante) e avisa via
+//      console.warn().
+//   4. Olha os arquivos ads-*.json já salvos em src/content/reports/ (gerados
 //      por execuções anteriores desta mesma rotina) e descobre qual é o dia
 //      mais recente já coberto.
-//   4. Filtra da planilha só os dias posteriores a esse — normalmente ~7
+//   5. Filtra da planilha só os dias posteriores a esse — normalmente ~7
 //      dias, mas pode ser mais se alguma execução anterior falhou ou não
-//      rodou (ex: sheet fora do ar, secret expirado etc.).
-//   5. Se houver dia novo, salva um arquivo novo ads-<data-de-hoje>.json,
+//      rodou (ex: sheet fora do ar, secret expirado etc.). Com a flag
+//      --full (só uso manual/pontual), ignora essa checagem e resincroniza
+//      tudo que existe na planilha no momento.
+//   6. Se houver dia novo, salva um arquivo novo ads-<data-de-hoje>.json,
 //      preservando granularidade dia + campanha + grupo de anúncios (para
 //      permitir agregações futuras no relatório semanal). Se não houver
 //      nada novo, só loga e sai sem criar arquivo vazio.
@@ -32,6 +38,20 @@ import { getAdsSheetRows, type AdsRow } from "../src/lib/google-sheets.ts";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPORTS_DIR = path.join(__dirname, "..", "src", "content", "reports");
 const SNAPSHOT_FILENAME_RE = /^ads-(\d{4}-\d{2}-\d{2})\.json$/;
+
+// Prefixo esperado no nome de toda campanha da TexFlow. Existe porque o
+// relatório do Google Ads já foi criado por engano dentro do contexto da
+// conta MCC uma vez, e nesse modo ele soma campanhas de OUTRAS contas
+// gerenciadas junto (ex: "Rede de Pesquisa - Leads #2", de outro cliente).
+// O relatório foi corrigido na origem, mas esta é a segunda camada de
+// proteção — se a nomenclatura de campanha mudar de propósito no futuro,
+// atualize esta constante.
+const EXPECTED_CAMPAIGN_PREFIX = "[2026][BW][PESQUISA]";
+
+// Ignora a checagem de "só dias novos" e resincroniza tudo que existe hoje
+// na planilha — usado uma vez para resgatar um snapshot salvo quando a
+// planilha ainda estava com o bug do MCC/período curto (ver commit).
+const FORCE_FULL_RESYNC = process.argv.includes("--full");
 
 interface AdsSnapshotFile {
   generatedAt: string;
@@ -73,6 +93,34 @@ function todayIso(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+/**
+ * Mantém só linhas de campanhas da TexFlow (prefixo esperado) e descarta o
+ * resto — proteção contra o relatório voltar a somar dado de outra conta
+ * (ex: se alguém recriar o relatório de dentro do MCC por engano de novo).
+ * Emite um warn por nome de campanha estranha encontrada (uma vez cada,
+ * mesmo que apareça em várias linhas/dias), pra aparecer bem visível nos
+ * logs do GitHub Actions.
+ */
+function filterValidCampaignRows(rows: AdsRow[]): AdsRow[] {
+  const valid: AdsRow[] = [];
+  const warnedCampaigns = new Set<string>();
+  for (const row of rows) {
+    if (row.campaign.startsWith(EXPECTED_CAMPAIGN_PREFIX)) {
+      valid.push(row);
+      continue;
+    }
+    if (!warnedCampaigns.has(row.campaign)) {
+      warnedCampaigns.add(row.campaign);
+      console.warn(
+        `⚠️  ATENÇÃO: campanha fora do esperado na planilha, IGNORADA: "${row.campaign}" ` +
+          `(esperado prefixo "${EXPECTED_CAMPAIGN_PREFIX}"). Verifique se o relatório do Google Ads ` +
+          "não voltou a ser gerado no contexto de outra conta (MCC).",
+      );
+    }
+  }
+  return valid;
+}
+
 async function main() {
   const spreadsheetId = await findLatestAdsSheetId();
   if (!spreadsheetId) {
@@ -83,14 +131,28 @@ async function main() {
     return;
   }
 
-  const allRows = await getAdsSheetRows(spreadsheetId);
-  if (allRows.length === 0) {
+  const rawRows = await getAdsSheetRows(spreadsheetId);
+  if (rawRows.length === 0) {
     console.error(`Planilha ${spreadsheetId} encontrada, mas sem nenhuma linha de dados — nada foi salvo.`);
     process.exitCode = 1;
     return;
   }
 
-  const lastSavedDay = await findLastSavedDay();
+  const allRows = filterValidCampaignRows(rawRows);
+  if (allRows.length === 0) {
+    console.error(
+      `Todas as ${rawRows.length} linha(s) da planilha ${spreadsheetId} foram descartadas pelo filtro ` +
+        `de campanha (nenhuma começa com "${EXPECTED_CAMPAIGN_PREFIX}") — nada foi salvo. Verifique a ` +
+        "configuração do relatório no Google Ads.",
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  const lastSavedDay = FORCE_FULL_RESYNC ? null : await findLastSavedDay();
+  if (FORCE_FULL_RESYNC) {
+    console.log("Modo --full: ignorando o último dia salvo, resincronizando tudo que existe na planilha agora.");
+  }
 
   const newRows = allRows
     .filter((r) => r.day && (!lastSavedDay || r.day > lastSavedDay))
