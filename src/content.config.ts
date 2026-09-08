@@ -121,4 +121,30 @@ const reports = defineCollection({
   }),
 });
 
-export const collections = { blog, gallery, reports };
+// Snapshots brutos do Google Ads, um arquivo por execução da rotina semanal
+// (scripts/sync-ads-snapshot.ts, via GitHub Actions) — granularidade dia +
+// campanha + grupo de anúncios, incremental (cada arquivo só cobre dias
+// ainda não salvos por uma execução anterior). Collection separada da
+// "reports" acima (que só lê .md) de propósito: glob por extensão diferente,
+// sem tocar no schema/loader dos relatórios agregados existentes.
+const adsReports = defineCollection({
+  loader: glob({ pattern: 'ads-*.json', base: './src/content/reports' }),
+  schema: z.object({
+    generatedAt: z.coerce.date(),
+    spreadsheetId: z.string(),
+    days: z.array(z.string()),
+    rowCount: z.number(),
+    rows: z.array(z.object({
+      campaign: z.string(),
+      adGroup: z.string(),
+      day: z.string(),
+      cost: z.number(),
+      clicks: z.number(),
+      ctr: z.number(),
+      impressions: z.number(),
+      conversions: z.number(),
+    })),
+  }),
+});
+
+export const collections = { blog, gallery, reports, adsReports };
