@@ -20,7 +20,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/relatorio-performance'),
+      filter: (page) => !page.includes('/relatorio-performance') && !page.includes('/limpeza-galeria'),
     }),
     decapCmsOauth(),
   ],

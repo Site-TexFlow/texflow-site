@@ -1,0 +1,350 @@
+---
+export const prerender = false;
+
+import { DASHBOARD_USER, DASHBOARD_PASSWORD } from "astro:env/server";
+import fs from "node:fs";
+import path from "node:path";
+
+// Mesmo padrão de Basic Auth do /relatorio-performance — URL não-listada +
+// usuário/senha.
+const authHeader = Astro.request.headers.get("authorization");
+const expected = "Basic " + Buffer.from(`${DASHBOARD_USER}:${DASHBOARD_PASSWORD}`).toString("base64");
+
+if (authHeader !== expected) {
+  return new Response("Autenticação necessária.", {
+    status: 401,
+    headers: { "WWW-Authenticate": 'Basic realm="Limpeza Galeria TexFlow"' },
+  });
+}
+
+// Esta ferramenta só existe pra rodar localmente (npm run dev): ela apaga
+// arquivo de verdade do disco (conteúdo .md + imagem .webp) pra você revisar
+// com git diff/status antes de commitar. Em produção (Vercel) o filesystem
+// do build é read-only, então a exclusão é bloqueada abaixo.
+const GALLERY_CONTENT_DIR = path.join(process.cwd(), "src", "content", "gallery");
+const PUBLIC_DIR = path.join(process.cwd(), "public");
+
+interface GalleryFileEntry {
+  file: string;
+  image: string | null;
+  category: string | null;
+  title: string | null;
+  description: string | null;
+  featured: boolean;
+  homeCard: boolean;
+  ts: number | null;
+}
+
+function getField(lines: string[], key: string): string | null {
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith(key + ":")) {
+      let val = trimmed.slice(key.length + 1).trim();
+      if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+      return val;
+    }
+  }
+  return null;
+}
+
+function readGalleryEntries(): GalleryFileEntry[] {
+  const files = fs.readdirSync(GALLERY_CONTENT_DIR).filter((f) => f.endsWith(".md"));
+  const entries: GalleryFileEntry[] = [];
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(GALLERY_CONTENT_DIR, file), "utf8");
+    const fmLines = (content.split("---")[1] ?? "").split("\n");
+    const tm = file.match(/^([a-z-]+)-(\d{8})-(\d{6})(?:-(\d+))?\.md$/);
+    const ts = tm
+      ? Date.UTC(+tm[2].slice(0, 4), +tm[2].slice(4, 6) - 1, +tm[2].slice(6, 8), +tm[3].slice(0, 2), +tm[3].slice(2, 4), +tm[3].slice(4, 6))
+      : null;
+    entries.push({
+      file,
+      image: getField(fmLines, "image"),
+      category: getField(fmLines, "category"),
+      title: getField(fmLines, "title"),
+      description: getField(fmLines, "description"),
+      featured: getField(fmLines, "featured") === "true",
+      homeCard: getField(fmLines, "homeCard") === "true",
+      ts,
+    });
+  }
+  return entries;
+}
+
+interface Cluster {
+  category: string;
+  entries: GalleryFileEntry[];
+}
+
+// Agrupa por categoria + proximidade de horário no nome do arquivo (mesma
+// heurística usada na varredura manual anterior): fotos da mesma categoria
+// tiradas com até 90s de diferença viram candidatas a "mesma peça, ângulos
+// diferentes". É só uma sugestão visual — nada aqui é pré-selecionado.
+function buildClusters(entries: GalleryFileEntry[]): { clusters: Cluster[]; singles: GalleryFileEntry[] } {
+  const byCategory = new Map<string, GalleryFileEntry[]>();
+  const singles: GalleryFileEntry[] = [];
+  for (const e of entries) {
+    if (!e.category || e.ts === null) {
+      singles.push(e);
+      continue;
+    }
+    if (!byCategory.has(e.category)) byCategory.set(e.category, []);
+    byCategory.get(e.category)!.push(e);
+  }
+  const clusters: Cluster[] = [];
+  for (const [category, list] of byCategory) {
+    list.sort((a, b) => a.ts! - b.ts!);
+    let current: GalleryFileEntry[] = [];
+    for (const e of list) {
+      if (current.length === 0) {
+        current.push(e);
+        continue;
+      }
+      const last = current[current.length - 1];
+      if (e.ts! - last.ts! <= 90_000) {
+        current.push(e);
+      } else {
+        if (current.length > 1) clusters.push({ category, entries: current });
+        else singles.push(current[0]);
+        current = [e];
+      }
+    }
+    if (current.length > 1) clusters.push({ category, entries: current });
+    else if (current.length === 1) singles.push(current[0]);
+  }
+  clusters.sort((a, b) => a.category.localeCompare(b.category) || a.entries[0].ts! - b.entries[0].ts!);
+  return { clusters, singles };
+}
+
+let errorMsg: string | null = null;
+
+if (Astro.request.method === "POST") {
+  if (!import.meta.env.DEV) {
+    errorMsg = "Esta ferramenta só funciona rodando localmente (npm run dev) — em produção o filesystem é somente leitura.";
+  } else {
+    const formData = await Astro.request.formData();
+    const toDelete = formData.getAll("delete").map(String);
+    let deletedCount = 0;
+    let failedCount = 0;
+    for (const file of toDelete) {
+      if (!/^[a-zA-Z0-9._-]+\.md$/.test(file)) {
+        failedCount++;
+        continue;
+      }
+      const mdPath = path.join(GALLERY_CONTENT_DIR, file);
+      try {
+        const content = fs.readFileSync(mdPath, "utf8");
+        const fmLines = (content.split("---")[1] ?? "").split("\n");
+        const image = getField(fmLines, "image");
+        fs.unlinkSync(mdPath);
+        deletedCount++;
+        if (image) {
+          try {
+            fs.unlinkSync(path.join(PUBLIC_DIR, image.replace(/^\//, "")));
+          } catch {
+            /* imagem já não existia — segue o jogo */
+          }
+        }
+      } catch {
+        failedCount++;
+      }
+    }
+    return Astro.redirect(`/limpeza-galeria?deleted=${deletedCount}${failedCount ? "&failed=" + failedCount : ""}`, 303);
+  }
+}
+
+const deletedParam = Astro.url.searchParams.get("deleted");
+const failedParam = Astro.url.searchParams.get("failed");
+
+const entries = readGalleryEntries();
+const { clusters, singles } = buildClusters(entries);
+const singlesByCategory = new Map<string, GalleryFileEntry[]>();
+for (const s of singles) {
+  const key = s.category ?? "Sem categoria";
+  if (!singlesByCategory.has(key)) singlesByCategory.set(key, []);
+  singlesByCategory.get(key)!.push(s);
+}
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>TexFlow — Limpeza da Galeria</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { font-family: system-ui, sans-serif; margin: 0; background: #f4f5f7; color: #14182e; }
+      header.topbar {
+        position: sticky; top: 0; z-index: 10;
+        background: #14182e; color: white; padding: 12px 20px;
+        display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      }
+      header.topbar h1 { font-size: 15px; margin: 0; }
+      header.topbar .stats { font-size: 12.5px; color: #b7bccb; }
+      button.danger {
+        background: #d64545; color: white; border: none; border-radius: 6px;
+        padding: 9px 16px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+      }
+      button.danger:disabled { background: #5a5f6e; cursor: not-allowed; }
+      button.secondary {
+        background: #2a3050; color: white; border: 1px solid #444a6b; border-radius: 5px;
+        padding: 5px 10px; font-size: 11.5px; cursor: pointer;
+      }
+      main { max-width: 1300px; margin: 0 auto; padding: 20px; }
+      .banner {
+        padding: 10px 14px; border-radius: 6px; font-size: 13.5px; margin-bottom: 16px;
+      }
+      .banner.ok { background: #e2f6e8; color: #1d6b3a; border: 1px solid #b6e6c4; }
+      .banner.warn { background: #fdf1d6; color: #8a5a00; border: 1px solid #f0d99a; }
+      .banner.error { background: #fbe3e3; color: #a01e1e; border: 1px solid #f2b8b8; }
+      h2.category-title { font-size: 16px; margin: 28px 0 10px; color: #14182e; }
+      .cluster {
+        background: white; border: 1.5px solid #e4a63a; border-radius: 8px;
+        padding: 12px; margin-bottom: 14px;
+      }
+      .cluster-head {
+        display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 10px; flex-wrap: wrap;
+      }
+      .cluster-head .label { font-size: 12px; color: #8a5a00; font-weight: 600; }
+      .thumbs { display: flex; flex-wrap: wrap; gap: 10px; }
+      .thumb { width: 130px; text-align: center; font-size: 11px; }
+      .thumb label { cursor: pointer; display: block; }
+      .thumb img {
+        width: 130px; height: 130px; object-fit: cover; border-radius: 5px; border: 2px solid transparent; display: block;
+      }
+      .thumb input[type="checkbox"] { margin-top: 4px; }
+      .thumb input[type="checkbox"]:checked + img,
+      .thumb .checked-border { border-color: #d64545; }
+      .thumb.is-checked img { border-color: #d64545; opacity: 0.55; }
+      .thumb .fname { display: block; word-break: break-all; color: #676f82; margin-top: 2px; }
+      details.singles { margin-top: 20px; }
+      details.singles summary { cursor: pointer; font-size: 13px; color: #676f82; margin-bottom: 10px; }
+      .singles-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    </style>
+  </head>
+  <body>
+    <form method="POST" id="cleanup-form">
+      <header class="topbar">
+        <h1>Limpeza da Galeria — TexFlow</h1>
+        <div class="stats">
+          {entries.length} fotos no total · {clusters.length} grupos com possível duplicata · {singles.length} sem grupo
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span id="counter" style="font-size:13px;">0 selecionadas</span>
+          <button type="submit" class="danger" id="submit-btn" disabled>Excluir selecionadas</button>
+        </div>
+      </header>
+
+      <main>
+        {deletedParam && (
+          <div class="banner ok">
+            {deletedParam} foto(s) excluída(s) do disco. Nada foi commitado ainda — confira com <code>git status</code> / <code>git diff</code> e peça pro Claude commitar quando aprovar.
+          </div>
+        )}
+        {failedParam && (
+          <div class="banner warn">{failedParam} arquivo(s) não puderam ser excluídos (já não existiam ou nome inválido).</div>
+        )}
+        {errorMsg && <div class="banner error">{errorMsg}</div>}
+
+        <p style="font-size:13px; color:#676f82; max-width:70ch;">
+          Os quadros com borda laranja são <strong>sugestões de grupos</strong> (mesma categoria, fotos tiradas em
+          menos de 90s de diferença — provável mesma peça em ângulos diferentes). Isso é só uma ajuda visual pra
+          escanear mais rápido: <strong>nada vem pré-marcado</strong>. Marque manualmente as fotos que quer excluir
+          e clique em "Excluir selecionadas". A exclusão só apaga do seu disco local — nada é commitado
+          automaticamente.
+        </p>
+
+        {clusters.map((cluster, ci) => (
+          <>
+            {(ci === 0 || clusters[ci - 1].category !== cluster.category) && (
+              <h2 class="category-title">{cluster.category}</h2>
+            )}
+            <div class="cluster" data-cluster-index={ci}>
+              <div class="cluster-head">
+                <span class="label">Grupo de {cluster.entries.length} fotos — possível mesma peça</span>
+                <button type="button" class="secondary" data-keep-first={ci}>Marcar todas, exceto a 1ª</button>
+              </div>
+              <div class="thumbs">
+                {cluster.entries.map((e) => (
+                  <div class="thumb">
+                    <label>
+                      <input type="checkbox" name="delete" value={e.file} />
+                      <img src={e.image ?? ""} alt={e.title ?? e.file} loading="lazy" />
+                      <span class="fname">{e.file.replace(/\.md$/, "")}</span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        ))}
+
+        <details class="singles">
+          <summary>Fotos sem grupo sugerido ({singles.length}) — clique para expandir</summary>
+          {[...singlesByCategory.entries()].map(([category, list]) => (
+            <>
+              <h2 class="category-title">{category}</h2>
+              <div class="singles-grid">
+                {list.map((e) => (
+                  <div class="thumb">
+                    <label>
+                      <input type="checkbox" name="delete" value={e.file} />
+                      <img src={e.image ?? ""} alt={e.title ?? e.file} loading="lazy" />
+                      <span class="fname">{e.file.replace(/\.md$/, "")}</span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </>
+          ))}
+        </details>
+      </main>
+    </form>
+
+    <script>
+      const form = document.getElementById("cleanup-form") as HTMLFormElement;
+      const counter = document.getElementById("counter")!;
+      const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+
+      function updateCounter() {
+        const checked = form.querySelectorAll<HTMLInputElement>('input[name="delete"]:checked');
+        counter.textContent = `${checked.length} selecionada(s)`;
+        submitBtn.disabled = checked.length === 0;
+        form.querySelectorAll<HTMLElement>(".thumb").forEach((thumb) => {
+          const input = thumb.querySelector<HTMLInputElement>('input[type="checkbox"]');
+          thumb.classList.toggle("is-checked", !!input?.checked);
+        });
+      }
+
+      form.addEventListener("change", (e) => {
+        if ((e.target as HTMLElement).matches('input[name="delete"]')) updateCounter();
+      });
+
+      form.querySelectorAll<HTMLButtonElement>("[data-keep-first]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const cluster = btn.closest(".cluster");
+          const checkboxes = cluster?.querySelectorAll<HTMLInputElement>('input[name="delete"]');
+          checkboxes?.forEach((cb, i) => {
+            if (i > 0) cb.checked = true;
+          });
+          updateCounter();
+        });
+      });
+
+      form.addEventListener("submit", (e) => {
+        const checked = form.querySelectorAll<HTMLInputElement>('input[name="delete"]:checked');
+        if (checked.length === 0) {
+          e.preventDefault();
+          return;
+        }
+        if (!confirm(`Excluir ${checked.length} foto(s) do disco? Isso não pode ser desfeito por aqui (mas também não commita nada — dá pra restaurar com git se precisar).`)) {
+          e.preventDefault();
+        }
+      });
+
+      updateCounter();
+    </script>
+  </body>
+</html>
