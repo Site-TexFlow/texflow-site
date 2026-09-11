@@ -4,9 +4,10 @@ description: Entenda as diferenças entre texturização e revestimento
   antiaderente industrial, quando cada solução é indicada e como escolher a
   tecnologia certa para o seu processo produtivo.
 publishDate: 2026-09-11
-image: /images/blog/revestimento-antiaderente-industrial.png
-imageAlt: Comparação entre texturização industrial e revestimento
-  antiaderente aplicados a moldes e rolos industriais
+image: /images/blog/texturizacao-vs-revestimento-antiaderente-industrial.jpg
+imageAlt: Peça metálica industrial dividida ao meio comparando o lado com
+  texturização e o lado com revestimento antiaderente, sobre bancada de
+  oficina com ferramentas
 tags:
   - Texturização Industrial
   - Revestimento Antiaderente Industrial
