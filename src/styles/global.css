@@ -98,4 +98,36 @@
   .article-prose a:hover {
     color: var(--color-orange-600);
   }
+  .article-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+  }
+  .article-prose thead {
+    background: var(--color-navy-900);
+  }
+  .article-prose th {
+    color: white;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.75em 1.1em;
+    white-space: nowrap;
+  }
+  .article-prose td {
+    padding: 0.75em 1.1em;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+    color: var(--color-ink);
+  }
+  .article-prose tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .article-prose tbody tr:nth-child(even) {
+    background: #f8fafc;
+  }
 }
