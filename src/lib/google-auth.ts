@@ -3,10 +3,10 @@ import { GoogleAuth } from "google-auth-library";
 // Lido direto de process.env (e não via astro:env/server) de propósito: o
 // valor é o mesmo em runtime nos dois casos (Astro/Vercel só expõe secrets
 // via process.env por baixo dos panos), mas ler direto permite reaproveitar
-// este helper — e por tabela google-drive.ts/google-sheets.ts/ga4.ts/
-// search-console.ts, que dependem dele — em scripts standalone (ex:
-// scripts/sync-ads-snapshot.ts, rodado fora do Astro pelo GitHub Actions),
-// sem precisar do pipeline do Vite/Astro só para resolver a env var.
+// este helper — e por tabela google-drive.ts/google-sheets.ts, que
+// dependem dele — em scripts standalone (ex: scripts/sync-ads-snapshot.ts,
+// rodado fora do Astro pelo GitHub Actions), sem precisar do pipeline do
+// Vite/Astro só para resolver a env var.
 export async function getGoogleClient(scopes: string[]) {
   const key = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
   if (!key) {

@@ -2,9 +2,6 @@
 export const prerender = false;
 
 import { DASHBOARD_USER, DASHBOARD_PASSWORD } from "astro:env/server";
-import { getSearchAnalytics, type SearchAnalyticsRow } from "../lib/search-console";
-import { getGa4Report } from "../lib/ga4";
-import { getValidRoutes, isValidSiteUrl, isValidPath } from "../lib/site-routes";
 import { getCollection } from "astro:content";
 
 // Basic Auth — além de ser uma URL não-listada (fora do menu, sem link em
@@ -21,109 +18,12 @@ if (authHeader !== expected) {
   });
 }
 
-// Seletor de período único no topo, controla Search Console e GA4 juntos —
-// substitui o seletor Semana/Quinzena/Mês/Trimestre previsto na spec original.
+// Seletor de período único no topo, controla a seção Ads.
 const ALLOWED_DAYS = [15, 30, 45, 60, 75, 90] as const;
 const daysParam = Number(Astro.url.searchParams.get("days"));
 const days = ALLOWED_DAYS.includes(daysParam as (typeof ALLOWED_DAYS)[number]) ? daysParam : 30;
 
-// Search Console processa dado com ~2-3 dias de atraso — a janela termina
-// 3 dias atrás pra evitar dias incompletos/instáveis nos números.
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
-const endDate = new Date();
-endDate.setDate(endDate.getDate() - 3);
-const startDate = new Date(endDate);
-startDate.setDate(startDate.getDate() - (days - 1));
-
-const validRoutes = await getValidRoutes();
-
-let totals: SearchAnalyticsRow | null = null;
-let topQueries: SearchAnalyticsRow[] = [];
-let topPages: SearchAnalyticsRow[] = [];
-let searchConsoleError: string | null = null;
-
-try {
-  const range = { startDate: fmt(startDate), endDate: fmt(endDate) };
-  const [totalsRows, queriesRows, pagesRows] = await Promise.all([
-    getSearchAnalytics({ ...range, dimensions: [], rowLimit: 1 }),
-    getSearchAnalytics({ ...range, dimensions: ["query"], rowLimit: 10 }),
-    // Busca mais que o necessário porque URLs legadas do WordPress antigo
-    // (filtradas abaixo) ainda aparecem no índice do Google e ocupariam
-    // posições no topo se pedíssemos só 10.
-    getSearchAnalytics({ ...range, dimensions: ["page"], rowLimit: 50 }),
-  ]);
-  totals = totalsRows[0] ?? null;
-  topQueries = queriesRows;
-  topPages = pagesRows.filter((row) => isValidSiteUrl(row.keys[0], validRoutes)).slice(0, 10);
-} catch (err) {
-  searchConsoleError = err instanceof Error ? err.message : "Erro desconhecido ao consultar o Search Console.";
-  console.error("Search Console error:", err);
-}
-
-// GA4 — eventos de conversão confirmados via consulta real ao eventName
-// (não são os mesmos nomes literais da spec original, que tinha um pequeno
-// desvio: é "ads_conversion_Fale_conosco_1", com sufixo "_1").
-const CONVERSION_EVENTS = ["contato_form", "form_start", "Whatsapp_lead", "ads_conversion_Fale_conosco_1"];
-
-let ga4Kpis: { activeUsers: number; sessions: number; newUsers: number; engagementRate: number } | null = null;
-let ga4Channels: Array<{ channel: string; sessions: number }> = [];
-let ga4Pages: Array<{ path: string; views: number }> = [];
-let ga4Conversions: Array<{ event: string; count: number }> = [];
-let ga4Error: string | null = null;
-
-const ga4Row = (r: { dimensionValues: { value: string }[]; metricValues: { value: string }[] }, i = 0) =>
-  ({ dim: r.dimensionValues[0]?.value, metric: Number(r.metricValues[i]?.value ?? 0) });
-
-try {
-  const ga4Range = { startDate: `${days}daysAgo`, endDate: "yesterday" };
-  const [kpiReport, channelReport, pageReport, conversionReport] = await Promise.all([
-    getGa4Report({ ...ga4Range, metrics: ["activeUsers", "sessions", "newUsers", "engagementRate"] }),
-    getGa4Report({ ...ga4Range, dimensions: ["sessionDefaultChannelGroup"], metrics: ["sessions"], orderByMetric: "sessions" }),
-    getGa4Report({ ...ga4Range, dimensions: ["pagePath"], metrics: ["screenPageViews"], orderByMetric: "screenPageViews", limit: 30 }),
-    getGa4Report({
-      ...ga4Range,
-      dimensions: ["eventName"],
-      metrics: ["eventCount"],
-      dimensionFilter: {
-        filter: { fieldName: "eventName", inListFilter: { values: CONVERSION_EVENTS } },
-      },
-    }),
-  ]);
-
-  const kpiValues = kpiReport.rows?.[0]?.metricValues ?? [];
-  ga4Kpis = {
-    activeUsers: Number(kpiValues[0]?.value ?? 0),
-    sessions: Number(kpiValues[1]?.value ?? 0),
-    newUsers: Number(kpiValues[2]?.value ?? 0),
-    engagementRate: Number(kpiValues[3]?.value ?? 0),
-  };
-  ga4Channels = (channelReport.rows ?? []).map((r) => {
-    const { dim, metric } = ga4Row(r);
-    return { channel: dim, sessions: metric };
-  });
-  // GA4 conta /rota e /rota/ como paths distintos (trailingSlash do site é
-  // "ignore") — normaliza removendo a barra final antes de agrupar, exceto
-  // na home, e soma as visualizações das duas variantes na mesma linha.
-  const normalizePath = (path: string) => (path === "/" ? "/" : path.replace(/\/+$/, ""));
-  const pageViewsByPath = new Map<string, number>();
-  for (const r of pageReport.rows ?? []) {
-    const { dim, metric } = ga4Row(r);
-    if (!isValidPath(dim, validRoutes)) continue;
-    const normalized = normalizePath(dim);
-    pageViewsByPath.set(normalized, (pageViewsByPath.get(normalized) ?? 0) + metric);
-  }
-  ga4Pages = [...pageViewsByPath.entries()]
-    .map(([path, views]) => ({ path, views }))
-    .sort((a, b) => b.views - a.views)
-    .slice(0, 10);
-  ga4Conversions = (conversionReport.rows ?? []).map((r) => {
-    const { dim, metric } = ga4Row(r);
-    return { event: dim, count: metric };
-  });
-} catch (err) {
-  ga4Error = err instanceof Error ? err.message : "Erro desconhecido ao consultar o GA4.";
-  console.error("GA4 error:", err);
-}
 
 // Google Ads — sem API direta (developer token trava), e agora sem leitura
 // ao vivo do Sheets nesta página também: lê os snapshots acumulados por
@@ -148,10 +48,10 @@ let adsByAdGroup: Array<{ campaign: string; adGroup: string; cost: number; click
 let adsError: string | null = null;
 let adsHasSnapshots = true;
 
-// Mesma âncora de antes (ontem, sem a folga de 3 dias do Search Console) —
-// só define até onde o período "olha pra trás". Se o período pedido for
-// maior que o histórico salvo, o filtro abaixo simplesmente retorna menos
-// linhas — sem erro, é o comportamento esperado até acumular mais semanas.
+// Âncora do período: ontem, olhando pra trás "days" dias. Se o período
+// pedido for maior que o histórico salvo, o filtro abaixo simplesmente
+// retorna menos linhas — sem erro, é o comportamento esperado até acumular
+// mais semanas.
 const adsEndDate = new Date();
 adsEndDate.setDate(adsEndDate.getDate() - 1);
 const adsStartDate = new Date(adsEndDate);
@@ -217,8 +117,8 @@ try {
     <div style="max-width:860px; margin:0 auto; padding:60px 24px 100px;">
       <h1 style="font-size:28px; margin-bottom:6px;">Relatório de Performance</h1>
       <p style="color:#676F82; line-height:1.6; margin-bottom:20px;">
-        Blog e ações executadas ainda pendentes de integração. Google Ads,
-        Search Console e GA4 já estão ao vivo abaixo.
+        Dados de Google Ads, lidos dos snapshots semanais salvos pela rotina
+        de sincronização.
       </p>
 
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:40px;">
@@ -329,194 +229,6 @@ try {
                     <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">R$ {row.cost.toFixed(2)}</td>
                     <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.clicks}</td>
                     <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.conversions}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </section>
-
-      <section style="border-top:1.5px solid #14182E; padding-top:20px; margin-top:40px;">
-        <div style="font-weight:600; color:#1E2761; font-size:13px; margin-bottom:4px;">SEO — SEARCH CONSOLE</div>
-        <h2 style="font-size:20px; margin:0 0 4px;">Últimos {days} dias</h2>
-        <p style="color:#676F82; font-size:13.5px; margin-bottom:20px;">{fmt(startDate)} a {fmt(endDate)}</p>
-
-        {searchConsoleError && (
-          <p style="background:#EAE6D9; border-left:3px solid #FF6A2C; padding:14px 16px; font-size:14px;">
-            Falha ao consultar o Search Console: {searchConsoleError}
-          </p>
-        )}
-
-        {totals && (
-          <div style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid #B9B29B; border-left:1px solid #B9B29B; margin-bottom:32px;">
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Cliques</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{totals.clicks}</div>
-            </div>
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Impressões</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{totals.impressions}</div>
-            </div>
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">CTR médio</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{(totals.ctr * 100).toFixed(2)}%</div>
-            </div>
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Posição média</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{totals.position.toFixed(1)}</div>
-            </div>
-          </div>
-        )}
-
-        {topQueries.length > 0 && (
-          <>
-            <h3 style="font-size:15px; margin-bottom:10px;">Principais consultas</h3>
-            <table style="width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;">
-              <thead>
-                <tr>
-                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Consulta</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Cliques</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Impr.</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">CTR</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Posição</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topQueries.map((row) => (
-                  <tr>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.keys[0]}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.clicks}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.impressions}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{(row.ctr * 100).toFixed(1)}%</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.position.toFixed(1)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-
-        {topPages.length > 0 && (
-          <>
-            <h3 style="font-size:15px; margin-bottom:10px;">Páginas mais acessadas</h3>
-            <table style="width:100%; border-collapse:collapse; font-size:13.5px;">
-              <thead>
-                <tr>
-                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Página</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Cliques</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Impr.</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">CTR</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Posição</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topPages.map((row) => (
-                  <tr>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; word-break:break-all;">{row.keys[0].replace("https://texflow.com.br", "")}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.clicks}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.impressions}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{(row.ctr * 100).toFixed(1)}%</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.position.toFixed(1)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </section>
-
-      <section style="border-top:1.5px solid #14182E; padding-top:20px; margin-top:40px;">
-        <div style="font-weight:600; color:#1E2761; font-size:13px; margin-bottom:4px;">SITE — GA4</div>
-        <h2 style="font-size:20px; margin:0 0 4px;">Comportamento no site</h2>
-        <p style="color:#676F82; font-size:13.5px; margin-bottom:20px;">Últimos {days} dias</p>
-
-        {ga4Error && (
-          <p style="background:#EAE6D9; border-left:3px solid #FF6A2C; padding:14px 16px; font-size:14px;">
-            Falha ao consultar o GA4: {ga4Error}
-          </p>
-        )}
-
-        {ga4Kpis && (
-          <div style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid #B9B29B; border-left:1px solid #B9B29B; margin-bottom:32px;">
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Usuários ativos</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{ga4Kpis.activeUsers}</div>
-            </div>
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Sessões</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{ga4Kpis.sessions}</div>
-            </div>
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Novos usuários</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{ga4Kpis.newUsers}</div>
-            </div>
-            <div style="border-right:1px solid #B9B29B; border-bottom:1px solid #B9B29B; padding:14px;">
-              <div style="font-size:11px; color:#676F82; text-transform:uppercase;">Taxa de engajamento</div>
-              <div style="font-weight:700; font-size:22px; color:#1E2761;">{(ga4Kpis.engagementRate * 100).toFixed(1)}%</div>
-            </div>
-          </div>
-        )}
-
-        {ga4Conversions.length > 0 && (
-          <>
-            <h3 style="font-size:15px; margin-bottom:10px;">Conversões por tipo</h3>
-            <table style="width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;">
-              <thead>
-                <tr>
-                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Evento</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Ocorrências</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ga4Conversions.map((row) => (
-                  <tr>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.event}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.count}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-
-        {ga4Channels.length > 0 && (
-          <>
-            <h3 style="font-size:15px; margin-bottom:10px;">Origem do tráfego</h3>
-            <table style="width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;">
-              <thead>
-                <tr>
-                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Canal</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Sessões</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ga4Channels.map((row) => (
-                  <tr>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE;">{row.channel}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.sessions}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-
-        {ga4Pages.length > 0 && (
-          <>
-            <h3 style="font-size:15px; margin-bottom:10px;">Páginas mais acessadas</h3>
-            <table style="width:100%; border-collapse:collapse; font-size:13.5px;">
-              <thead>
-                <tr>
-                  <th style="text-align:left; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Página</th>
-                  <th style="text-align:right; border-bottom:1.5px solid #14182E; padding:8px; font-size:11px; text-transform:uppercase; color:#676F82;">Visualizações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ga4Pages.map((row) => (
-                  <tr>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; word-break:break-all;">{row.path}</td>
-                    <td style="padding:8px; border-bottom:1px solid #D6D0BE; text-align:right;">{row.views}</td>
                   </tr>
                 ))}
               </tbody>
