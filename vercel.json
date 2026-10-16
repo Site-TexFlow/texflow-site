@@ -1,4 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "texflow-site.vercel.app"
+        }
+      ],
+      "destination": "https://www.texflow.com.br/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/oauth",

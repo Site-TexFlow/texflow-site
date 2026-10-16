@@ -8,7 +8,7 @@ import decapCmsOauth from 'astro-decap-cms-oauth';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://texflow-site.vercel.app',
+  site: 'https://www.texflow.com.br',
   output: 'static',
   adapter: vercel(),
   redirects: {
