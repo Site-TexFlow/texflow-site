@@ -1,0 +1,195 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SolutionGallery from "../components/SolutionGallery.astro";
+import FinalCta from "../components/FinalCta.astro";
+
+import corteLaserImg from "../assets/solucoes/corte-laser-servico.png";
+import corteLaserHero from "../assets/heroes/corte-laser-hero.png";
+
+const materials = [
+  {
+    title: "Aço Inox",
+    text: "Peças resistentes à corrosão para aplicações alimentícias, sanitárias e decorativas.",
+  },
+  {
+    title: "Latão",
+    text: "Componentes decorativos e peças que aliam bom acabamento visual e usinabilidade.",
+  },
+  {
+    title: "Alumínio",
+    text: "Peças leves para estruturas, painéis e componentes que exigem baixo peso.",
+  },
+  {
+    title: "Aço Carbono",
+    text: "Estruturas e componentes industriais que exigem resistência mecânica.",
+  },
+  {
+    title: "Cobre",
+    text: "Peças condutoras e componentes para aplicações elétricas e decorativas.",
+  },
+];
+
+const advantages = [
+  {
+    title: "Precisão",
+    text: "Corte guiado digitalmente a partir do seu desenho, reproduzindo a geometria da peça com exatidão.",
+    icon: "M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.4 7.2 16.9l.9-5.4-3.9-3.8 5.4-.8L12 2z",
+  },
+  {
+    title: "Bordas Limpas",
+    text: "Acabamento de corte limpo, com menos necessidade de retrabalho na peça final.",
+    icon: "M4 17l13-13M4 7l13 13",
+  },
+  {
+    title: "Flexibilidade de Formas",
+    text: "Permite cortar geometrias simples e complexas a partir do mesmo arquivo de desenho.",
+    icon: "M12 3l3 3-3 3-3-3 3-3zM12 15l3 3-3 3-3-3 3-3zM3 12l3-3 3 3-3 3-3-3zM15 12l3-3 3 3-3 3-3-3z",
+  },
+  {
+    title: "Bom Aproveitamento da Chapa",
+    text: "Organização das peças na chapa pensada para reduzir sobra de material.",
+    icon: "M4 4h16v16H4V4zm4 4h8v8H8V8z",
+  },
+  {
+    title: "Rapidez para Protótipos e Lotes",
+    text: "Atende desde uma peça única de prototipagem até lotes de produção em série.",
+    icon: "M13 2L3 14h7l-1 8 10-12h-7l1-8z",
+  },
+];
+
+const steps = [
+  {
+    title: "Envie o desenho",
+    text: "Mande o arquivo da peça em DXF ou DWG. Não tem o desenho pronto? Nossa equipe de desenho pode ajudar a desenvolvê-lo para você.",
+  },
+  {
+    title: "Informe o material",
+    text: "Diga qual material entre aço inox, latão, alumínio, aço carbono ou cobre.",
+  },
+  {
+    title: "Informe a quantidade",
+    text: "Conte se é uma peça única, um protótipo ou um lote de produção.",
+  },
+];
+---
+
+<Layout
+  title="Corte a Laser de Chapas Metálicas | Aço Inox, Latão, Alumínio | TexFlow"
+  description="Corte a laser de chapas metálicas com precisão: aço inox, latão, alumínio, aço carbono e cobre. Peça seu orçamento com a TexFlow."
+>
+  <Header />
+  <main>
+    <PageHero breadcrumbLabel="Corte a Laser" subtitle="Corte a laser de precisão em chapas metálicas, executado pela própria TexFlow." image={corteLaserHero}>
+      CORTE A LASER DE <span class="text-orange-500">CHAPAS METÁLICAS</span>
+    </PageHero>
+
+    <section class="bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-muted leading-relaxed text-lg">
+            O corte a laser de chapas metálicas é executado pela própria
+            TexFlow, com precisão e acabamento limpo, para peças sob medida
+            ou produção em série.
+          </p>
+          <p class="mt-4 text-muted leading-relaxed text-lg">
+            Atendemos aço inox, latão, alumínio, aço carbono e cobre,
+            reproduzindo o desenho da sua peça com fidelidade — do
+            protótipo único ao lote de produção.
+          </p>
+        </div>
+        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+          <Image
+            src={corteLaserImg}
+            alt="Chapa metálica cortada a laser pela TexFlow"
+            widths={[480, 768, 1024]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            quality={78}
+            format="webp"
+            loading="eager"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          MATERIAIS QUE <span class="text-orange-500">CORTAMOS</span>
+        </h2>
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {
+            materials.map((m) => (
+              <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6 text-center">
+                <h3 class="font-bold text-navy-900 leading-snug">{m.title}</h3>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{m.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          VANTAGENS DO <span class="text-orange-500">CORTE A LASER</span>
+        </h2>
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {
+            advantages.map((a) => (
+              <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <div class="w-11 h-11 rounded-full bg-orange-500 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={a.icon} />
+                  </svg>
+                </div>
+                <h3 class="mt-4 font-bold text-navy-900 leading-snug">{a.title}</h3>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{a.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-navy-900">
+          COMO SOLICITAR <span class="text-orange-500">ORÇAMENTO</span>
+        </h2>
+        <p class="mt-3 text-center text-muted max-w-xl mx-auto leading-relaxed">
+          Três informações simples para começarmos a avaliar o seu corte.
+        </p>
+        <div class="mt-10 grid sm:grid-cols-3 gap-6">
+          {
+            steps.map((s, i) => (
+              <div class="flex flex-col items-center text-center gap-3 p-6 rounded-xl border border-slate-100 shadow-sm bg-white">
+                <div class="w-11 h-11 rounded-full bg-orange-500 flex items-center justify-center text-white font-extrabold">
+                  {i + 1}
+                </div>
+                <h3 class="font-bold text-navy-900 leading-snug">{s.title}</h3>
+                <p class="text-sm text-muted leading-relaxed">{s.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <SolutionGallery category="Corte a Laser" lightboxGroup="lightbox-corte-laser" />
+
+    <section class="bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 pb-16 lg:pb-20 text-center text-sm text-muted">
+        Conheça também nossas soluções de <a href="/texturizacao" class="text-orange-500 font-semibold hover:text-orange-600 transition-colors">texturização industrial</a>, <a href="/revestimento-antiaderente-industrial" class="text-orange-500 font-semibold hover:text-orange-600 transition-colors">revestimento antiaderente industrial</a> e <a href="/revestimento-antiaderente-alimenticio" class="text-orange-500 font-semibold hover:text-orange-600 transition-colors">revestimento antiaderente alimentício</a>, ou <a href="/contato" class="text-orange-500 font-semibold hover:text-orange-600 transition-colors">fale com a nossa equipe</a>.
+      </div>
+    </section>
+
+    <FinalCta subtitle="Envie o desenho da sua peça — ou peça apoio da nossa equipe de desenho — e fale com a TexFlow para solicitar o orçamento do seu corte a laser." />
+  </main>
+  <Footer />
+</Layout>

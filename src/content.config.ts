@@ -27,6 +27,7 @@ const galleryCategories = z.enum([
   'Revestimento Antiaderente Industrial',
   'Revestimento Antiaderente Alimentício',
   'Texturização Industrial',
+  'Corte a Laser',
 ]);
 
 const gallery = defineCollection({

@@ -49,6 +49,7 @@ collections:
           - { label: "Revestimento Antiaderente Industrial", value: "Revestimento Antiaderente Industrial" }
           - { label: "Revestimento Antiaderente Alimentício", value: "Revestimento Antiaderente Alimentício" }
           - { label: "Texturização Industrial", value: "Texturização Industrial" }
+          - { label: "Corte a Laser", value: "Corte a Laser" }
       - { label: "Descrição", name: "description", widget: "text", required: false }
       - { label: "Destacar na Home?", name: "featured", widget: "boolean", default: false, hint: "Só fotos marcadas aqui aparecem na galeria da página inicial." }
       - { label: "Foto Principal da Categoria", name: "homeCard", widget: "boolean", default: false, hint: "Marque em apenas UMA foto por categoria — é a que aparece no resumo 'Todos' da galeria da home." }
