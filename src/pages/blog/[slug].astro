@@ -29,7 +29,7 @@ const fallbackRelated = allPosts
 
 const related = relatedPosts.length > 0 ? relatedPosts : fallbackRelated;
 
-const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
+const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric", timeZone: "UTC" });
 
 const canonicalURL = new URL(`/blog/${post.id}`, Astro.site).toString();
 const imageURL = new URL(post.data.image, Astro.site).toString();
