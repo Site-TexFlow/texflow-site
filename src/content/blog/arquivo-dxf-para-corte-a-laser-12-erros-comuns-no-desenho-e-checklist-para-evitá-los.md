@@ -5,8 +5,8 @@ description: "Saiba como preparar o arquivo DXF ou DWG para corte a laser
   corrigi-los e um checklist para enviar o arquivo certo de primeira."
 publishDate: 2026-10-30
 image: /images/blog/arquivo-dxf-corte-a-laser.png
-imageAlt: Desenho técnico em CAD na tela ao lado de chapa metálica sendo
-  cortada a laser, com o desenho impresso e um paquímetro sobre a mesa
+imageAlt: Desenho técnico em CAD na tela ao lado de peças metálicas de
+  precisão já cortadas a laser e do desenho impresso sobre a mesa
 tags:
   - Arquivo DXF Corte a Laser
   - Desenho para Corte a Laser
