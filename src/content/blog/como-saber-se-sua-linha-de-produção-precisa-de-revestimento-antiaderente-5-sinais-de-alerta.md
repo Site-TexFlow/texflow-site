@@ -53,6 +53,6 @@ Se um ou mais desses sinais soam familiares à realidade da sua produção, o pr
 
 Paradas de limpeza, desgaste prematuro, dependência de lubrificantes, corrosão recorrente e custos de manutenção crescentes não são problemas isolados — na maioria das vezes, são sintomas de um mesmo diagnóstico: a superfície de contato do seu processo não está preparada para a demanda real da produção.
 
-A TexFlow atua há mais de 28 anos aplicando revestimentos antiaderentes industriais para moldes, rolos, cilindros, esteiras e peças metálicas em todo o Brasil. Nossa equipe técnica avalia o processo produtivo e recomenda a solução de revestimento mais adequada para reduzir paradas, desgaste e custos de manutenção.
+A TexFlow atua há mais de 27 anos aplicando revestimentos antiaderentes industriais para moldes, rolos, cilindros, esteiras e peças metálicas em todo o Brasil. Nossa equipe técnica avalia o processo produtivo e recomenda a solução de revestimento mais adequada para reduzir paradas, desgaste e custos de manutenção.
 
 **Identificou algum desses sinais na sua produção?** [Fale com nossos especialistas](/contato) ou conheça nossa solução de [revestimento antiaderente industrial](/revestimento-antiaderente-industrial).

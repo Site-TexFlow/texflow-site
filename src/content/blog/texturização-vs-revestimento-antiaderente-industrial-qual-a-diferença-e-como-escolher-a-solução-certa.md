@@ -85,6 +85,6 @@ Antes de decidir entre texturização, revestimento antiaderente ou a combinaç�
 
 Texturização e revestimento antiaderente industrial resolvem problemas diferentes — e entender essa diferença é o primeiro passo para tomar a decisão certa para o seu processo produtivo. Em muitos casos, a solução ideal nem é escolher entre uma ou outra, mas sim combinar as duas tecnologias de forma estratégica.
 
-A TexFlow atua há mais de 28 anos aplicando revestimentos antiaderentes e soluções de texturização industrial para moldes, rolos, cilindros e peças metálicas em todo o Brasil. Nossa equipe técnica avalia cada processo individualmente para recomendar a solução mais adequada — seja texturização, revestimento antiaderente, ou a combinação das duas.
+A TexFlow atua há mais de 27 anos aplicando revestimentos antiaderentes e soluções de texturização industrial para moldes, rolos, cilindros e peças metálicas em todo o Brasil. Nossa equipe técnica avalia cada processo individualmente para recomendar a solução mais adequada — seja texturização, revestimento antiaderente, ou a combinação das duas.
 
 **Precisa de orientação técnica para o seu processo?** [Fale com nossos especialistas](/contato) ou conheça nossas soluções de [revestimento antiaderente industrial](/revestimento-antiaderente-industrial) e [texturização industrial](/texturizacao).

@@ -78,6 +78,6 @@ Em muitos casos, sim. Moldes, rolos, cilindros e outras peças metálicas podem 
 
 A durabilidade de um revestimento antiaderente industrial depende de um conjunto de fatores: temperatura, abrasão, agentes químicos, preparo da superfície, qualidade da aplicação e cuidados na operação. Quando o revestimento é bem especificado e corretamente aplicado, ele reduz paradas, atrito e custos de manutenção por um período longo, e a reaplicação no momento certo mantém esse benefício ao longo da vida da peça.
 
-A TexFlow atua há mais de 28 anos aplicando revestimentos antiaderentes industriais e soluções de texturização para moldes, rolos, cilindros e peças metálicas em todo o Brasil. Nossa equipe técnica avalia as condições do seu processo e indica o revestimento mais adequado para a sua aplicação.
+A TexFlow atua há mais de 27 anos aplicando revestimentos antiaderentes industriais e soluções de texturização para moldes, rolos, cilindros e peças metálicas em todo o Brasil. Nossa equipe técnica avalia as condições do seu processo e indica o revestimento mais adequado para a sua aplicação.
 
 **Quer saber qual revestimento oferece a melhor durabilidade para o seu processo?** [Fale com nossos especialistas](/contato) ou conheça nossa solução de [revestimento antiaderente industrial](/revestimento-antiaderente-industrial) e de [texturização industrial](/texturizacao).

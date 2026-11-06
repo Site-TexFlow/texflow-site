@@ -58,6 +58,6 @@ Se a sua produção de peças injetadas enfrenta paradas frequentes para limpeza
 
 A aderência do plástico ao molde é um dos fatores mais subestimados nas paradas de produção da injeção plástica — e também um dos mais simples de resolver com a tecnologia certa. O revestimento antiaderente aplicado na cavidade do molde reduz paradas, diminui o uso de desmoldantes, melhora o acabamento das peças e prolonga a vida útil do ferramental.
 
-A TexFlow atua há mais de 28 anos aplicando revestimentos antiaderentes industriais em moldes, rolos, cilindros e peças metálicas em todo o Brasil, com avaliação técnica individual para cada processo produtivo.
+A TexFlow atua há mais de 27 anos aplicando revestimentos antiaderentes industriais em moldes, rolos, cilindros e peças metálicas em todo o Brasil, com avaliação técnica individual para cada processo produtivo.
 
 **Quer avaliar o revestimento ideal para o seu molde de injeção?** [Fale com nossos especialistas](/contato) ou conheça nossa solução de [revestimento antiaderente industrial](/revestimento-antiaderente-industrial).

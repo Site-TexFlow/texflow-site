@@ -23,7 +23,7 @@ O **corte a laser de chapas metálicas** se tornou um dos processos mais usados 
 
 Neste guia, explicamos como o processo funciona, em que ele se diferencia de outros métodos de corte, como cada material (aço inox, aço carbono, alumínio, latão e cobre) se comporta e quais cuidados de projeto ajudam a obter um resultado melhor. Se você está avaliando o corte a laser para o seu produto, ou comparando com o que usa hoje, este conteúdo é um bom ponto de partida.
 
-A TexFlow, que há mais de 28 anos atua com revestimento antiaderente e texturização industrial, também executa corte a laser de chapas metálicas na própria unidade, em Pinhais (PR).
+A TexFlow, que há mais de 27 anos atua com revestimento antiaderente e texturização industrial, também executa corte a laser de chapas metálicas na própria unidade, em Pinhais (PR).
 
 ## Índice
 

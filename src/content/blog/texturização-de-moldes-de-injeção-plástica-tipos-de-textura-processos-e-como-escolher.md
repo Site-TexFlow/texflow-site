@@ -74,6 +74,6 @@ Em muitos casos, a textura pode ser recuperada ou refeita, preservando o investi
 
 A texturização de moldes de injeção plástica define o acabamento que o cliente final vê e sente no produto. Química, jateamento e gravação e usinagem de precisão são caminhos diferentes para resultados diferentes, e a escolha certa depende da função da textura, do material, da geometria do molde e do volume de produção. Quando bem especificada, a texturização agrega valor ao produto, esconde imperfeições de processo e mantém a consistência do acabamento ao longo de toda a série.
 
-A TexFlow atua há mais de 28 anos com texturização industrial e revestimentos antiaderentes para moldes, rolos, cilindros e peças metálicas em todo o Brasil. Nossa equipe técnica avalia o seu molde e indica o processo e o padrão mais adequados para o resultado que você precisa.
+A TexFlow atua há mais de 27 anos com texturização industrial e revestimentos antiaderentes para moldes, rolos, cilindros e peças metálicas em todo o Brasil. Nossa equipe técnica avalia o seu molde e indica o processo e o padrão mais adequados para o resultado que você precisa.
 
 **Precisa texturizar ou recuperar a textura de um molde?** [Fale com nossos especialistas](/contato) ou conheça nossa solução de [texturização industrial](/texturizacao) e de [revestimento antiaderente industrial](/revestimento-antiaderente-industrial).

@@ -201,4 +201,4 @@ Aço inox, latão, alumínio, aço carbono e cobre.
 
 ## Quer saber mais?
 
-A TexFlow atua há mais de 28 anos com revestimento antiaderente industrial e texturização, e agora também executa corte a laser de chapas metálicas na própria unidade, em Pinhais (PR). Conheça os serviços de [revestimento antiaderente industrial](/revestimento-antiaderente-industrial), [texturização](/texturizacao) e [corte a laser](/corte-a-laser), ou [fale com a nossa equipe](/contato).
+A TexFlow atua há mais de 27 anos com revestimento antiaderente industrial e texturização, e agora também executa corte a laser de chapas metálicas na própria unidade, em Pinhais (PR). Conheça os serviços de [revestimento antiaderente industrial](/revestimento-antiaderente-industrial), [texturização](/texturizacao) e [corte a laser](/corte-a-laser), ou [fale com a nossa equipe](/contato).
